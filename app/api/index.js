@@ -5,13 +5,19 @@ import { getUser } from 'meteor/apollo'
 import typeDefs from './schema'
 import resolvers from './resolvers'
 
+import {
+    makeExecutableSchema,
+    addMockFunctionsToSchema,
+    mergeSchemas,
+} from 'graphql-tools';
+
 const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: async ({ req }) => ({
         user: await getUser(req.headers.authorization)
     })
-})
+});
 
 server.applyMiddleware({
     app: WebApp.connectHandlers,
