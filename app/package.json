@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
+    "apollo-boost": "^0.1.15",
+    "apollo-server-express": "^2.0.4",
+    "graphql": "^0.13.2",
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
