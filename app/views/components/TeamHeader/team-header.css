@@ -1,0 +1,48 @@
+.team-header{
+    color:#FFF;
+    width: 100%;
+    overflow: hidden;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.team-header > .logo{
+    width: 100%;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+.team-header > .logo > img{
+    width: 30%;
+    min-width: 60px;
+    max-width: 200px;
+}
+
+.team-header > .name{
+    font-size: 24pt;
+    width: 100%;
+    padding-top:5px;
+    padding-bottom: 12px;
+    font-weight: 400;
+}
+
+.team-header > .description{
+    font-size: 14pt;
+    font-weight: 100;
+    color:rgba(255,255,255,0.75);
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 12px;
+}
+
+.team-header > .link > a{
+    font-size: 12pt;
+    color: #4A7699;
+    transition: 1s;
+}
+
+.team-header > .link > a:hover{
+    color: #FFF;
+    cursor: pointer;
+}

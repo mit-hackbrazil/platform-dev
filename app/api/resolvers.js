@@ -3,7 +3,7 @@ export default resolvers = {
 
     Query: {
         test(_, args) {
-            return "hackbrazil"//Post.findAll({ where: args });
+            return "hackbrazil-test"//Post.findAll({ where: args });
         },
     }
 };

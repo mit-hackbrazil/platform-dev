@@ -24,3 +24,8 @@ aldeed:collection2
 ostrio:files
 swydo:ddp-apollo
 apollo
+accounts-ui
+accounts-password
+accounts-facebook
+accounts-google
+accounts-github
