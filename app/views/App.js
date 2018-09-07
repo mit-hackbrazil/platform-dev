@@ -10,6 +10,9 @@ import PostViewer from "./components/PostViewer";
 import AccountsUIWrapper from './components/AccountsUIWrapper.js';
 import { Tracker } from 'meteor/tracker';
 
+//settings
+import { settings } from "../settings.js";
+
 const defaultTasks = [
   {
     name: "tarefa 1",

@@ -18,12 +18,13 @@
     text-transform: none;
     -webkit-appearance: button;
     cursor: pointer;
+    border:none;
   }
   button[disabled].rbc-btn {
     cursor: not-allowed;
   }
   button.rbc-input::-moz-focus-inner {
-    border: 0;
+    border: none;
     padding: 0;
   }
   .rbc-calendar {
@@ -139,7 +140,7 @@
     background: none;
     background-image: none;
     padding: .375rem 1rem;
-    border-radius: 0px;
+    border:none;
     line-height: normal;
     white-space: nowrap;
   }
