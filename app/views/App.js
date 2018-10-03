@@ -12,6 +12,7 @@ import { Tracker } from 'meteor/tracker';
 
 //settings
 import { settings } from "../settings.js";
+import "./app.css";
 
 const defaultTasks = [
   {
