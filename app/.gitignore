@@ -4,3 +4,5 @@ node_modules/
 *.keys
 *.keys.json
 settings.json
+secret.json
+*_secret.json

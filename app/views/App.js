@@ -9,6 +9,7 @@ import PostViewer from "./components/PostViewer";
 
 import AccountsUIWrapper from './components/AccountsUIWrapper.js';
 import { Tracker } from 'meteor/tracker';
+import { Accounts } from 'meteor/accounts-base'
 
 //settings
 import { settings } from "../settings.js";
@@ -101,12 +102,32 @@ const posts = [
 ]
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { loading: true, logged: false };
+
+  }
+
+  onUserLogin = () => {
+    this.setState({ logged: true });
+    console.log("login..");
+  }
+
+  onUserLogout = () => {
+    this.setState({ logged: false });
+  }
 
   componentWillMount() {
     Tracker.autorun(() => {
       if (Accounts.loginServicesConfigured()) {
-        // this.setState({ loading: false });
-        console.log('USER', Meteor.user());
+        let user = Meteor.user();
+
+        console.log('USER', user._id);
+
+        if (Meteor.user())
+          this.setState({ logged: true });
+        if (Meteor.user() === null)
+          this.setState({ logged: false });
       }
     });
   }
@@ -114,21 +135,27 @@ class App extends Component {
   render() {
     console.log("userid", Meteor.userId());
 
-    return (
-      <div>
+    if (!this.state.logged)
+      return <div>
         <AccountsUIWrapper />
-        <TeamHeader team={team} />
-        <TasksList tasks={defaultTasks} />
-        <h2>CALENDAR</h2>
-        <Calendar events={events} />
-
-        <h2>POSTS</h2>
-        <PostViewer posts={posts} />
-        <h2>EQUIPE</h2>
-
-        <h2>CONTATO</h2>
+        <div> Home.. log in! ... </div>
       </div>
-    );
+    else
+      return (
+        <div>
+          <AccountsUIWrapper />
+          <TeamHeader team={team} />
+          <TasksList tasks={defaultTasks} />
+          <h2>CALENDAR</h2>
+          <Calendar events={events} />
+
+          <h2>POSTS</h2>
+          <PostViewer posts={posts} />
+          <h2>EQUIPE</h2>
+
+          <h2>CONTATO</h2>
+        </div>
+      );
   }
 }
 

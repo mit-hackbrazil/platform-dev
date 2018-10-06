@@ -1,9 +1,15 @@
 import { Mongo } from 'meteor/mongo';
+import { merge } from 'lodash';
 
 //let Teams = new Mongo.Collection('teams');
-import { Teams } from "../model/teams.js";
-import { Test } from "../model/test.js";
+import { Teams } from "../../model/teams.js";
+import { Test } from "../../model/test.js";
 
+import { resolver as teamsResolver } from "./teams";
+
+export default resolvers = merge(teamsResolver);
+
+/*
 // create the resolve functions for the available GraphQL queries
 export default resolvers = {
 
@@ -17,4 +23,4 @@ export default resolvers = {
             //return "hackbrazil-test"//Post.findAll({ where: args });
         },
     }
-};
+};*/
