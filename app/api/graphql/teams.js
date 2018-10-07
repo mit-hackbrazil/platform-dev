@@ -21,7 +21,8 @@ export const typeDef = `
   }
 
   extend type Query {
-    team(args:JSON): [Team]
+    team(args:JSON): [Team],
+    teamKey(args:JSON) : Boolean
   }
 
   extend type Mutation{
@@ -32,22 +33,37 @@ export const typeDef = `
 
 export let resolver = {
     Query: {
-        async team(_, args) {
+        async team(_, input) {
             let team = null;
 
-            //all
-            if (args.id === undefined)
-                team = await db.many("SELECT * FROM teams");
+            let args = input.args;
 
-            else if (args.id) {
-                team = await db.one(`SELECT * from team WHERE id=${args.id}`)
+            console.log('args', args);
+
+            if (args.id) {
+                team = await db.many(`SELECT * from teams WHERE id=${args.id}`)
             }
 
             else if (args.name) {
-                team = await db.one(`SELECT * from team WHERE name=${args.name}`)
+                team = await db.many(`SELECT * from teams WHERE name=${args.name}`)
+            }
+
+            else {
+                team = await db.many("SELECT * FROM teams");
             }
 
             return team;
+        },
+        async teamKey(_, input) {
+            let args = input.args;
+            let result = await db.one(`SELECT subscription_key FROM teams WHERE id=${args.id}`);
+            console.log("subs", result.subscription_key);
+
+            if (args.key == result.subscription_key)
+                return true;
+            else
+                return false;
+
         }
     },
     Mutation: {

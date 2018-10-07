@@ -40,11 +40,12 @@ let team = {
 }
 */
 
-function getBase64(file) {
+function getBase64(file, callback) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
         console.log(reader.result);
+        callback(reader.result);
     };
     reader.onerror = function (error) {
         console.log('Error: ', error);
@@ -62,21 +63,37 @@ function canUploadFile(file) {
 }
 
 class UploadTeamLogo extends Component {
-    onInputChange = (event) => {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileName: "Selecionar Imagem...",
+            fileSrc: null
+        }
+    }
+
+    onInputChange = async (event) => {
         let file = event.target.files[0];
 
         console.log("fileevent", file);
         console.log("canUploadFile", canUploadFile(file));
-        let base64 = getBase64(file);
+        getBase64(file, (base64) => {
+
+            this.setState({ fileName: file.name, fileSrc: base64 });
+            console.log("base64", base64);
+            if (this.props.callback) {
+                this.props.callback(base64);
+            }
+        });
     }
+
     render() {
         return (<div className="popup-content">
             <p>Apenas arquivos dos tipos .png, .jpeg e .jpg abaixo de 10Mb serão aceitos.</p>
             <p>Sugerimos a resolução de 1024x1024 pixels para a imagem da sua logo.</p>
 
-            <label class="bp3-file-input .modifier">
+            <label className="bp3-file-input .modifier">
                 <input type="file" accept='image/*' onChange={this.onInputChange} />
-                <span class="bp3-file-upload-input">Selecionar Imagem...</span>
+                <span className="bp3-file-upload-input">{this.state.fileName}</span>
             </label>
         </div >);
     }
@@ -87,10 +104,15 @@ export default class TeamHeader extends Component {
         super(props);
         this.state = {
             name: null,
-
+            logoSrc: null
         }
 
-        console.log("api TEST:", api.teams.get(12));
+
+        this.loadCurrentTeam();
+    }
+
+    loadCurrentTeam = async () => {
+        console.log("api TEST:", await api.teams.getCurrent());
     }
 
     onChangeName = (name) => {
@@ -102,6 +124,11 @@ export default class TeamHeader extends Component {
         let win = window.open(link, '_blank');
         win.focus();
     }
+
+    onNewLogo = (imageSrc) => {
+        console.log("new logo", imageSrc);
+        this.setState({ logoSrc: imageSrc });
+    }
     render() {
         let { name, logo, description, link } = this.props.team;
         let linkSimplified = link.replace("https://", "").replace("http://", "");
@@ -110,9 +137,9 @@ export default class TeamHeader extends Component {
 
             <div className="logo">
                 <div className="image">
-                    <img src={logo} />
+                    <img src={this.state.logoSrc} />
                     <div className="logo-edit">
-                        <Popover content={<UploadTeamLogo />}>
+                        <Popover content={<UploadTeamLogo callback={this.onNewLogo} />}>
                             <Button icon="edit" />
                         </Popover>
                     </div>

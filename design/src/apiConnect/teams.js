@@ -1,26 +1,40 @@
 import { GraphQuery } from "./index.js";
 
-export default class Teams {
+export async function getCurrent() {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    var key = url.searchParams.get("key");
 
-    static getCurrent() {
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var id = url.searchParams.get("id");
-        var key = url.searchParams.get("key");
-        console.log("current team", id, key);
-        return { id, key };
-    }
+    console.log("current team", id, key);
+    let isValid = await validate(id, key);
+    console.log("isValid", isValid);
 
-    static async get(id) {
-        `
+    return get(id);
+}
+
+export async function validate(id, _key) {
+    let query = `
         query{
-            team(args:{name:"Test"}){
-                 id, name,members,link
+            teamKey(args:{id:${id}, key:"${_key}"})
+        }
+        `;
+
+    console.log(query);
+    let results = await GraphQuery(query);
+    return results.teamKey;
+}
+
+export async function get(id, args = "id, name, members,link, logo, contacts") {
+    let query = `
+        query{
+            team(args:{id:${id}}){
+                 ${args}
             }
         }
-        `
-    }
-
-
-
+        `;
+    let results = await GraphQuery(query);
+    return results;
 }
+
+
