@@ -21,7 +21,8 @@ import {
     RadioGroup,
     Slider,
     Switch,
-    Icon
+    Icon,
+    FileInput
 } from "@blueprintjs/core";
 
 /*
@@ -33,6 +34,48 @@ let team = {
   link: String
 }
 */
+function getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        console.log(reader.result);
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
+
+function canUploadFile(file) {
+    let fileSize = file.size / 1024 / 1024; //in MB
+    let type = file.type.split("/")[0];
+    if (fileSize <= 10 && type == "image") {
+        return true;
+    }
+    else
+        return false;
+}
+
+class UploadTeamLogo extends Component {
+    onInputChange = (event) => {
+        let file = event.target.files[0];
+
+        console.log("fileevent", file);
+        console.log("canUploadFile", canUploadFile(file));
+        let base64 = getBase64(file);
+    }
+    render() {
+        return (<div className="popup-content">
+            <p>Apenas arquivos dos tipos .png, .jpeg e .jpg abaixo de 10Mb serão aceitos.</p>
+            <p>Sugerimos a resolução de 1024x1024 pixels para a imagem da sua logo.</p>
+
+            <label class="bp3-file-input .modifier">
+                <input type="file" accept='image/*' onChange={this.onInputChange} />
+                <span class="bp3-file-upload-input">Selecionar Imagem...</span>
+            </label>
+
+        </div >);
+    }
+}
 
 export default class TeamHeader extends Component {
     onClickLink = () => {
@@ -50,7 +93,7 @@ export default class TeamHeader extends Component {
                 <div className="image">
                     <img src={logo} />
                     <div className="logo-edit">
-                        <Popover content={<div className="popup-content">Selecionar arquivossss sasdklald <br /> askaklsdk</div>}>
+                        <Popover content={<UploadTeamLogo />}>
                             <Button icon="edit" />
                         </Popover>
                     </div>

@@ -15,5 +15,6 @@ body {
 .popup-content{
   padding:10px;
   color:#000;
+  max-width: 350px;
 }
 /*standard colors for the platform*/
