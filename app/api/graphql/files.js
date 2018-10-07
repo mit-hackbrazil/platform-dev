@@ -12,19 +12,19 @@ let model = {
 
 export const typeDef = `
 
-  type _File{
+  type File{
     id: Int,
     name: String,
     type: String,
     author_meteor: String,
-    data: File
+    data: String,
+    timestamp: String
   }
 
   extend type Query {
     file(args:JSON): [File]
   }
-
-
+  
 `;
 
 export let resolver = {

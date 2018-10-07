@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import { Meteor } from 'meteor/meteor';
-import App from "../views/App.js";
+import App from "./App.js";
 //import './main.html';
 
 console.log("user", Meteor.user());

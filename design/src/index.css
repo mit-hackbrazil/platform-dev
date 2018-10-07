@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #212121;
+  color:#FFF;
+  width:100vw;
+  font-family: 'Abel', sans-serif;
+  padding-left:20px;
+  padding-right:20px;
+  margin-top:42px;
+/*font-family: 'Open Sans', sans-serif;*/
+}
+
+/*standard colors for the platform*/

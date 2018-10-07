@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
+    "@blueprintjs/core": "^3.7.0",
     "apollo-boost": "^0.1.15",
     "apollo-server-express": "^2.0.4",
     "bcrypt": "^3.0.1",
