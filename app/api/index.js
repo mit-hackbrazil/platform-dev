@@ -2,8 +2,8 @@ import { ApolloServer, gql } from 'apollo-server-express'
 import { WebApp } from 'meteor/webapp'
 import { getUser } from 'meteor/apollo'
 
-import typeDefs from './schema'
-import resolvers from './resolvers'
+//import typeDefs from './schema'
+import { typeDefs, resolvers } from './graphql'
 
 import {
     makeExecutableSchema,
