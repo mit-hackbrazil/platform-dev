@@ -8,7 +8,7 @@ import Calendar from "./components/Calendar";
 import PostViewer from "./components/PostViewer";
 import TeamViewer from "./components/TeamViewer";
 
-
+import { Classes } from "@blueprintjs/core";
 
 const defaultTasks = [
   {
@@ -116,7 +116,7 @@ const teamMembers = [
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className={Classes.DARK}>
         <NavBar />
         <TeamHeader team={team} />
         <TasksList tasks={defaultTasks} />

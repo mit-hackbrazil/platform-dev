@@ -22,8 +22,13 @@ import {
     Slider,
     Switch,
     Icon,
-    FileInput
+    FileInput,
+    EditableText
 } from "@blueprintjs/core";
+
+//API connect
+
+import api from "../../apiConnect";
 
 /*
 example of props
@@ -34,6 +39,7 @@ let team = {
   link: String
 }
 */
+
 function getBase64(file) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
@@ -72,12 +78,25 @@ class UploadTeamLogo extends Component {
                 <input type="file" accept='image/*' onChange={this.onInputChange} />
                 <span class="bp3-file-upload-input">Selecionar Imagem...</span>
             </label>
-
         </div >);
     }
 }
 
 export default class TeamHeader extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: null,
+
+        }
+
+        console.log("api TEST:", api.teams.get(12));
+    }
+
+    onChangeName = (name) => {
+        // this.setState({ name });
+    }
+
     onClickLink = () => {
         let { link } = this.props.team;
         let win = window.open(link, '_blank');
@@ -100,7 +119,18 @@ export default class TeamHeader extends Component {
                 </div>
 
             </div>
-            <div className="name">{name}</div>
+
+
+            <EditableText
+                className="editable-text team-name"
+                maxLength={200}
+                maxLines={1}
+                minLines={1}
+                multiline={false}
+                placeholder="Editar nome do time..."
+                value={this.state.name}
+            />
+
             <div className="description">{description}</div>
             <div className="link"><a hrf={link} onClick={this.onClickLink}>{linkSimplified}</a></div>
         </div>

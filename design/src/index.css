@@ -2,19 +2,30 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: #444;
+  background: #222;
   color:#FFF;
-  width:100vw;
+  width:Calc(100% - 24px);
   font-family: 'Abel', sans-serif;
-  padding-left:20px;
-  padding-right:20px;
-  margin-top:42px;
+  margin-left:12px;
+  margin-right: 12px;
+  margin-top:60px;
+  overflow-x: hidden;
 /*font-family: 'Open Sans', sans-serif;*/
+}
+
+html{
+  margin:0;
+  padding: 0;
+  width:100vw;
+  overflow-x:hidden;
 }
 
 .popup-content{
   padding:10px;
-  color:#000;
-  max-width: 350px;
+  max-width: 300px;
 }
 /*standard colors for the platform*/
+.editable-text{
+  text-align: left;
+  width:90%;
+}

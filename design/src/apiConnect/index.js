@@ -1,6 +1,7 @@
 import axios from "axios";
 import api, { GraphQLCall } from "graphql-call";
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
+import Teams from "./teams";
 const stringifyObject = require('stringify-object');
 
 //graphUrl
@@ -15,20 +16,20 @@ export function GraphJson(obj) {
 }
 
 export async function GraphQuery(query, url = GRAPH_URL) {
-    //let login = sessionStorage.getItem('login');
-    //let password = sessionStorage.getItem('password');
-    //console.log("login", login, password);
-
     return axios({
         url: url,
         method: 'post',
         data: {
             query: query
-        },
-        auth: {
-            username: login,
-            password: password
-        },
+        }
     });
 
 }
+
+
+
+let apiConnect = {
+    teams: new Teams(),
+}
+
+export default apiConnect;

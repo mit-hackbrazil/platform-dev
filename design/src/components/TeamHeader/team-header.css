@@ -41,7 +41,7 @@
   object-fit: cover;
 }
 
-.team-header > .name{
+.team-header .team-name{
     font-size: 24pt;
     width: 100%;
     padding-top:5px;
@@ -89,8 +89,8 @@
     transition: 0.5s;
 }
 
-
 .logo-edit:hover > img{
     width: 35px;
     cursor: pointer;
 }
+
