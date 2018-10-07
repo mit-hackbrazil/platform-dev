@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { } from "./team-header.css";
-import icon_edit from "./icon_edit.svg";
+//import icon_edit from "./icon_edit.svg";
 
 /*
 example of props
@@ -28,7 +28,7 @@ export default class TeamHeader extends Component {
                 <div className="image">
                     <img src={logo} />
                     <div className="logo-edit">
-                        <img src={icon_edit} width={30}/>
+                        <img width={30}/>
                     </div>
                 </div>
 

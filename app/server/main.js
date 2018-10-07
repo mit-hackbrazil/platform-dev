@@ -26,35 +26,20 @@ Accounts.onCreateUser((options, user) => {
   return user;
 });
 
-Accounts.onLogin((info) => {
+Accounts.onLogin(async (info) => {
   console.log('login info', info.user);
   let id = info.user._id;
   let email = info.user.emails[0].address;
 
-  db.none('INSERT INTO users(meteor_id,email) VALUES($1,$2)', [id, email])
-    .then(() => {
-      // success;
-    })
-    .catch(error => {
-      // error;
-    });
+  let findUser = await db.any(`SELECT * FROM users WHERE meteor_id='${id}'`);
 
-  /*
-  console.log("creating user", user);
-  let email = user.emails[0].address;
+  if (findUser.length > 0) {
+    db.none('INSERT INTO users(meteor_id,email) VALUES($1,$2)', [id, email]);
+  }
 
-  db.none('INSERT INTO users(email) VALUES($1)', [email])
-    .then(() => {
-      // success;
-    })
-    .catch(error => {
-      // error;
-    });
-  return user;*/
 });
 
 import "../api/";
-
 
 Meteor.startup(() => {
   // code to run on server at startup

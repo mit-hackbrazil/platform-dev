@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { } from "./navbar.css";
-import icon_menu from "./icon_menu.svg";
-
+//import icon_menu from "./icon_menu.svg";
 
 export default class NavBar extends Component {
     constructor(props) {
@@ -23,7 +22,7 @@ export default class NavBar extends Component {
         return <div className="menu-navbar">
             <div className="group-left" onClick={this.onClickMenu}>
                 <div className="menu-dropdown" >
-                    <img className="icon" src={icon_menu} />
+                    
                 </div>
                 <div>
                     HackBrazil 2019
