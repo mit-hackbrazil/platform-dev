@@ -2,6 +2,28 @@ import React, { Component } from "react";
 import { } from "./team-header.css";
 import icon_edit from "./icon_edit.svg";
 
+import {
+    AnchorButton,
+    Button,
+    Classes,
+    Code,
+    FormGroup,
+    H5,
+    HTMLSelect,
+    Intent,
+    Label,
+    Menu,
+    MenuDivider,
+    MenuItem,
+    Popover,
+    PopoverInteractionKind,
+    Position,
+    RadioGroup,
+    Slider,
+    Switch,
+    Icon
+} from "@blueprintjs/core";
+
 /*
 example of props
 let team = {
@@ -28,7 +50,9 @@ export default class TeamHeader extends Component {
                 <div className="image">
                     <img src={logo} />
                     <div className="logo-edit">
-                        <img src={icon_edit} width={30}/>
+                        <Popover content={<div className="popup-content">Selecionar arquivossss sasdklald <br /> askaklsdk</div>}>
+                            <Button icon="edit" />
+                        </Popover>
                     </div>
                 </div>
 

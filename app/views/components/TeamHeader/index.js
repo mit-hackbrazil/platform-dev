@@ -28,7 +28,7 @@ export default class TeamHeader extends Component {
                 <div className="image">
                     <img src={logo} />
                     <div className="logo-edit">
-                        <img width={30}/>
+                        <img width={30} />
                     </div>
                 </div>
 

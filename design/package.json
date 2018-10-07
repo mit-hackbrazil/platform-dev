@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^3.7.0",
     "moment": "^2.22.2",
     "react": "^16.4.2",
     "react-big-calendar": "^0.19.2",
