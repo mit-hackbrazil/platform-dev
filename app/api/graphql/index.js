@@ -6,6 +6,7 @@ import { resolver as filesResolver, typeDef as filesTypeDef } from "./files";
 
 let defaultTypeDef = `
 scalar JSON 
+scalar Upload
 
 type Query{
     _empty:String

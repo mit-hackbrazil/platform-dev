@@ -14,6 +14,7 @@ export const typeDef = `
   type Team{
     id: Int,
     name: String,
+    description: String,
     link: String,
     members: JSON, 
     logo: String, 
@@ -93,13 +94,13 @@ export let resolver = {
 
             let original = await db.one(`SELECT * FROM teams WHERE id=${args.id}`);
             let input = Object.assign(original, args);
-            
+
             //Only requests containing a valid edit_key are allowed to update db content
             if (input.edit_key == original.edit_key) {
                 let query = await db.one(`UPDATE teams SET
-                (name, logo, members, link, contacts) = ($1,$2,$3,$4,$5) WHERE id=${args.id} RETURNING *
-                `, [input.name, input.logo, input.members, input.link, input.contact]);
-                
+                (name, logo, description, members, link, contacts) = ($1,$2,$3,$4,$5, $6) WHERE id=${args.id} RETURNING *
+                `, [input.name, input.logo, input.description, input.members, input.link, input.contact]);
+
                 return true;
             } else {
                 return false;

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^3.7.0",
+    "@google-cloud/storage": "^2.0.3",
     "axios": "^0.18.0",
     "graphql-call": "^1.0.6",
     "json-to-graphql-query": "^1.9.0",

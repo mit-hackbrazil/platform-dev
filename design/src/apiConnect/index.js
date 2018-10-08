@@ -2,6 +2,7 @@ import axios from "axios";
 import api, { GraphQLCall } from "graphql-call";
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 import * as _teams from "./teams";
+
 const stringifyObject = require('stringify-object');
 
 //graphUrl
@@ -28,7 +29,7 @@ export async function GraphQuery(query, url = GRAPH_URL) {
 
 }
 
-export async function getCredentials() {
+export function getCredentials() {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
@@ -37,10 +38,10 @@ export async function getCredentials() {
 
     return { id, editKey, viewKey };
 }
-let apiConnect = {
-    getCredentials,
-    teams: _teams,
 
+let apiConnect = {
+    getCredentials: getCredentials,
+    teams: _teams,
 }
 
 export default apiConnect;

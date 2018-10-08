@@ -34,7 +34,7 @@ export async function validateView(id, _key) {
     return results.teamViewKey;
 }
 
-export async function getAll(args = "id, name, members,link, logo, contacts") {
+export async function getAll(args = "id, name, members,link, logo, contacts, description") {
     let query = `
         query{
             team{
@@ -46,7 +46,7 @@ export async function getAll(args = "id, name, members,link, logo, contacts") {
     return results;
 }
 
-export async function getOne(id, args = "id, name, members,link, logo, contacts") {
+export async function getOne(id, args = "id, name, members,link, logo, contacts, description") {
     let query = `
         query{
             team(args:{id:${id}}){

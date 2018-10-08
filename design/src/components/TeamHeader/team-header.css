@@ -40,6 +40,8 @@
     top: 0; 
     left: 0; 
     object-fit: cover;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .team-header .team-name{

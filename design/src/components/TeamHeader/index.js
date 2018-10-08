@@ -114,7 +114,7 @@ export default class TeamHeader extends Component {
         let loadedTeam = await api.teams.getCurrent();
         let { name, description, link, logo } = loadedTeam;
 
-        this.setState({ name, description, link, logo, ready: true });
+        this.setState({ team_id: loadedTeam.id, name, description, link, logo, ready: true });
 
         console.log("api TEAM", loadedTeam);
     }
@@ -138,29 +138,30 @@ export default class TeamHeader extends Component {
     }
 
     onNewLogo = (imageSrc) => {
-        console.log("new logo", imageSrc);
+        // console.log("new logo", imageSrc);
         this.setState({ logo: imageSrc });
     }
 
     onUpdateParameter = () => {
-        console.log("updated the header :)");
-        let { id, editKey } = api.getCredentials;
+        // console.log("updated the header :)");
+        let { id, editKey } = api.getCredentials();
 
-        let { name, logo, description, link } = this.state;
-        api.teams.update({ id, name, logo, description, link, edit_key: editKey });
+        let { team_id, name, description, link } = this.state;
+        api.teams.update({ id: team_id, name, description, link, edit_key: editKey });
     }
 
     render() {
         let { name, logo, description, link } = this.props.team;
         let linkSimplified = link.replace("https://", "").replace("http://", "");
+        let defaultImageUrl = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/add-logo.png?raw=true";
 
         let content = <div className="team-header">
 
             <div className="logo">
                 <div className="image">
-                    <img src={this.state.logo} />
+                    <img src={this.state.logo ? this.state.logo : defaultImageUrl} />
                     <Popover className="logo-edit" content={<UploadTeamLogo callback={this.onNewLogo} />}>
-                        <Button icon="edit" className={Classes.MINIMAL} />
+                        <Button icon="edit" />
                     </Popover>
                 </div>
             </div>
@@ -189,6 +190,7 @@ export default class TeamHeader extends Component {
                     value={this.state.description}
                     disabled={!this.state.canEdit}
                     onChange={this.onChangeDescription}
+                    onConfirm={this.onUpdateParameter}
                 />
                 <div className="link">
                     <a hrf={this.state.link} onClick={this.onClickLink}><Icon icon="link" /></a>
@@ -202,6 +204,7 @@ export default class TeamHeader extends Component {
                         value={this.state.link}
                         disabled={!this.state.canEdit}
                         onChange={this.onChangeLink}
+                        onConfirm={this.onUpdateParameter}
                     />
 
                 </div>
