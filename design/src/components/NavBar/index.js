@@ -48,7 +48,7 @@ export default class NavBar extends Component {
                 <NavbarHeading>{icon_hack}</NavbarHeading>
                 <NavbarDivider />
                 <Button className={Classes.MINIMAL} icon="home" text="Home" />
-                <Button className={Classes.MINIMAL} icon="document" text="Files" />
+                <Button className={Classes.MINIMAL} icon="form" text="Feedback" />
             </NavbarGroup>
             <NavbarGroup align={Alignment.RIGHT}>
                 <Button className={Classes.MINIMAL} icon="cog" text="Configurações" />

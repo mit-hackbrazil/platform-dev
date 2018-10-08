@@ -74,12 +74,8 @@ class UploadTeamLogo extends Component {
     onInputChange = async (event) => {
         let file = event.target.files[0];
 
-        console.log("fileevent", file);
-        console.log("canUploadFile", canUploadFile(file));
         getBase64(file, (base64) => {
-
             this.setState({ fileName: file.name, fileSrc: base64 });
-            console.log("base64", base64);
             if (this.props.callback) {
                 this.props.callback(base64);
             }
@@ -107,7 +103,6 @@ export default class TeamHeader extends Component {
             logoSrc: null
         }
 
-
         this.loadCurrentTeam();
     }
 
@@ -116,7 +111,7 @@ export default class TeamHeader extends Component {
     }
 
     onChangeName = (name) => {
-        // this.setState({ name });
+        this.setState({ name });
     }
 
     onClickLink = () => {
@@ -129,6 +124,11 @@ export default class TeamHeader extends Component {
         console.log("new logo", imageSrc);
         this.setState({ logoSrc: imageSrc });
     }
+
+    onUpdateParameter = () => {
+        console.log("updated the header :)");
+    }
+
     render() {
         let { name, logo, description, link } = this.props.team;
         let linkSimplified = link.replace("https://", "").replace("http://", "");
@@ -138,28 +138,37 @@ export default class TeamHeader extends Component {
             <div className="logo">
                 <div className="image">
                     <img src={this.state.logoSrc} />
-                    <div className="logo-edit">
-                        <Popover content={<UploadTeamLogo callback={this.onNewLogo} />}>
-                            <Button icon="edit" />
-                        </Popover>
-                    </div>
+                    <Popover className="logo-edit" content={<UploadTeamLogo callback={this.onNewLogo} />}>
+                        <Button icon="edit" className={Classes.MINIMAL} />
+                    </Popover>
                 </div>
-
             </div>
 
+            <div className="info">
+                <EditableText
+                    className="editable-text team-name"
+                    maxLength={200}
+                    maxLines={1}
+                    minLines={1}
+                    multiline={false}
+                    placeholder="Editar nome do time..."
+                    onConfirm={this.onUpdateParameter}
+                    disabled={true}
+                />
 
-            <EditableText
-                className="editable-text team-name"
-                maxLength={200}
-                maxLines={1}
-                minLines={1}
-                multiline={false}
-                placeholder="Editar nome do time..."
-                value={this.state.name}
-            />
+                <EditableText
+                    className="editable-text team-description"
+                    maxLength={400}
+                    maxLines={2}
+                    minLines={1}
+                    multiline={true}
+                    placeholder="Editar descrição do time..."
+                    value={this.state.name}
+                />
 
-            <div className="description">{description}</div>
-            <div className="link"><a hrf={link} onClick={this.onClickLink}>{linkSimplified}</a></div>
+                <div className="link"><a hrf={link} onClick={this.onClickLink}><Icon icon="link" /> {linkSimplified}</a></div>
+            </div>
+
         </div>
     }
 

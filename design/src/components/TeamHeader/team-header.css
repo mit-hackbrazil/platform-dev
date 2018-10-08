@@ -7,6 +7,9 @@
     text-align: center;
     position: relative;
     margin-bottom:30px;
+
+    display: grid;
+    grid-template-columns: 20% 80%;
 }
 
 .team-header > .logo{
@@ -26,7 +29,7 @@
     width:150px;
     height: 150px;
     border-radius: 50%;
-    background:#111;
+    background:#FFF;
     display: flex;
     justify-content: center;
     overflow: hidden;
@@ -58,13 +61,18 @@
     margin-bottom: 12px;
 }
 
-.team-header > .link > a{
-    font-size: 12pt;
-    color: #4A7699;
+.link{
+    width:100%;
+    text-align: left;
+}
+.link > a{
+    font-size: 16pt;
+    color: rgb(144, 180, 209);
     transition: 1s;
+
 }
 
-.team-header > .link > a:hover{
+.link > a:hover{
     color: #FFF;
     cursor: pointer;
 }
@@ -85,12 +93,20 @@
     opacity: 1;
 }
 
-.logo-edit > img{
-    transition: 0.5s;
+.team-description{
+    font-size: 14pt;
+    color:rgba(255,255,255,0.75);
+    margin-bottom: 12px;
 }
 
-.logo-edit:hover > img{
-    width: 35px;
-    cursor: pointer;
+.edit-button .bp3-button{
+    background:none;
+    background-color: transparent;
 }
 
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-left:40px;
+}

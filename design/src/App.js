@@ -113,13 +113,15 @@ const teamMembers = [
   }
 ];
 
+const canEdit = true;
+
 class App extends Component {
   render() {
     return (
       <div className={Classes.DARK}>
         <NavBar />
-        <TeamHeader team={team} />
-        <TasksList tasks={defaultTasks} />
+        <TeamHeader team={team} canEdit={true} />
+        <TasksList tasks={defaultTasks} canEdit={true} />
         <h2>CALENDAR</h2>
         <Calendar events={events} />
 
