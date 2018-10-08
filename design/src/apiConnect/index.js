@@ -41,7 +41,7 @@ export function getCredentials() {
 
 let apiConnect = {
     getCredentials: getCredentials,
-    teams: _teams,
+    teams: _teams
 }
 
 export default apiConnect;

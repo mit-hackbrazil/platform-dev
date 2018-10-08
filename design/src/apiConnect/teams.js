@@ -1,4 +1,5 @@
 import { GraphQuery, GraphJson } from "./index.js";
+import { storage } from "./storage";
 
 export async function getCurrent() {
     var url_string = window.location.href;
@@ -72,4 +73,31 @@ export async function update(teamUpdate) {
     console.log("query update", query);
     let results = await GraphQuery(query);
     return true; //single return
+}
+
+export async function uploadLogo(image, progress_callback, done) {
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+
+    uploadTask.on('state_changed',
+        (snapshot) => {
+            // progrss function ....
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            //this.setState({ progress });
+            if (progress_callback) {
+                progress_callback(progress);
+            }
+        },
+        (error) => {
+            // error function ....
+            alert("ERROR: problem with image upload");
+            console.log(error);
+        },
+        () => {
+            storage.ref('images').child(image.name).getDownloadURL().then(url => {
+                console.log(url);
+                if (done)
+                    done(url);
+                // this.setState({ url });
+            })
+        });
 }

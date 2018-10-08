@@ -4,9 +4,10 @@ import { merge } from 'lodash';
 import { resolver as teamsResolver, typeDef as teamsTypeDef } from "./teams";
 import { resolver as filesResolver, typeDef as filesTypeDef } from "./files";
 
+const { GraphQLUpload } = require('apollo-server')
+
 let defaultTypeDef = `
 scalar JSON 
-scalar Upload
 
 type Query{
     _empty:String

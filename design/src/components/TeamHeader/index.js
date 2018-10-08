@@ -30,6 +30,7 @@ import {
 //API connect
 
 import api from "../../apiConnect";
+import apiConnect from "../../apiConnect";
 
 /*
 example of props
@@ -74,14 +75,21 @@ class UploadTeamLogo extends Component {
     }
 
     onInputChange = async (event) => {
+
         let file = event.target.files[0];
 
+        api.teams.uploadLogo(file, null, (url) => {
+            this.props.callback(url);
+        });
+
+        /*
         getBase64(file, (base64) => {
             this.setState({ fileName: file.name, fileSrc: base64 });
             if (this.props.callback) {
                 this.props.callback(base64);
             }
-        });
+        });*/
+
     }
 
     render() {
@@ -137,9 +145,12 @@ export default class TeamHeader extends Component {
         win.focus();
     }
 
-    onNewLogo = (imageSrc) => {
-        // console.log("new logo", imageSrc);
-        this.setState({ logo: imageSrc });
+    onNewLogo = (imageUrl) => {
+        this.setState({ logo: imageUrl });
+        let { editKey } = api.getCredentials();
+        let { team_id } = this.state;
+
+        api.teams.update({ id: team_id, edit_key: editKey, logo: imageUrl });
     }
 
     onUpdateParameter = () => {
