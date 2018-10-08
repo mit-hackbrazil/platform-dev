@@ -7,14 +7,12 @@
     text-align: center;
     position: relative;
     margin-bottom:30px;
-
+    margin-top:20px;
     display: grid;
     grid-template-columns: 20% 80%;
 }
 
 .team-header > .logo{
-    width: 100%;
-    height: 0 auto;
     margin-top:10px;
     margin-bottom: 20px;
     position: relative;
@@ -22,26 +20,26 @@
     display: flex;
     justify-content: center;
     padding:0px;
-    
 }
 
 .team-header > .logo > .image{
-    width:150px;
-    height: 150px;
+    width: 100%; 
+    text-align: center; 
+    position: relative; 
+    padding-bottom: 100%; 
     border-radius: 50%;
-    background:#FFF;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
+    background:#666;
+    
     box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
 }
 
 .team-header > .logo > .image > img{
-   
-    display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0; 
+    object-fit: cover;
 }
 
 .team-header .team-name{
@@ -69,7 +67,7 @@
     font-size: 16pt;
     color: rgb(144, 180, 209);
     transition: 1s;
-
+    margin-right:15px;
 }
 
 .link > a:hover{
@@ -99,14 +97,53 @@
     margin-bottom: 12px;
 }
 
-.edit-button .bp3-button{
-    background:none;
-    background-color: transparent;
-}
-
 .info{
     display: flex;
     flex-direction: column;
     justify-content: left;
-    margin-left:40px;
+    margin-left:0px;
 }
+
+.mockup{
+    background-color: #444 !important;
+}
+.name-mockup{
+    background: #444;
+    width: 50%;
+    height: 30pt;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+.description-mockup{
+    background: #444;
+    width: 80%;
+    height: 20pt;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+.link-mockup{
+    background: #444;
+    height: 14pt;
+    width:25%;
+    border-radius: 3px;
+}
+
+/*mobile*/
+@media only screen and (max-width: 768px) {
+    .team-header{
+        margin-bottom:20px;
+        margin-top:10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .team-header > .logo {
+        width:50%;
+        max-width: 200px;
+        min-width: 150px;
+    }
+
+
+} 

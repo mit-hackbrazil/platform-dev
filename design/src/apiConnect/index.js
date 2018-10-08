@@ -28,8 +28,19 @@ export async function GraphQuery(query, url = GRAPH_URL) {
 
 }
 
+export async function getCredentials() {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    var editKey = url.searchParams.get("edit");
+    var viewKey = url.searchParams.get("view");
+
+    return { id, editKey, viewKey };
+}
 let apiConnect = {
+    getCredentials,
     teams: _teams,
+
 }
 
 export default apiConnect;

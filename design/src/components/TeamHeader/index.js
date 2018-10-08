@@ -21,6 +21,7 @@ import {
     RadioGroup,
     Slider,
     Switch,
+    Spinner,
     Icon,
     FileInput,
     EditableText
@@ -36,7 +37,8 @@ let team = {
   name: String,
   logo: String,
   description: String,
-  link: String
+  link: String,
+  members:JSON
 }
 */
 
@@ -98,20 +100,35 @@ class UploadTeamLogo extends Component {
 export default class TeamHeader extends Component {
     constructor(props) {
         super(props);
+        let { name, logo, description, link } = props.team;
         this.state = {
-            name: null,
-            logoSrc: null
+            name, logo, description, link,
+            canEdit: props.canEdit ? props.canEdit : false,
+            ready: false
         }
 
         this.loadCurrentTeam();
     }
 
     loadCurrentTeam = async () => {
-        console.log("api TEST:", await api.teams.getCurrent());
+        let loadedTeam = await api.teams.getCurrent();
+        let { name, description, link, logo } = loadedTeam;
+
+        this.setState({ name, description, link, logo, ready: true });
+
+        console.log("api TEAM", loadedTeam);
     }
 
     onChangeName = (name) => {
         this.setState({ name });
+    }
+
+    onChangeDescription = (description) => {
+        this.setState({ description });
+    }
+
+    onChangeLink = (link) => {
+        this.setState({ link });
     }
 
     onClickLink = () => {
@@ -122,22 +139,26 @@ export default class TeamHeader extends Component {
 
     onNewLogo = (imageSrc) => {
         console.log("new logo", imageSrc);
-        this.setState({ logoSrc: imageSrc });
+        this.setState({ logo: imageSrc });
     }
 
     onUpdateParameter = () => {
         console.log("updated the header :)");
+        let { id, editKey } = api.getCredentials;
+
+        let { name, logo, description, link } = this.state;
+        api.teams.update({ id, name, logo, description, link, edit_key: editKey });
     }
 
     render() {
         let { name, logo, description, link } = this.props.team;
         let linkSimplified = link.replace("https://", "").replace("http://", "");
 
-        return <div className="team-header">
+        let content = <div className="team-header">
 
             <div className="logo">
                 <div className="image">
-                    <img src={this.state.logoSrc} />
+                    <img src={this.state.logo} />
                     <Popover className="logo-edit" content={<UploadTeamLogo callback={this.onNewLogo} />}>
                         <Button icon="edit" className={Classes.MINIMAL} />
                     </Popover>
@@ -153,7 +174,9 @@ export default class TeamHeader extends Component {
                     multiline={false}
                     placeholder="Editar nome do time..."
                     onConfirm={this.onUpdateParameter}
-                    disabled={true}
+                    value={this.state.name}
+                    disabled={!this.state.canEdit}
+                    onChange={this.onChangeName}
                 />
 
                 <EditableText
@@ -163,13 +186,50 @@ export default class TeamHeader extends Component {
                     minLines={1}
                     multiline={true}
                     placeholder="Editar descrição do time..."
-                    value={this.state.name}
+                    value={this.state.description}
+                    disabled={!this.state.canEdit}
+                    onChange={this.onChangeDescription}
                 />
+                <div className="link">
+                    <a hrf={this.state.link} onClick={this.onClickLink}><Icon icon="link" /></a>
+                    <EditableText
+                        className="editable-text team-description"
+                        maxLength={100}
+                        maxLines={1}
+                        minLines={1}
+                        multiline={false}
+                        placeholder="Editar link para site do time..."
+                        value={this.state.link}
+                        disabled={!this.state.canEdit}
+                        onChange={this.onChangeLink}
+                    />
 
-                <div className="link"><a hrf={link} onClick={this.onClickLink}><Icon icon="link" /> {linkSimplified}</a></div>
+                </div>
+            </div>
+        </div>;
+
+        //end of content
+
+        let mockup = <div className="team-header ">
+
+            <div className="logo">
+                <div className="image mockup">
+                </div>
             </div>
 
-        </div>
+            <div className="info">
+                <div className="name-mockup"></div>
+                <div className="description-mockup"></div>
+                <div className="link-mockup"></div>
+            </div>
+        </div>;
+
+        if (this.state.ready)
+            return content;
+        else
+            return mockup;
+        //return <Spinner size={100} />
+
     }
 
 }
