@@ -39,7 +39,7 @@ http://localhost:3000/graphql
 
 ## Teams
 ### all  :[Team]
-```
+```javascript
 query{
 	team{
 		 id, name,members,link
@@ -48,7 +48,7 @@ query{
 ```
 
 ### read by id :[Team]
-```
+```javascript
 query{
 	team(args:{id:12}){
 		 id, name, contacts
@@ -57,7 +57,7 @@ query{
 ```
 
 ### validate Edit Key :Boolean
-```
+```javascript
 query{
 	teamEditKey(args:{id:<ID> ,key:<EDIT_KEY>})
 }
@@ -65,7 +65,7 @@ query{
 
 
 ### validate View Key :Boolean
-```
+```json
 query{
 	teamVIEWKey(args:{id:<ID> ,key:<VIEW_KEY>})
 }
