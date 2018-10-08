@@ -30,7 +30,7 @@ since version 1.0.1 we migrated from MongoDB to PostgreSQL;
 # Running Project
 ```
 cd app
-meteor install
+meteor npm install
 meteor run
 ```
 http://localhost:3000
