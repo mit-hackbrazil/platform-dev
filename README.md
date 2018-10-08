@@ -26,6 +26,7 @@ since version 1.0.1 we migrated from MongoDB to PostgreSQL;
   curl https://install.meteor.com/ | sh
   ```
   
+# Running Project
 ```
 cd app
 meteor install
@@ -33,6 +34,12 @@ meteor run
 ```
 http://localhost:3000
 
+# Running experimental UI
+```
+cd design
+npm install
+npm start
+```
 
 # GraphQL APIs
 http://localhost:3000/graphql
