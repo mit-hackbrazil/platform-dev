@@ -1,5 +1,6 @@
 # platform-dev
-Platform to organize Teams, Tasks, Posts (Prototype Update) and Mentors.
+Remote Hackathon management platform
+Designed to organize Teams, Tasks/Calendar, Posts (Prototypes' Updates) and Mentors;
 
 # 🚨DataBase connection files 
 since version 1.0.1 we migrated from MongoDB to PostgreSQL;
