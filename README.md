@@ -32,3 +32,42 @@ meteor install
 meteor run
 ```
 http://localhost:3000
+
+
+# GraphQL APIs
+http://localhost:3000/graphql
+
+## Teams
+### all  :[Team]
+```
+query{
+	team{
+		 id, name,members,link
+	}
+}
+```
+
+### read by id :[Team]
+```
+query{
+	team(args:{id:12}){
+		 id, name, contacts
+	}
+}
+```
+
+### validate Edit Key :Boolean
+```
+query{
+	teamEditKey(args:{id:<ID> ,key:<EDIT_KEY>})
+}
+```
+
+
+### validate View Key :Boolean
+```
+query{
+	teamVIEWKey(args:{id:<ID> ,key:<VIEW_KEY>})
+}
+```
+
