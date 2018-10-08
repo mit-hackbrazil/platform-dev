@@ -48,7 +48,7 @@ query{
 ```
 
 ### read by id :[Team]
-```javascript
+```graphql
 query{
 	team(args:{id:12}){
 		 id, name, contacts
@@ -57,7 +57,7 @@ query{
 ```
 
 ### validate Edit Key :Boolean
-```javascript
+```graphql
 query{
 	teamEditKey(args:{id:<ID> ,key:<EDIT_KEY>})
 }
@@ -65,7 +65,7 @@ query{
 
 
 ### validate View Key :Boolean
-```json
+```graphql
 query{
 	teamVIEWKey(args:{id:<ID> ,key:<VIEW_KEY>})
 }
