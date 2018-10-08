@@ -39,7 +39,7 @@ http://localhost:3000/graphql
 
 ## Teams
 ### all  :[Team]
-```javascript
+```graphql
 query{
 	team{
 		 id, name,members,link
