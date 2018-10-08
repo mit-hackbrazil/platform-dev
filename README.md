@@ -38,6 +38,28 @@ http://localhost:3000
 http://localhost:3000/graphql
 
 ## Teams
+Schema
+```graphql
+ type Team{
+    id: Int,
+    name: String,
+    link: String,
+    members: JSON, 
+    logo: String, 
+    contacts: JSON
+  }
+
+  extend type Query {
+    team(args:JSON): [Team],
+    teamEditKey(args:JSON) : Boolean,
+    teamViewKey(args:JSON) : Boolean
+  }
+
+  extend type Mutation{
+      addTeam(args:JSON): Boolean,
+      updateTeam(args:JSON): Boolean
+  }
+```
 ### all  :[Team]
 ```graphql
 query{
