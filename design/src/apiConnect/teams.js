@@ -7,10 +7,7 @@ export async function getCurrent() {
     var id = url.searchParams.get("id");
     var editKey = url.searchParams.get("edit");
 
-    console.log("current team", id, editKey);
     let isValid = await validateEdit(id, editKey);
-
-    console.log("isValid to Edit", isValid);
 
     return getOne(id);
 }
@@ -61,7 +58,7 @@ export async function getOne(id, args = "id, name, members,link, logo, contacts,
 
 export async function update(teamUpdate) {
     let teamUpdateJSON = GraphJson(teamUpdate);
-    console.log(teamUpdateJSON);
+
     let query = `
         mutation{
             updateTeam(
@@ -70,7 +67,7 @@ export async function update(teamUpdate) {
             )
         }
         `;
-    console.log("query update", query);
+
     let results = await GraphQuery(query);
     return true; //single return
 }
@@ -94,7 +91,6 @@ export async function uploadLogo(image, progress_callback, done) {
         },
         () => {
             storage.ref('images').child(image.name).getDownloadURL().then(url => {
-                console.log(url);
                 if (done)
                     done(url);
                 // this.setState({ url });

@@ -2,6 +2,7 @@ import axios from "axios";
 import api, { GraphQLCall } from "graphql-call";
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 import * as _teams from "./teams";
+import * as _posts from "./posts";
 
 const stringifyObject = require('stringify-object');
 
@@ -41,7 +42,8 @@ export function getCredentials() {
 
 let apiConnect = {
     getCredentials: getCredentials,
-    teams: _teams
+    teams: _teams,
+    posts: _posts
 }
 
 export default apiConnect;

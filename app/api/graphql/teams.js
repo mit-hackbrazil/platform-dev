@@ -125,3 +125,21 @@ let GenerateKey = async (key_name, table_name = "teams") => {
 
     return new_key;
 }
+
+export async function ValidateEditKey(id, edit_key) {
+    let result = await db.one(`SELECT edit_key FROM teams WHERE id=${id}`);
+    if (edit_key == result.edit_key)
+        return true;
+    else
+        return false;
+
+}
+
+export async function ValidateViewKey(id, view_key) {
+    let result = await db.one(`SELECT view_key FROM teams WHERE id=${id}`);
+    if (view_key == result.view_key)
+        return true;
+    else
+        return false;
+
+}

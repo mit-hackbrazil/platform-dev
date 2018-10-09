@@ -3,6 +3,7 @@ import { merge } from 'lodash';
 
 import { resolver as teamsResolver, typeDef as teamsTypeDef } from "./teams";
 import { resolver as filesResolver, typeDef as filesTypeDef } from "./files";
+import { resolver as postsResolver, typeDef as postsTypeDef } from "./posts";
 
 const { GraphQLUpload } = require('apollo-server')
 
@@ -18,6 +19,6 @@ type Mutation{
 }
 `;
 
-export const typeDefs = [defaultTypeDef, teamsTypeDef, filesTypeDef];
+export const typeDefs = [defaultTypeDef, teamsTypeDef, filesTypeDef, postsTypeDef];
 
-export const resolvers = merge(teamsResolver, filesResolver);
+export const resolvers = merge(teamsResolver, filesResolver, postsResolver);
