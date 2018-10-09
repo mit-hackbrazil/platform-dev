@@ -54,7 +54,7 @@ export let resolver = {
             let team_id = args.team;
             let { editKey, viewKey } = args;
 
-            let valid = ValidateAction(args);
+            let valid = await ValidateAction(args);
 
             if (!valid)
                 return null
@@ -73,7 +73,7 @@ export let resolver = {
 
             let { title, content, team, files, thumbnail, editKey } = args;
 
-            let valid = ValidateAction(args);
+            let valid = await ValidateAction(args);
 
             if (!valid)
                 return null
@@ -91,7 +91,7 @@ export let resolver = {
             let original = await db.one(`SELECT * FROM posts WHERE id=${args.id}`);
             let { title, content, team, files, thumbnail, editKey, visible } = Object.assign(original, args);
 
-            let valid = ValidateAction(args);
+            let valid = await ValidateAction(args);
 
             if (!valid)
                 return null;
