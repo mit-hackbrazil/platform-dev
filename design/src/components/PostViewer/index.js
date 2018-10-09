@@ -67,6 +67,21 @@ class Post extends Component {
     render() {
         let { title, content, description, thumbnail, date, files } = this.props.post;
         let timestamp = moment(date).format('MMMM Do YYYY');
+
+        //settings default thumbnail github/assets/
+        thumbnail = thumbnail ? thumbnail : "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/place-holder-thumbnail.png?raw=true";
+        console.log("files", files);
+        let filesList = files.list.map((file) => {
+            return <div>
+                <div>
+                    {file.name}
+                </div>
+                <div>
+                    {file.size}
+                </div>
+            </div>
+        });
+
         return <div className="post" >
             <div className="image"><img src={thumbnail} /></div>
             <div className="info">
@@ -74,7 +89,7 @@ class Post extends Component {
                 <div className="content">{content}</div>
                 <div className="date">{timestamp}</div>
                 <div className="file">
-                    {files.toString()}
+                    {filesList}
                 </div>
             </div>
 

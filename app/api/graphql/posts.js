@@ -60,7 +60,7 @@ export let resolver = {
                 return null
 
             let posts = await db.many(
-                `SELECT * FROM posts WHERE team=${team_id}`
+                `SELECT * FROM posts WHERE team=${team_id} ORDER BY update DESC`
             );
 
             return posts;
