@@ -1,6 +1,10 @@
-# platform-dev
-Remote Hackathon management platform
-Designed to organize Teams, Tasks/Calendar, Posts (Prototypes' Updates) and Mentors;
+# Platform HackBrazil 2019 - @ MIT & Harvard
+
+## Remote Hackathon management platform
+### Designed to organize Teams, Tasks/Calendar, Posts (Prototypes' Updates) and Mentors;
+
+![image](https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/screenshot.gif?raw=true)
+
 
 # 🚨DataBase connection files 
 since version 1.0.1 we migrated from MongoDB to PostgreSQL;
