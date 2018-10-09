@@ -39,6 +39,11 @@ meteor run
 ```
 http://localhost:3000
 
+# Example Team
+```
+http://localhost:3002/?id=12&edit=fe8027edb3
+```
+
 # Running experimental UI
 ```
 cd design
