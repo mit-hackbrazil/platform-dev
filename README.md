@@ -1,7 +1,9 @@
 # Platform HackBrazil 2019 - @ MIT & Harvard
 
 ## Remote Hackathon management platform
-### Designed to organize Teams, Tasks/Calendar, Posts (Prototypes' Updates) and Mentors;
+Designed to organize Teams, Tasks/Calendar, Posts (Prototypes' Updates) and Mentors;
+
+Current localizations: \[🇧🇷 pt-br\]
 
 ![image](https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/screenshot.gif?raw=true)
 
