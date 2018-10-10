@@ -21,7 +21,7 @@ const posts = [
 import React, { Component } from "react";
 import { } from "./post-viewer.css";
 import moment from "moment";
-import { AnchorButton, Button, Classes, Code, Dialog, H5, Intent, Switch, Tooltip } from "@blueprintjs/core";
+import { AnchorButton, Button, Classes, Code, Dialog, H5, Intent, Switch, Tooltip, Spinner } from "@blueprintjs/core";
 import apiConnect from "../../apiConnect";
 
 import PostEditor from "./PostEditor";
@@ -112,7 +112,8 @@ export default class PostViewer extends Component {
 
     loadPosts = async () => {
         let posts = await apiConnect.posts.getAll();
-        this.setState({ posts: posts.posts });
+        if (posts.posts)
+            this.setState({ posts: posts.posts, ready: true });
     }
     onOpenEditor = () => {
         this.setState({ isOpen: true });
@@ -124,11 +125,14 @@ export default class PostViewer extends Component {
 
 
     render() {
-        let { posts } = this.state;
+        let { posts, ready } = this.state;
 
         let postsList = posts.map((post) => {
             return <Post post={post} />
         });
+
+        if (!ready)
+            return <Spinner size={50} />
         return <div className="post-viewer">
             <ButtonAddPost onCLick={this.onOpenEditor} />
             <div className="pots-list">

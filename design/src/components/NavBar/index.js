@@ -42,17 +42,19 @@ export default class NavBar extends Component {
 
     render() {
         let { menuOpen } = this.state;
+        /* google forms
+        https://goo.gl/forms/kFAs13YK8ZJDxT8e2
+        */
+        let formsUrl = "https://goo.gl/forms/kFAs13YK8ZJDxT8e2";
 
         return (<Navbar className="top-menu">
             <NavbarGroup align={Alignment.LEFT}>
                 <NavbarHeading>{icon_hack}</NavbarHeading>
                 <NavbarDivider />
                 <Button className={Classes.MINIMAL} icon="home" text="Home" />
-                <Button className={Classes.MINIMAL} icon="form" text="Feedback" />
+                <Button className={Classes.MINIMAL} icon="form" text="Enviar Feedback" />
                 <Button className={Classes.MINIMAL} icon="cog" text="Configurações" />
             </NavbarGroup>
-
-
         </Navbar>)
     }
 }

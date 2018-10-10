@@ -22,7 +22,7 @@ export default class Calendar extends Component {
                 width="100%"
                 height="400"
                 frameborder="0"
-                scrolling="yes"></iframe>
+                scrolling="no"></iframe>
 
         </div >
     }

@@ -5,6 +5,7 @@
   "dependencies": {
     "@blueprintjs/core": "^3.7.0",
     "@google-cloud/storage": "^2.0.3",
+    "@material-ui/core": "^3.2.0",
     "axios": "^0.18.0",
     "firebase": "^5.5.3",
     "graphql-call": "^1.0.6",

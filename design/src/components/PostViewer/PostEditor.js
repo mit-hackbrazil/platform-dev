@@ -17,8 +17,8 @@ export default class PostEditor extends Component {
     }
     render() {
         return (<Dialog
-            icon="info-sign"
-            title="Palantir Foundry"
+            icon="edit"
+            title="Editor de Posts"
             isOpen={this.props.isOpen}
             className={Classes.DARK + " post-editor "}
             onClose={this.onCloseEditor}
@@ -50,18 +50,23 @@ export default class PostEditor extends Component {
                     And the enterprise data foundation goes where the business drives it.
                     </p>
                 <p>Start the revolution. Unleash the power of data integration with Palantir Foundry.</p>
+
+                <label className="bp3-file-input .modifier">
+                    <input type="file" accept='image/*' onChange={this.onInputChange} />
+                    <span className="bp3-file-upload-input">{/**/}</span>
+                </label>
             </div>
             <div className={Classes.DIALOG_FOOTER}>
                 <div className={Classes.DIALOG_FOOTER_ACTIONS}>
-                    <Tooltip content="This button is hooked up to close the dialog.">
-                        <Button onClick={this.onCloseEditor}>Close</Button>
+                    <Tooltip content="Todo o conteúdo NÃO será salvo se você fechar essa Janela">
+                        <Button onClick={this.onCloseEditor}>Cancelar</Button>
                     </Tooltip>
                     <AnchorButton
                         intent={Intent.PRIMARY}
                         href="https://www.palantir.com/palantir-foundry/"
                         target="_blank"
                     >
-                        Visit the Foundry website
+                        Enviar Post
                         </AnchorButton>
                 </div>
             </div>

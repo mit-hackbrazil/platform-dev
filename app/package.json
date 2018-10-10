@@ -11,15 +11,19 @@
     "@babel/runtime": "7.0.0-beta.55",
     "@blueprintjs/core": "^3.7.0",
     "@google-cloud/storage": "^2.0.3",
+    "@material-ui/core": "^3.2.0",
     "apollo-boost": "^0.1.15",
     "apollo-server": "^2.1.0",
     "apollo-server-express": "^2.0.4",
     "bcrypt": "^3.0.1",
     "crypto": "^1.0.1",
     "crypto-random-string": "^1.0.0",
+    "firebase": "^5.5.3",
     "graphql": "^0.13.2",
+    "graphql-call": "^1.0.6",
     "graphql-tools": "^4.0.0",
     "graphql-type-json": "^0.2.1",
+    "json-to-graphql-query": "^1.9.0",
     "lodash": "^4.17.11",
     "meteor-node-stubs": "^0.4.1",
     "moment": "^2.22.2",
@@ -27,7 +31,8 @@
     "react": "^16.4.2",
     "react-big-calendar": "^0.19.2",
     "react-dom": "^16.4.2",
-    "simpl-schema": "^1.5.3"
+    "simpl-schema": "^1.5.3",
+    "stringify-object": "^3.2.2"
   },
   "meteor": {
     "mainModule": {
