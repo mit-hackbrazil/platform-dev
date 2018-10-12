@@ -1,49 +1,60 @@
-.teamviewer{
-    width:Calc(100% - 40px);
+.member-card{
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    padding:5px;
+    color:#111 !important;
+}
+
+.member-card-image{
+    width:100%;
     display: flex;
     justify-content: center;
-    align-content: center;
 }
 
-.team-member{
-    padding:20px;
-    display: block;
-    width:100%;
-    background:#252525;
-    border-radius: 5px;
-    margin:20px;
+.member-card-image > img{
+    width:80%;
+    top:0px;
+
+    height: 0 auto;
+    align-self: center;
+    float:center;
 }
 
-.team-member > .image-info{
+.member-card .member-contact{
+    width: 100%;
     display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.member-contact i{
+    color:#ccc;
+}
+
+.link-active i{
+    color:#222;
+}
+
+.modal-editor{
+    position: absolute;
+    background:#FFF;
+    border-radius: 0px;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.8);
+    width: 30% auto;
+    min-width: 300px;
+    
+    max-width: 100vw;
+    top:50%;
+    transform: translate(0, -50%);
+    padding:12px;
+
+}
+
+.modal-editor-container{
+    display: flex;
+    justify-content: center;
+}
+
+.editor-text{
     width:100%;
-    height:50px;
-    border-radius: 50%;
-    font-size: 14pt;
-    grid-template-columns: 30% 70%;
 }
-
-.team-member > .image-info > img{
-    width:50px;
-    background:#111;
-    height:50px;
-    border-radius: 50%;
-}
-
-.team-member > .image-info > .name > h1{
-    font-size: 18pt;
-    line-height: 19pt;
-    margin:0px;
-    padding:0px;
-}
-
-.team-member > .image-info > .name > p{
-    font-size: 12pt;
-    line-height: 16pt;
-    margin:0px;
-    padding:0px;
-    font-weight: 100;
-    opacity: 0.8;
-}
-
-

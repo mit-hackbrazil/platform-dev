@@ -32,6 +32,8 @@ import {
 import api from "../../apiConnect";
 import apiConnect from "../../apiConnect";
 
+import { Grid, Paper } from "@material-ui/core";
+
 /*
 example of props
 let team = {
@@ -217,7 +219,6 @@ export default class TeamHeader extends Component {
                         onChange={this.onChangeLink}
                         onConfirm={this.onUpdateParameter}
                     />
-
                 </div>
             </div>
         </div>;

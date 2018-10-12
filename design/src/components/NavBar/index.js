@@ -1,16 +1,10 @@
 import React, { Component } from "react";
 import { } from "./navbar.css";
-import {
-    Alignment,
-    Button,
-    Classes,
-    H5,
-    Navbar,
-    NavbarDivider,
-    NavbarGroup,
-    NavbarHeading,
-    Switch,
-} from "@blueprintjs/core";
+
+import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+
+import { Icon } from "@blueprintjs/core";
+
 
 let icon_hack = <svg width="30" height="34" viewBox="0 0 30 34" xmlns="http://www.w3.org/2000/svg">
     <g id="Page-1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
@@ -47,14 +41,15 @@ export default class NavBar extends Component {
         */
         let formsUrl = "https://goo.gl/forms/kFAs13YK8ZJDxT8e2";
 
-        return (<Navbar className="top-menu">
-            <NavbarGroup align={Alignment.LEFT}>
-                <NavbarHeading>{icon_hack}</NavbarHeading>
-                <NavbarDivider />
-                <Button className={Classes.MINIMAL} icon="home" text="Home" />
-                <Button className={Classes.MINIMAL} icon="form" text="Enviar Feedback" />
-                <Button className={Classes.MINIMAL} icon="cog" text="Configurações" />
-            </NavbarGroup>
-        </Navbar>)
+        return (<AppBar position="=fixed">
+            <Toolbar>
+                <IconButton color="inherit" aria-label="Menu">
+                    {icon_hack}
+                </IconButton>
+                <Typography variant="h6" color="inherit" >
+                    Hack Brazil 2019
+                </Typography>
+            </Toolbar>
+        </AppBar>)
     }
 }

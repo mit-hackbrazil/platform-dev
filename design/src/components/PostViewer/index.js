@@ -82,7 +82,7 @@ class Post extends Component {
             </div>
         });
 
-        return <div className="post" >
+        return <div className="card post" >
             <div className="image"><img src={thumbnail} /></div>
             <div className="info">
                 <div className="title">{title}</div>

@@ -6,8 +6,7 @@
     align-items: center;
     text-align: center;
     position: relative;
-    margin-bottom:30px;
-    margin-top:20px;
+
     display: grid;
     grid-template-columns: 20% 80%;
 }
