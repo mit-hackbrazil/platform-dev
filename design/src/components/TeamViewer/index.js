@@ -30,10 +30,10 @@ class MemberCard extends Component {
             editorOpen: false,
         }
     }
+
     toggleEditor = () => {
         this.setState({ editorOpen: !this.state.editorOpen });
     }
-
 
     handleClose = () => {
         this.setState({ editorOpen: false });
@@ -60,7 +60,6 @@ class MemberCard extends Component {
         },
     });
 
-
     render() {
         let { name, role, link, github, linkedin, photo } = this.props.member;
         let defaultPhoto = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/user-logo.png?raw=true";
@@ -80,6 +79,7 @@ class MemberCard extends Component {
                     onClose={this.handleClose}
                     className="modal-editor-container"
                 >
+
                     <div className="modal-editor" >
                         <Typography variant="h6" id="modal-title">
                             Editar Perfil
@@ -164,9 +164,9 @@ class MemberCard extends Component {
                         {role}
                     </Typography>
                     <div className="member-contact">
-                        <IconButton className={github ? "link-active" : null}><a href={github}><i class="fab fa-github"></i></a></ IconButton>
-                        <IconButton> <i class="fab fa-linkedin-in"></i> </IconButton>
-                        <IconButton> <i class="fas fa-link"></i> </ IconButton>
+                        <IconButton className={github ? "link-active" : null}><a href={github}><i className="fab fa-github"></i></a></ IconButton>
+                        <IconButton> <i className="fab fa-linkedin-in"></i> </IconButton>
+                        <IconButton> <i className="fas fa-link"></i> </ IconButton>
                     </div>
 
                     {editMenu}

@@ -1,0 +1,34 @@
+.contacts{
+    height: 220px;
+    display: block;
+    padding-top:30px;
+}
+
+.contacts-list{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    font-size: 16pt;
+    justify-content: center;
+}
+
+.contacts-list > div{
+    display: flex;
+    width: 0 auto;
+    justify-content: left;
+    margin-bottom: 10pt;
+}
+.contacts-list > div > i{
+    margin-right: 20pt;
+}
+/*mobile*/
+@media only screen and (max-width: 768px) {
+    .contacts{
+        margin-bottom:20px;
+        margin-top:10px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+    }
+} 

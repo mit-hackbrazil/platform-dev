@@ -7,6 +7,7 @@ import TeamHeader from "./components/TeamHeader";
 import Calendar from "./components/Calendar";
 import PostViewer from "./components/PostViewer";
 import TeamViewer from "./components/TeamViewer";
+import Contacts from "./components/Contacts";
 
 import { Classes } from "@blueprintjs/core";
 import { Grid, Paper } from "@material-ui/core";
@@ -121,14 +122,13 @@ class App extends Component {
     return (
       <div className={Classes.DARK}>
         <NavBar />
-
-
         <Grid container spacing={24} className="main-content">
-
           <Grid item xs={12} sm={6}>
             <TeamHeader team={team} canEdit={canEdit} />
           </Grid>
-
+          <Grid item xs={12} sm={6}>
+            <Contacts canEdit={canEdit} />
+          </Grid>
           <Grid item xs={12} sm={12}>
             <TeamViewer canEdit={canEdit} />
           </Grid>
@@ -143,16 +143,10 @@ class App extends Component {
           <Grid item xs={12} sm={6}>
             <Paper>xs=12 sm=6</Paper>
           </Grid>
-
-
         </Grid>
 
         <TasksList tasks={defaultTasks} canEdit={true} />
-
         <PostViewer posts={posts} />
-
-        <h2>MENTORES</h2>
-        <h2>CONTATO</h2>
       </div>
     );
   }

@@ -4,11 +4,13 @@
     overflow: hidden;
     align-content: center;
     align-items: center;
-    text-align: center;
+    text-align: left;
     position: relative;
 
     display: grid;
     grid-template-columns: 20% 80%;
+
+    height: 220px;
 }
 
 .team-header > .logo{
@@ -27,9 +29,7 @@
     position: relative; 
     padding-bottom: 100%; 
     border-radius: 50%;
-    background:#666;
-    
-    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+    background:#f0f0f0;
 }
 
 .team-header > .logo > .image > img{
@@ -103,13 +103,14 @@
     flex-direction: column;
     justify-content: left;
     margin-left:0px;
+    margin-bottom: 12px;
 }
 
 .mockup{
-    background-color: #444 !important;
+    background-color: #f0f0f0 !important;
 }
 .name-mockup{
-    background: #444;
+    background: #f0f0f0;
     width: 50%;
     height: 30pt;
     border-radius: 3px;
@@ -117,7 +118,7 @@
 }
 
 .description-mockup{
-    background: #444;
+    background: #f0f0f0;;
     width: 80%;
     height: 20pt;
     border-radius: 3px;
@@ -125,7 +126,7 @@
 }
 
 .link-mockup{
-    background: #444;
+    background: #f0f0f0;
     height: 14pt;
     width:25%;
     border-radius: 3px;
@@ -138,6 +139,8 @@
         margin-top:10px;
         display: flex;
         flex-direction: column;
+        text-align: center;
+        height: auto;
     }
 
     .team-header > .logo {

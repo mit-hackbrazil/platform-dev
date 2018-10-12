@@ -1,14 +1,15 @@
 import { GraphQuery, GraphJson } from "./index.js";
 import { storage } from "./storage";
 
-export async function getCurrent() {
+export async function getCurrent(args) {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
     var editKey = url.searchParams.get("edit");
 
     let isValid = await validateEdit(id, editKey);
-
+    if (args)
+        return getOne(id, args);
     return getOne(id);
 }
 
@@ -56,7 +57,7 @@ export async function getOne(id, args = "id, name, members,link, logo, contacts,
     return results.team[0]; //single return
 }
 
-export async function update(teamUpdate) {
+export async function update(teamUpdate, callback) {
     let teamUpdateJSON = GraphJson(teamUpdate);
 
     let query = `
@@ -69,6 +70,9 @@ export async function update(teamUpdate) {
         `;
 
     let results = await GraphQuery(query);
+    if (callback)
+        callback(results);
+
     return true; //single return
 }
 

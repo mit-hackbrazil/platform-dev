@@ -4,7 +4,6 @@ import icon_edit from "./icon_edit.svg";
 
 import {
     AnchorButton,
-    Button,
     Classes,
     Code,
     FormGroup,
@@ -32,7 +31,7 @@ import {
 import api from "../../apiConnect";
 import apiConnect from "../../apiConnect";
 
-import { Grid, Paper } from "@material-ui/core";
+import { Button, TextField, Modal } from "@material-ui/core";
 
 /*
 example of props
@@ -84,14 +83,6 @@ class UploadTeamLogo extends Component {
             this.props.callback(url);
         });
 
-        /*
-        getBase64(file, (base64) => {
-            this.setState({ fileName: file.name, fileSrc: base64 });
-            if (this.props.callback) {
-                this.props.callback(base64);
-            }
-        });*/
-
     }
 
     render() {
@@ -114,19 +105,21 @@ export default class TeamHeader extends Component {
         this.state = {
             name, logo, description, link,
             canEdit: props.canEdit ? props.canEdit : false,
-            ready: false
+            ready: false,
+            editorOpen: false,
+            nameEdit: name,
+            logoEdit: logo,
+            descriptionEdit: description,
+            linkEdit: link,
+            logoFile: null
         }
-
         this.loadCurrentTeam();
     }
 
     loadCurrentTeam = async () => {
         let loadedTeam = await api.teams.getCurrent();
         let { name, description, link, logo } = loadedTeam;
-
-        this.setState({ team_id: loadedTeam.id, name, description, link, logo, ready: true });
-
-        console.log("api TEAM", loadedTeam);
+        this.setState({ team_id: loadedTeam.id, name, description, link, logo, nameEdit: name, descriptionEdit: description, linkEdit: link, ready: true, editorOpen: false });
     }
 
     onChangeName = (name) => {
@@ -151,16 +144,50 @@ export default class TeamHeader extends Component {
         this.setState({ logo: imageUrl });
         let { editKey } = api.getCredentials();
         let { team_id } = this.state;
-
         api.teams.update({ id: team_id, edit_key: editKey, logo: imageUrl });
     }
 
-    onUpdateParameter = () => {
-        // console.log("updated the header :)");
-        let { id, editKey } = api.getCredentials();
+    onInputChange = async (event) => {
+        let file = event.target.files[0];
+        this.setState({ logoFile: file, fileName: file.name });
+    }
 
-        let { team_id, name, description, link } = this.state;
-        api.teams.update({ id: team_id, name, description, link, edit_key: editKey });
+    onSaveChanges = () => {
+        let { id, editKey } = api.getCredentials();
+        let { team_id, nameEdit, descriptionEdit, linkEdit } = this.state;
+        api.teams.update({ id: team_id, name: nameEdit, description: descriptionEdit, link: linkEdit, edit_key: editKey }, this.loadCurrentTeam);
+        //check if needs to upload file
+        if (this.state.logoFile)
+            api.teams.uploadLogo(this.state.logoFile, null, (url) => {
+                this.onNewLogo(url);
+            });
+    }
+
+    toggleEditor = () => {
+        this.setState({ editorOpen: !this.state.editorOpen });
+    }
+
+
+    handleClose = () => {
+        this.setState({ editorOpen: false });
+    }
+
+    editName = event => {
+        this.setState({
+            nameEdit: event.target.value,
+        });
+    };
+
+    editDescription = event => {
+        this.setState({
+            descriptionEdit: event.target.value,
+        });
+    }
+
+    editLink = event => {
+        this.setState({
+            linkEdit: event.target.value,
+        });
     }
 
     render() {
@@ -168,8 +195,7 @@ export default class TeamHeader extends Component {
         let linkSimplified = link.replace("https://", "").replace("http://", "");
         let defaultImageUrl = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/add-logo.png?raw=true";
 
-        let content = <div className="team-header">
-
+        let content = <div className="team-header card">
             <div className="logo">
                 <div className="image">
                     <img src={this.state.logo ? this.state.logo : defaultImageUrl} />
@@ -180,53 +206,70 @@ export default class TeamHeader extends Component {
             </div>
 
             <div className="info">
-                <EditableText
-                    className="editable-text team-name"
-                    maxLength={200}
-                    maxLines={1}
-                    minLines={1}
-                    multiline={false}
-                    placeholder="Editar nome do time..."
-                    onConfirm={this.onUpdateParameter}
-                    value={this.state.name}
-                    disabled={!this.state.canEdit}
-                    onChange={this.onChangeName}
-                />
-
-                <EditableText
-                    className="editable-text team-description"
-                    maxLength={400}
-                    maxLines={2}
-                    minLines={1}
-                    multiline={true}
-                    placeholder="Editar descrição do time..."
-                    value={this.state.description}
-                    disabled={!this.state.canEdit}
-                    onChange={this.onChangeDescription}
-                    onConfirm={this.onUpdateParameter}
-                />
-                <div className="link">
-                    <a hrf={this.state.link} onClick={this.onClickLink}><Icon icon="link" /></a>
-                    <EditableText
-                        className="editable-text team-description"
-                        maxLength={100}
-                        maxLines={1}
-                        minLines={1}
-                        multiline={false}
-                        placeholder="Editar link para site do time..."
-                        value={this.state.link}
-                        disabled={!this.state.canEdit}
-                        onChange={this.onChangeLink}
-                        onConfirm={this.onUpdateParameter}
-                    />
-                </div>
+                <div className="name-0">{this.state.name}</div>
+                <div className="name-1">{this.state.description ? this.state.description : "Adicionar descrição da equipe ..."}</div>
+                <div className="name-2">{this.state.link ? this.state.link : "Adicionar website da equipe ..."} <a hrf={this.state.link} onClick={this.onClickLink}><Icon icon="link" /></a></div>
             </div>
+
+            <Button onClick={this.toggleEditor}>Editar</Button>
+
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.editorOpen}
+                onClose={this.handleClose}
+                className="modal-editor-container"
+            >
+                <div className="modal-editor" >
+                    <div className="modal-inner">
+                        <p>Logo do Time</p>
+                        <div className="upload-file">
+                            <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo.."}</button>
+                            <input type="file" name="myfile" onChange={this.onInputChange} />
+                        </div>
+
+                        <TextField
+                            id="standard-name"
+                            label="Nome do Time"
+                            value={this.state.nameEdit}
+                            onChange={this.editName}
+                            margin="normal"
+                            placeholder="Minha equipe..."
+                            className="editor-text"
+                        />
+
+                        <TextField
+                            id="standard-name"
+                            label="Descrição"
+                            value={this.state.descriptionEdit}
+                            onChange={this.editDescription}
+                            margin="normal"
+                            placeholder="Descrição do time, em poucas linhas"
+                            className="editor-text"
+                        />
+
+                        <TextField
+                            label="Website da equipe"
+                            value={this.state.linkEdit}
+                            onChange={this.editLink}
+                            margin="normal"
+                            placeholder="http://meuprojeto.com"
+                            className="editor-text"
+                        />
+                    </div>
+
+
+                    <Button onClick={this.toggleEditor}>Cancelar</Button>
+
+                    <Button onClick={this.onSaveChanges}>Salvar</Button>
+
+                </div>
+            </Modal>
         </div>;
 
         //end of content
 
-        let mockup = <div className="team-header ">
-
+        let mockup = <div className="team-header card">
             <div className="logo">
                 <div className="image mockup">
                 </div>
