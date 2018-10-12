@@ -31,7 +31,7 @@ import {
 import api from "../../apiConnect";
 import apiConnect from "../../apiConnect";
 
-import { Button, TextField, Modal } from "@material-ui/core";
+import { Button, TextField, Modal, LinearProgress } from "@material-ui/core";
 
 /*
 example of props
@@ -270,12 +270,15 @@ export default class TeamHeader extends Component {
         //end of content
 
         let mockup = <div className="team-header card">
+            
+
             <div className="logo">
                 <div className="image mockup">
                 </div>
             </div>
 
             <div className="info">
+            <LinearProgress />
                 <div className="name-mockup"></div>
                 <div className="description-mockup"></div>
                 <div className="link-mockup"></div>

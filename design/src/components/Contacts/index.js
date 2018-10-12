@@ -3,6 +3,7 @@ import { } from "./contacts.css";
 import api from "../../apiConnect";
 
 import { Button, Modal, Typography, TextField } from "@material-ui/core";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 export default class Contacts extends Component {
     constructor(props) {
@@ -24,16 +25,32 @@ export default class Contacts extends Component {
     }
 
     loadCurrentTeam = async () => {
-        let loadedTeam = await api.teams.getCurrent("contacts");
+        let loadedTeam = await api.teams.getCurrent();
+        console.log('loaded team contacts', loadedTeam);
+
         let { contacts } = loadedTeam;
+
         console.log("contacts", contacts);
+        if (!contacts) {
+            contacts = {
+                whatsapp: "insira um link para o grupo de whatsapp",
+                facebook: "insira um link para o grupo do facebook ou messenger",
+                slack: "insira um link para o canal do slack"
+            }
+        }
+
+        let { whatsapp, facebook, slack } = contacts;
+
+        contacts = { whatsapp, facebook, slack };
 
         this.setState({
             contacts,
-            whatsappEdit: contacts.whatsapp,
-            facebookEdit: contacts.facebook,
-            slackEdit: contacts.slack,
-            ready: true
+            team_id: loadedTeam.id,
+            whatsappEdit: whatsapp,
+            facebookEdit: facebook,
+            slackEdit: slack,
+            ready: true,
+            editorOpen: false
         });
 
         //console.log("api TEAM", loadedTeam);
@@ -68,21 +85,26 @@ export default class Contacts extends Component {
     onSaveChanges = () => {
         let { id, editKey } = api.getCredentials();
         let { team_id, contacts, whatsappEdit, facebookEdit, slackEdit } = this.state;
+
         let _contacts = {
             whatsapp: whatsappEdit,
             facebook: facebookEdit,
             slack: slackEdit
         }
 
-        api.teams.update({ id: team_id, contacts: _contacts }, () =>
-            this.setState({
-                contacts: _contacts,
-                editorOpen: false
-            })
-        );
+        //console.log("will save contacts", _contacts);
+
+        api.teams.update({ id: team_id, contacts: _contacts }, this.loadCurrentTeam);
+
     }
 
     render() {
+        if (!this.state.ready)
+
+            return <div className="contacts card">
+                <LinearProgress />
+            </div>
+
         return (
             <div className="contacts card">
                 <div className="contacts-list">
@@ -118,7 +140,7 @@ export default class Contacts extends Component {
                             id="standard-name"
                             label="Facebook"
                             value={this.state.facebookEdit}
-                            onChange={this.onEditWhatsapp}
+                            onChange={this.onEditFacebook}
                             margin="normal"
                             placeholder="Grupo do Facebook..."
                             className="editor-text"
@@ -127,7 +149,7 @@ export default class Contacts extends Component {
                             id="standard-name"
                             label="Slack"
                             value={this.state.slackEdit}
-                            onChange={this.onEditWhatsapp}
+                            onChange={this.onEditSlack}
                             margin="normal"
                             placeholder="Canal no Slack..."
                             className="editor-text"

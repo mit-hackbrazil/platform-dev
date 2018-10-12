@@ -4,6 +4,7 @@ import icon_user from "./icon_user.svg";
 
 import { Grid, Paper, Card, Typography, CardContent, CardActionArea, CardMedia, IconButton, Button, CardActions, Input, TextField, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Modal } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import api from "../../apiConnect";
 import { Spinner } from "@blueprintjs/core";
@@ -80,13 +81,21 @@ class MemberCard extends Component {
                     className="modal-editor-container"
                 >
 
-                    <div className="modal-editor" >
+                    <div className="modal-editor modal-inner" >
                         <Typography variant="h6" id="modal-title">
                             Editar Perfil
                         </Typography>
                         <Typography variant="subtitle1" id="simple-modal-description">
                             As alterações só serão salvas quando clicar no botão 'salvar'
                         </Typography>
+
+                        <p>Foto do Perfil</p>
+
+                        <div className="upload-file">
+                            <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo.."}</button>
+                            <input type="file" name="myfile" onChange={this.onInputChange} />
+                        </div>
+
                         <TextField
                             id="standard-name"
                             label="Nome"
@@ -139,9 +148,8 @@ class MemberCard extends Component {
                             placeholder="http://linkedin.com/lucascassiano"
                         />
 
-                        <div><Button variant="contained">Cancelar</Button>
-                            <Button variant="contained" color="primary">Salvar</Button>
-                        </div>
+                        <Button onClick={this.toggleEditor}>Cancelar</Button>
+                        <Button onClick={this.onSaveChanges}>Salvar</Button>
 
                     </div>
                 </Modal>
@@ -152,7 +160,8 @@ class MemberCard extends Component {
 
         return (
             <Grid item xs={6} sm={4}>
-                <Card className="member-card">
+                <div className="member-card card">
+
                     <div className="member-card-image" >
                         <img
                             src={photo}></img>
@@ -171,7 +180,7 @@ class MemberCard extends Component {
 
                     {editMenu}
 
-                </Card>
+                </div>
             </Grid>
         )
     }

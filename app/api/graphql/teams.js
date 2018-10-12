@@ -85,7 +85,7 @@ export let resolver = {
             let query = await db.none(`INSERT INTO 
             teams(name, edit_key, logo, members, link, contacts, view_key) 
             VALUES($1,$2,$3,$4,$5,$6,$7)
-            `, [input.name, edit_key, input.logo, input.members, input.link, input.contact, view_key]);
+            `, [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key]);
 
             return true;
         },
@@ -99,7 +99,7 @@ export let resolver = {
             if (input.edit_key == original.edit_key) {
                 let query = await db.one(`UPDATE teams SET
                 (name, logo, description, members, link, contacts) = ($1,$2,$3,$4,$5, $6) WHERE id=${args.id} RETURNING *
-                `, [input.name, input.logo, input.description, input.members, input.link, input.contact]);
+                `, [input.name, input.logo, input.description, input.members, input.link, input.contacts]);
 
                 return true;
             } else {
