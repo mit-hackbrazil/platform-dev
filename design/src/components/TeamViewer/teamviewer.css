@@ -16,7 +16,7 @@
     width:50%;
     top:0px;
     min-width:120px;
-
+    max-width: 200px;
     height: 0 auto;
     align-self: center;
     float:center;
