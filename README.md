@@ -116,3 +116,56 @@ query{
 }
 ```
 
+## Tasks
+
+Schema
+```graphql
+type Task{
+    id: Int, 
+    title: String, 
+    open: Boolean,
+    content: String, 
+    start_date: String,
+    end_date: String,
+    url: String
+  }
+
+  type TaskContent{
+    id: Int,
+    content: String, 
+    files: JSON, 
+    team: Int, 
+    task: Int
+    timestamp: String
+  }
+
+  extend type Query {
+    tasks(args:JSON): [Task],
+    taskContent(args:JSON): [TaskContent],
+  }
+
+  extend type Mutation{
+      sendTask(args:JSON):Boolean,
+      editTask(args:JSON):TaskContent
+  }
+```
+
+### Read All
+```graphql
+query{
+	tasks(args:{team:<TEAM_ID>}){
+		id, title, content, start_date, end_date, open
+	}
+}
+```
+
+### Task Content
+```graphql
+query{
+ taskContent(args:{team:<TEAM_ID>, task:<TASK_ID>,editKey:<EDIT_KEY>, viewKey:<VIEW_KEY>}){
+		id, content, files
+	}
+}
+```
+
+
