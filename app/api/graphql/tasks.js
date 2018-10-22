@@ -24,7 +24,7 @@ export const typeDef = `
 
   extend type Query {
     tasks(args:JSON): [Task],
-    sentTasks(args:JSON): [TaskContent]
+    sentTasks(args:JSON): [TaskContent],
   }
 
   extend type Mutation{
@@ -59,39 +59,40 @@ export let resolver = {
             return tasks;
         },
     },
-    Mutation: {
-        async addPost(_, { args }, req) {
 
-            let { title, content, team, files, thumbnail, editKey } = args;
+    Mutation: {
+        async sendTask(_, { args }, req) {
+
+            let { content, team, task, files, editKey } = args;
 
             let valid = await ValidateAction(args);
 
             if (!valid)
-                return null
+                return false
 
             let query = await db.none(`INSERT INTO 
-            posts(title, content, team, files, thumbnail) 
-            VALUES($1,$2,$3,$4,$5)
-            `, [title, content, team, files, thumbnail]);
+            teams_tasks(content, team, task, files) 
+            VALUES($1,$2,$3,$4)
+            `, [content, team, task, files]);
 
             return true;
         },
 
-        async editPost(_, { args }, req) {
-
-            let original = await db.one(`SELECT * FROM posts WHERE id=${args.id}`);
-            let { title, content, team, files, thumbnail, editKey, visible } = Object.assign(original, args);
+        async editTask(_, { args }, req) {
 
             let valid = await ValidateAction(args);
 
             if (!valid)
-                return null;
+                return false
 
-            let post = await db.one(`UPDATE posts SET
-            (title, content, team, files, thumbnail, visible) = ($1,$2,$3,$4,$5,$6) WHERE id=${args.id} RETURNING *`,
-                [title, content, team, files, thumbnail, visible]);
+            let original = await db.one(`SELECT * FROM teams_tasks WHERE id=${args.id}`);
+            let { content, files } = Object.assign(original, args);
 
-            return post;
+            let tasks = await db.one(`UPDATE teams_tasks SET
+            (content, files, timestamp) = ($1,$2,now()) WHERE id=${args.id} RETURNING *`,
+                [content, files]);
+
+            return tasks;
         }
     }
 }

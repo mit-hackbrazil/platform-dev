@@ -129,7 +129,8 @@ class App extends Component {
           <Grid item xs={12} sm={4}>
             <Contacts canEdit={canEdit} />
           </Grid>
-          <Grid item xs={12} sm={12}>
+
+          <Grid item xs={12} sm={6}>
             <TeamViewer canEdit={canEdit} />
           </Grid>
 
@@ -142,13 +143,11 @@ class App extends Component {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Paper>xs=12 sm=6</Paper>
+            <h2>Posts / Protótipo</h2>
+            <PostViewer posts={posts} />
           </Grid>
-          
+
         </Grid>
-
-
-        <PostViewer posts={posts} />
       </div>
     );
   }

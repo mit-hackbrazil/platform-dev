@@ -12,78 +12,142 @@ example of props
 
 */
 import React, { Component } from "react";
+import api from "../../apiConnect";
 import { } from "./tasks-lists.css";
-import { TaskOpen, TaskDefault, TaskReady } from "./icons";
+
+import { Button, TextField, Modal, LinearProgress, Typography } from "@material-ui/core";
 import moment from "moment";
 moment.locale('pt-BR');
 
 class Task extends Component {
-
-    updateDimensions = () => {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    constructor(props) {
+        super(props);
+        this.state = {
+            editorOpen: false,
+            viewerOpen: false
+        }
     }
-
-    componentWillMount = () => {
-        this.updateDimensions();
-    }
-
-    componentDidMount = () => {
-        window.addEventListener("resize", this.updateDimensions);
-    }
-
-    componentWillUnmount = () => {
-        window.removeEventListener("resize", this.updateDimensions);
+    
+    toggleEditor = () => {
+        this.setState({ editorOpen: !this.state.editorOpen });
     }
 
     render() {
-        let { name, active, done, start, end } = this.props.task;
-        let icon = <TaskDefault />;
+        let { task } = this.props;
 
-        if (active && done)
-            icon = <TaskReady />
-        else if (active && !done)
-            icon = <TaskOpen />
-        //converting the dates to readable with moment
+        let start_date = moment(task.start_date);
+        let end_date = moment(task.end_date);
 
+        let side = this.props.index % 2 == 0 ? " right" : " left";
 
-        let startDate = moment(start).format('MMM D');
-        let endDate = moment(end).format('MMM D');
+        return (<div className={"container" + side}>
+            <div className="content">
+                <div className="task-dates">
+                    <div>
+                        início: <i>{start_date.format("DD/MM/YYYY")}</i>
+                    </div>
+                    <div>
+                        encerra:<strong>{end_date.format("DD/MM/YYYY")}</strong>
+                    </div>
+                </div>
 
-        let dates = <div className="task-dates">{startDate} - {endDate}</div>;
-        let nameLabel = <div>{name}</div>;
+                <h2>{task.title}</h2>
+                <p>{task.content}</p>
 
-        if (this.state.width < 700) {
-            nameLabel = <div>{this.props.index}</div>;
-            endDate = moment(end).format('D MMM');
-            dates = <div className="task-dates">{endDate}</div>;
-        }
+                <div className="buttons">
+                    <Button onClick={this.toggleEditor}>Abrir</Button>
+                    {this.props.canEdit ? <Button onClick={this.toggleEditor}>Editar</Button> : null}
+                </div>
 
-        return (<div className="task-item" >
-            {nameLabel}
-            <div className="task-circle-container">
-                {icon}
             </div>
-            {dates}
-        </div >);
+
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.editorOpen}
+                onClose={this.handleClose}
+                className="modal-editor-container"
+            >
+
+                <div className="modal-editor" >
+                    <Typography variant="h6" id="modal-title">
+                        Editar Tarefa
+                    </Typography>
+
+                    <TextField
+                        id="standard-name"
+                        label="Content"
+                        value={this.state.facebookEdit}
+                        onChange={this.onEditFacebook}
+                        margin="normal"
+                        placeholder="Grupo do Facebook..."
+                        className="editor-text"
+                    />
+                    <Button onClick={this.toggleEditor}>Cancelar</Button>
+                    <Button onClick={this.onSaveChanges}>Salvar</Button>
+                </div>
+            </Modal>
+        </div>);
     }
 }
 
+
+
 class TasksList extends Component {
-    
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            ready: false,
+            tasks: []
+        }
+
+        //loading tasks from database
+        this.loadTasks();
+    }
+
+    loadTasks = async () => {
+        let tasks = await api.tasks.getAll();
+        console.log("Tasks", tasks);
+        let sentTasks = await api.tasks.getCurrent();
+
+        this.setState({ tasks: tasks.tasks, ready: true });
+    }
+
     render() {
         //convert all tasks
-        let { tasks } = this.props;
-        let tasksList = tasks.map((task, index) => {
-            return <Task key={"task-" + index} task={task} index={index} />;
-        })
+        let { tasks } = this.state;
+        /*
+                let tasksList = tasks.map((task, index) => {
+                    return <Task key={"task-" + index} task={task} index={index} />;
+                })
+        */
 
-        return <div className="task-list-container">
-            <div className="task-line-container" >
-                <div className="task-line" />
-            </div>
-            <div className="task-list">
-                {tasksList}
-            </div>
+        if (!this.state.ready) {
+            return <LinearProgress />
+        }
+
+        let tasksList = tasks.map((task, index) => {
+            return <Task key={"task-" + index} task={task} index={index} canEdit={this.props.canEdit} />;
+        });
+        /*
+                return <div className="timeline">
+                    <div className="container left">
+                        <div className="content">
+                            <h2>2017</h2>
+                            <p>Lorem ipsum.. jaskdja kdjasdk ajdaksj dakaskdaldkalds kald kals dkalsdkald klaskd la dklaksd lakdslkassdaklasdkrsj </p>
+                        </div>
+                    </div>
+                    <div className="container right">
+                        <div className="content">
+                            <h2>2016</h2>
+                            <p>Lorem ipsum..</p>
+                        </div>
+                    </div>
+                </div>*/
+
+        return <div className="timeline">
+            {tasksList}
         </div>
     }
 }

@@ -1,102 +1,153 @@
-.task-list-container{
+  
+  /* The actual timeline (the vertical ruler) */
+.timeline {
     position: relative;
-    width: 100%;
-    align-content: center;
-    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-
-
-.task-list{
-    text-align: center;
-    vertical-align: middle;
-    float:center;
-    width: auto;
-    height: 100px;
-    z-index: 2;
-    float:middle;
-    display: flex;
-    align-items: center;
-    padding-top:20px;
-    padding-left: 20%;
-    padding-right:20%;
-}
-
-.task-item{
-    float:center;
-    display: grid;
-    width: 100%;
-    grid-template-columns:100%;
-    grid-template-rows: 20px auto 30px;
-    grid-row-gap: 3px;
-    font-size: 10pt;
-    color: rgba(255,255,255, 0.5);
-    text-align: center;
-    transition: 1s;
-}
-
-.task-circle{
-    width: 40px;
-    align-content: center;
-    z-index: 2;
-    transition: 1s;
-}
-
-.task-dates{
-    visibility: visible;
-    display: block;
-    transition: 1s;
-    color:#FFF;
-    font-size: 8pt;
-    width: 100%;
-    overflow: hidden;
-    height: auto;
-}
-
-.task-line-container{
-    width: Calc(100% - 40px);
+  
+/* The actual timeline (the vertical ruler) */
+.timeline::after {
+    content: '';
     position: absolute;
-    z-index: -2;
-    height: 50px;
-    padding-top: 62px;
-    overflow: hidden;
-}
-
-.task-line{
-    padding-left:10px;
-    padding-right: 10px;
-    width: 100%;
-    height: 1.5px;
-    background:rgba(0,0,0,0.3);
-}
-
-.task-circle-img{
+    width: 3px;
+    /* Rectangle 20: */
+background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149,149,0.00) 100%);top: 25px;
+    bottom: 0;
+    left: 50%;
     margin-left: 0px;
-    min-width: 30px;
-    max-width: 50px;
-    width: 8%;
+    border-radius: 10px;
 }
-
-#task-open,#task-open-circle{
-    transition: 0.8s;
+  
+/* Container around content */
+.container {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+    color: #111 !important;
 }
-
-
-#task-open:hover > #task-open-circle{
-    fill:#85CA83;
-    stroke-width: 0px;
-    cursor: pointer;
+  
+  /* The circles on the timeline */
+.container::after {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    right: -8px;
+    background-color: #fff;
+    top: 25px;
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.6);
 }
+  
+  /* Place the container to the left */
+  .left {
+    left: 0;
+  }
+  
+  /* Place the container to the right */
+  .right {
+    left: 50%;
+  }
+  
+  /* Add arrows to the left container (pointing right) */
+  .left::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    right: 30px;
+    border: medium solid white;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent white;
+  }
+  
+  /* Add arrows to the right container (pointing left) */
+  .right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    left: 30px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+  }
+  
+  /* Fix the circle for containers on the right side */
+  .right::after {
+    left: -5px;
+  }
+  
+  /* The actual content */
+  .content {
+    padding: 5px 12px;
+    background-color: white;
+    position: relative;
+    border-radius: 2px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.4);
+  }
 
+  .content > p{
+    max-height: 100px;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
 
+  .content-open{
+    background-color: rgb(0, 119, 255);
+    color:#FFF;  
+  }
 
-@media only screen and (max-width: 600px) {
-    .task-circle{
-        width: 30px;
+  /*-- CUSTOM --*/
+  .task-dates{
+    display: flex;
+    width: 0;
+  }
+
+  /* Media queries - Responsive timeline on screens less than 600px wide */
+  @media screen and (max-width: 970px) {
+  /* Place the timelime to the left */
+    .timeline::after {
+      left: 31px;
+    }
+  
+  /* Full-width containers */
+    .container {
+      width: 100%;
+      padding-left: 70px;
+      padding-right: 25px;
+    }
+  
+  /* Make sure that all arrows are pointing leftwards */
+    .container::before {
+      left: 60px;
+      border: medium solid white;
+      border-width: 10px 10px 10px 0;
+      border-color: transparent white transparent transparent;
+    }
+  
+  /* Make sure all circles are at the same spot */
+    .left::after, .right::after {
+      left: 26px;
+    }
+  
+  /* Make all right containers behave like the left ones */
+    .right {
+      left: 0%;
     }
 
-    .task-list{
-        padding-left: 5px;
-        padding-right:5px;
-    }
+      /*-- CUSTOM --*/
+  .task-dates{
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+  }
 
-}
+  }

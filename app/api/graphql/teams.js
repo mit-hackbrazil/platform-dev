@@ -1,5 +1,7 @@
 import { db } from "../Database.js";
 import GraphQLJSON from 'graphql-type-json';
+import { Log } from "./log";
+
 const cryptoRandomString = require('crypto-random-string');
 
 let model = {
@@ -87,6 +89,7 @@ export let resolver = {
             VALUES($1,$2,$3,$4,$5,$6,$7)
             `, [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key]);
 
+            Log(req, "insert@team", args);
             return true;
         },
 
@@ -104,6 +107,7 @@ export let resolver = {
                 (name, logo, description, members, link, contacts) = ($1,$2,$3,$4,$5, $6) WHERE id=${args.id} RETURNING *
                 `, [input.name, input.logo, input.description, input.members, input.link, input.contacts]);
 
+                Log(req, "update@team", args);
                 return true;
             } else {
                 return false;

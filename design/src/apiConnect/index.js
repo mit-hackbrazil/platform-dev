@@ -3,6 +3,7 @@ import api, { GraphQLCall } from "graphql-call";
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 import * as _teams from "./teams";
 import * as _posts from "./posts";
+import * as _tasks from "./tasks";
 
 const stringifyObject = require('stringify-object');
 
@@ -43,7 +44,8 @@ export function getCredentials() {
 let apiConnect = {
     getCredentials: getCredentials,
     teams: _teams,
-    posts: _posts
+    posts: _posts,
+    tasks: _tasks
 }
 
 export default apiConnect;
