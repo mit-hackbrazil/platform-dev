@@ -17,7 +17,7 @@
     align-items: center;
     text-align: justify;
     margin-bottom: 20px;
-    border-radius: 5px;
+    border-radius: 2px;
     color: #333;
 }
 
@@ -47,13 +47,12 @@
 
 }
 
-.post > .info > .content{
+.post > .info > .post-content{
     margin-bottom: 6px;
     overflow: hidden;
     font-size: 12pt;
     padding:20px;
     max-height: 80px;
-    
 }
 
 .post a{

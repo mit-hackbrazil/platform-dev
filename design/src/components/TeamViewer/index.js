@@ -154,7 +154,7 @@ class MemberCard extends Component {
 
                 <div className="modal-editor modal-inner" >
                     <Typography variant="h6" id="modal-title">
-                        Editar Perfil
+                        <i class="far fa-user"></i> Editar Perfil
                         </Typography>
                     <Typography variant="subtitle1" id="simple-modal-description">
                         As alterações só serão salvas quando clicar no botão 'salvar'
@@ -163,7 +163,7 @@ class MemberCard extends Component {
                     <p>Foto do Perfil</p>
 
                     <div className="upload-file">
-                        <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo..."}</button>
+                        <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo... (.pdf)"}</button>
                         <input type="file" name="myfile" onChange={this.onInputChange} />
                     </div>
 

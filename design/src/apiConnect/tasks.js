@@ -60,10 +60,29 @@ export async function editTask(sent_task_id, team_id, editKey, newTask) {
     return results;
 }
 
+export async function getTaskContent(team, task, viewKey, editKey) {
+    let currentTeam = await teams.getCurrent();
 
+    let query = `
+            query{
+                taskContent(args:{
+                    team:${team},
+                    task:${task},
+                    editKey:"${editKey}",
+                    viewKey:"${viewKey}",
+                }){
+                    id, content, files, timestamp
+                }
+            }
+        `;
+
+    let results = await GraphQuery(query);
+    return results;
+
+}
 export async function getCurrent() {
     let currentTeam = await teams.getCurrent();
-    
+
     let query = `
             query{
                 tasks{

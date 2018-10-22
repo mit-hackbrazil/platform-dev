@@ -24,7 +24,7 @@ export const typeDef = `
 
   extend type Query {
     tasks(args:JSON): [Task],
-    sentTasks(args:JSON): [TaskContent],
+    taskContent(args:JSON): [TaskContent],
   }
 
   extend type Mutation{
@@ -58,6 +58,21 @@ export let resolver = {
             );
             return tasks;
         },
+        async taskContent(_, { args }) {
+            let { task, team} = args;
+            
+            //only requests with a valid View Or Edit keys 
+            let valid = await ValidateAction(args);
+
+            if (!valid)
+                return null
+
+            let taskContent = await db.any(
+                `SELECT * FROM teams_tasks WHERE team=${team} AND task=${task}`
+            );
+
+            return taskContent;
+        }
     },
 
     Mutation: {

@@ -201,9 +201,6 @@ export default class TeamHeader extends Component {
             <div className="logo">
                 <div className="image">
                     <img src={this.state.logo ? this.state.logo : defaultImageUrl} />
-                    <Popover className="logo-edit" content={<UploadTeamLogo callback={this.onNewLogo} />}>
-                        <Button icon="edit" />
-                    </Popover>
                 </div>
             </div>
 
@@ -226,7 +223,7 @@ export default class TeamHeader extends Component {
                     <div className="modal-inner">
                         <p>Logo do Time</p>
                         <div className="upload-file">
-                            <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo.."}</button>
+                            <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selecionar Arquivo.."}</button>
                             <input type="file" name="myfile" onChange={this.onInputChange} />
                         </div>
 

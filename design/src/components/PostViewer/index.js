@@ -86,7 +86,7 @@ class Post extends Component {
             <div className="image"><img src={thumbnail} /></div>
             <div className="info">
                 <div className="title">{title}</div>
-                <div className="content">{content}</div>
+                <div className="post-content">{content}</div>
                 <div className="date">{timestamp}</div>
                 <div className="file">
                     {filesList}
