@@ -40,7 +40,7 @@ export let resolver = {
 
             let args = input.args;
 
-            console.log('args', args);
+            //console.log('args', args);
 
             if (args.id) {
                 team = await db.many(`SELECT * from teams WHERE id=${args.id}`)
@@ -95,12 +95,14 @@ export let resolver = {
             let original = await db.one(`SELECT * FROM teams WHERE id=${args.id}`);
             let input = Object.assign(original, args);
 
+            console.log("team Update", input);
+
             //Only requests containing a valid edit_key are allowed to update db content
-            if (input.edit_key == original.edit_key) {
+            if (input.edit_Key == original.edit_Key) {
+                console.log("EXECUTING QUERY")
                 let query = await db.one(`UPDATE teams SET
                 (name, logo, description, members, link, contacts) = ($1,$2,$3,$4,$5, $6) WHERE id=${args.id} RETURNING *
                 `, [input.name, input.logo, input.description, input.members, input.link, input.contacts]);
-
                 return true;
             } else {
                 return false;

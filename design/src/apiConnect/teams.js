@@ -60,6 +60,8 @@ export async function getOne(id, args = "id, name, members,link, logo, contacts,
 export async function update(teamUpdate, callback) {
     let teamUpdateJSON = GraphJson(teamUpdate);
 
+    console.log("Updated JSON", teamUpdateJSON);
+
     let query = `
         mutation{
             updateTeam(
@@ -95,6 +97,34 @@ export async function uploadLogo(image, progress_callback, done) {
         },
         () => {
             storage.ref('images').child(image.name).getDownloadURL().then(url => {
+                if (done)
+                    done(url);
+                // this.setState({ url });
+            })
+        });
+}
+
+
+export async function uploadProfileImage(image, progress_callback, done) {
+
+    const uploadTask = storage.ref(`profiles/${image.name}`).put(image);
+
+    uploadTask.on('state_changed',
+        (snapshot) => {
+            // progrss function ....
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            //this.setState({ progress });
+            if (progress_callback) {
+                progress_callback(progress);
+            }
+        },
+        (error) => {
+            // error function ....
+            alert("ERROR: problem with image upload");
+            console.log(error);
+        },
+        () => {
+            storage.ref('profiles').child(image.name).getDownloadURL().then(url => {
                 if (done)
                     done(url);
                 // this.setState({ url });

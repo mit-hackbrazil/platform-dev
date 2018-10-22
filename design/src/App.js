@@ -123,10 +123,10 @@ class App extends Component {
       <div className={Classes.DARK}>
         <NavBar />
         <Grid container spacing={24} className="main-content">
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={8}>
             <TeamHeader team={team} canEdit={canEdit} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <Contacts canEdit={canEdit} />
           </Grid>
           <Grid item xs={12} sm={12}>

@@ -8,6 +8,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 import api from "../../apiConnect";
 import { Spinner } from "@blueprintjs/core";
+import { async } from "@firebase/util";
+import { object } from "prop-types";
 /*
 {"members":
 [{
@@ -27,8 +29,17 @@ import { Spinner } from "@blueprintjs/core";
 class MemberCard extends Component {
     constructor(props) {
         super(props);
+        let { name, role, link, github, linkedin } = props.member;
+
         this.state = {
             editorOpen: false,
+            nameEdit: name,
+            roleEdit: role != undefined ? role : null,
+            linkEdit: link != undefined ? link : null,
+            githubEdit: github ? github : null,
+            linkedinEdit: linkedin ? linkedin : null,
+            photoFile: null,
+            fileName: null
         }
     }
 
@@ -61,6 +72,68 @@ class MemberCard extends Component {
         },
     });
 
+    editName = event => {
+        this.setState({
+            nameEdit: event.target.value,
+        });
+    };
+
+    editRole = event => {
+        this.setState({
+            roleEdit: event.target.value,
+        });
+    };
+
+    editLink = event => {
+        this.setState({
+            linkEdit: event.target.value,
+        });
+    };
+
+    editGithub = event => {
+        this.setState({
+            githubEdit: event.target.value,
+        });
+    };
+
+    editLinkedin = event => {
+        this.setState({
+            linkedinEdit: event.target.value,
+        });
+    };
+
+    editPhoto = event => {
+        this.setState({
+            photoEdit: event.target.value,
+        });
+    };
+
+    onInputChange = async (event) => {
+        let file = event.target.files[0];
+        this.setState({ photoFile: file, fileName: file.name });
+    }
+
+    onSaveChanges = () => {
+        let { id, editKey } = api.getCredentials();
+        let { team_id, memberIndex, members } = this.props;
+
+        let { nameEdit, roleEdit, linkedinEdit, linkEdit, githubEdit, photoEdit, fileName, photoFile } = this.state;
+
+        //console.log("member index", memberIndex);
+        let member = {
+            name: nameEdit,
+            role: roleEdit,
+            linkedin: linkedinEdit,
+            link: linkEdit,
+            github: githubEdit,
+        }
+
+        if (this.props.onChange)
+            this.props.onChange(memberIndex, member, photoFile);
+
+        this.toggleEditor();
+    }
+
     render() {
         let { name, role, link, github, linkedin, photo } = this.props.member;
         let defaultPhoto = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/user-logo.png?raw=true";
@@ -92,25 +165,24 @@ class MemberCard extends Component {
                         <p>Foto do Perfil</p>
 
                         <div className="upload-file">
-                            <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo.."}</button>
+                            <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo..."}</button>
                             <input type="file" name="myfile" onChange={this.onInputChange} />
                         </div>
 
                         <TextField
                             id="standard-name"
                             label="Nome"
-
-                            value={this.state.name}
-                            onChange={(name) => this.setState({ name })}
+                            value={this.state.nameEdit}
+                            onChange={this.editName}
                             margin="normal"
-                            placeholder="Rita Saldanha"
+                            placeholder="Nome do Participante"
                             className="editor-text"
                         />
                         <TextField
-                            id="standard-name"
+                            id="role-name"
                             label="Posição na equipe"
-                            value={this.state.name}
-                            onChange={(name) => this.setState({ name })}
+                            value={this.state.roleEdit}
+                            onChange={this.editRole}
                             margin="normal"
                             className="editor-text"
                             helperText="separe por vírgula"
@@ -120,8 +192,8 @@ class MemberCard extends Component {
                         <TextField
                             id="standard-name"
                             label="Github (link)"
-                            value={this.state.name}
-                            onChange={(name) => this.setState({ name })}
+                            value={this.state.githubEdit}
+                            onChange={this.editGithub}
                             margin="normal"
                             className="editor-text"
                             helperText="repositório de projetos"
@@ -131,8 +203,8 @@ class MemberCard extends Component {
                         <TextField
                             id="standard-name"
                             label="Linkedin (link)"
-                            value={this.state.name}
-                            onChange={(name) => this.setState({ name })}
+                            value={this.state.linkedinEdit}
+                            onChange={this.editLinkedin}
                             margin="normal"
                             placeholder="http://linkedin.com/lucascassiano"
                         />
@@ -140,8 +212,8 @@ class MemberCard extends Component {
                         <TextField
                             id="standard-name"
                             label="Site Pessoal / Portfolio (link)"
-                            value={this.state.name}
-                            onChange={(name) => this.setState({ name })}
+                            value={this.state.linkEdit}
+                            onChange={this.linkEdit}
                             margin="normal"
                             className="editor-text"
                             helperText="Site pessoal ou portfolio"
@@ -192,6 +264,7 @@ export default class TeamViewer extends Component {
         this.state = {
             ready: false,
             canEdit: props.canEdit ? props.canEdit : false,
+            team_id: 0,
             members: []
         }
 
@@ -200,26 +273,54 @@ export default class TeamViewer extends Component {
 
     loadCurrentTeam = async () => {
         let loadedTeam = await api.teams.getCurrent();
+        console.log("loaded Team", loadedTeam);
         let { members } = loadedTeam;
 
-        //        console.log("members", members.members[0]);
-
-        this.setState({ members: members.members, ready: true });
-
-        //console.log("api TEAM", loadedTeam);
+        this.setState({ team_id: loadedTeam.id, members: members.members, ready: true });
     }
 
+    onMemberChange = async (index, member, photo) => {
+        console.log("member change", index, member, photo);
 
+        let { id, editKey } = api.getCredentials();
+        let { team_id, members } = this.state;
+
+
+        if (photo) {
+            //Updloading User Photos
+            api.teams.uploadProfileImage(photo, null, (url) => {
+                console.log("image URL", url);
+
+                member.photo = url;
+                members[index] = member;
+
+                let _members = {
+                    members: members
+                };
+                api.teams.update({ id: team_id, members: _members, edit_key: editKey }, this.loadCurrentTeam);
+            });
+        }
+        else {
+            members[index] = member;
+
+            let _members = {
+                members: members
+            };
+
+            api.teams.update({ id: team_id, members: _members, edit_key: editKey }, this.loadCurrentTeam);
+        }
+
+    }
 
     render() {
+        let { team_id, members, canEdit } = this.state;
+        //console.log("members from state", members);
 
-        let { members, canEdit } = this.state;
-        console.log("members from state", members);
-        let members_div = {};
+        let members_div = <div className="contacts"><LinearProgress /></div>;
 
-        if (members)
-            members_div = members.map((member) => {
-                return (<MemberCard member={member} canEdit={canEdit} />);
+        if (members && members.length)
+            members_div = members.map((member, index) => {
+                return (<MemberCard key={"member_card_" + index} team_id={team_id} member={member} canEdit={canEdit} memberIndex={index} onChange={this.onMemberChange} />);
             });
 
         return (<Grid container spacing={24}>

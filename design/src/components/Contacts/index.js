@@ -92,9 +92,7 @@ export default class Contacts extends Component {
             slack: slackEdit
         }
 
-        //console.log("will save contacts", _contacts);
-
-        api.teams.update({ id: team_id, contacts: _contacts }, this.loadCurrentTeam);
+        api.teams.update({ id: team_id, contacts: _contacts, edit_key: editKey }, this.loadCurrentTeam);
 
     }
 

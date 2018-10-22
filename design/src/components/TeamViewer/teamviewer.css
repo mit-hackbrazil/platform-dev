@@ -15,13 +15,14 @@
 .member-card-image > img{
     width:50%;
     top:0px;
-    min-width:120px;
-    max-width: 200px;
+    min-width:40px;
+    max-width: 100px;
     height: 0 auto;
     align-self: center;
     float:center;
     margin-top:12px;
     margin-bottom:12px;
+    border-radius: 50%;
 }
 
 .member-card .member-contact{
