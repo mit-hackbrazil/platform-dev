@@ -69,9 +69,42 @@ class Task extends Component {
         this.setState({ taskFile: file, fileName: file.name });
     }
 
-    onSaveChanges = async () => {
-        let { contentEdit, taskFile } = this.state;
+    onNewLogo = async (team_id, editKey, task_id, url) => {
+        let _task = {
+            content: this.state.contentEdit,
+            files: { list: [url] }
+        }
 
+        let res = await api.tasks.sendTask(team_id, task_id, editKey, _task);
+        this.toggleEditor();
+
+        this.props.onChange();
+    }
+
+    onSaveChanges = async () => {
+        let { task } = this.props;
+        let { contentEdit, taskFile } = this.state;
+        let { id, editKey } = api.getCredentials();
+
+        let team_id = id;
+        let task_id = task.id;
+
+        //check if needs to upload file
+        if (this.state.taskFile)
+            api.tasks.uploadFile(this.state.taskFile, null, (url) => {
+                this.onNewLogo(team_id, editKey, task_id, url);
+            });
+        else {
+            let _task = {
+                content: this.state.contentEdit,
+                files: null
+            };
+
+            let res = await api.tasks.sendTask(id, task.id, editKey, _task);
+            this.toggleEditor();
+
+            this.props.onChange();
+        }
     }
 
     render() {
@@ -124,7 +157,7 @@ class Task extends Component {
                     <div className="modal-editor" >
                         <div className="modal-inner">
                             <Typography variant="h6" id="modal-title">
-                            <i class="fas fa-tasks"></i> Enviar Tarefa
+                                <i class="fas fa-tasks"></i> Enviar Tarefa
                         </Typography>
 
                             <TextField
@@ -231,6 +264,14 @@ class TasksList extends Component {
         this.setState({ tasks: tasks.tasks, ready: true });
     }
 
+    onChange = () => {
+        this.state = {
+            ready: false,
+            tasks: []
+        }
+        this.loadTasks();
+    }
+
     render() {
         //convert all tasks
         let { tasks } = this.state;
@@ -245,7 +286,7 @@ class TasksList extends Component {
         }
 
         let tasksList = tasks.map((task, index) => {
-            return <Task key={"task-" + index} task={task} index={index} canEdit={this.props.canEdit} />;
+            return <Task key={"task-" + index} task={task} index={index} canEdit={this.props.canEdit} onChange={this.onChange} />;
         });
         /*
             return <div className="timeline">

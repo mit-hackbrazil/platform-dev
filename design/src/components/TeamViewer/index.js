@@ -220,7 +220,6 @@ class MemberCard extends Component {
 
                     <Button onClick={this.toggleEditor}>Cancelar</Button>
                     <Button onClick={this.onSaveChanges}>Salvar</Button>
-
                 </div>
             </Modal>);
 

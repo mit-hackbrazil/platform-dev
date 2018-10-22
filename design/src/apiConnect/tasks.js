@@ -33,6 +33,8 @@ export async function sendTask(team_id, task_id, editKey, newTask) {
         }
     `;
 
+    console.log("task",query)
+
     let results = await GraphQuery(query);
     return results;
 }
@@ -93,4 +95,32 @@ export async function getCurrent() {
 
     let results = await GraphQuery(query);
     return results;
+}
+
+
+export async function uploadFile(image, progress_callback, done) {
+
+    const uploadTask = storage.ref(`taksFiles/${image.name}`).put(image);
+
+    uploadTask.on('state_changed',
+        (snapshot) => {
+            // progrss function ....
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            //this.setState({ progress });
+            if (progress_callback) {
+                progress_callback(progress);
+            }
+        },
+        (error) => {
+            // error function ....
+            alert("ERROR: problem with image upload");
+            console.log(error);
+        },
+        () => {
+            storage.ref('taksFiles').child(image.name).getDownloadURL().then(url => {
+                if (done)
+                    done(url);
+                // this.setState({ url });
+            })
+        });
 }
