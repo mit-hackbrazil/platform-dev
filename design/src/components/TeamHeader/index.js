@@ -195,7 +195,9 @@ export default class TeamHeader extends Component {
         let linkSimplified = link.replace("https://", "").replace("http://", "");
         let defaultImageUrl = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/add-logo.png?raw=true";
 
-        let content = <div className="team-header card">
+        let cardClass = this.props.canEdit ? "team-header card card-edit" : "team-header card";
+
+        let content = <div className={cardClass}>
             <div className="logo">
                 <div className="image">
                     <img src={this.state.logo ? this.state.logo : defaultImageUrl} />
@@ -211,7 +213,7 @@ export default class TeamHeader extends Component {
                 <div className="name-2">{this.state.link ? this.state.link : "Adicionar website da equipe ..."} <a hrf={this.state.link} onClick={this.onClickLink}><Icon icon="link" /></a></div>
             </div>
 
-            <Button onClick={this.toggleEditor}>Editar</Button>
+            {this.props.canEdit ? <Button onClick={this.toggleEditor} className="card-edit-button">Editar</Button> : null}
 
             <Modal
                 aria-labelledby="simple-modal-title"
@@ -270,7 +272,7 @@ export default class TeamHeader extends Component {
         //end of content
 
         let mockup = <div className="team-header card">
-            
+
 
             <div className="logo">
                 <div className="image mockup">
@@ -278,7 +280,7 @@ export default class TeamHeader extends Component {
             </div>
 
             <div className="info">
-            <LinearProgress />
+                <LinearProgress />
                 <div className="name-mockup"></div>
                 <div className="description-mockup"></div>
                 <div className="link-mockup"></div>

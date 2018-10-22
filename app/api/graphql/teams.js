@@ -42,11 +42,11 @@ export let resolver = {
 
             //console.log('args', args);
 
-            if (args.id) {
+            if (args && args.id) {
                 team = await db.many(`SELECT * from teams WHERE id=${args.id}`)
             }
 
-            else if (args.name) {
+            else if (args && args.name) {
                 team = await db.many(`SELECT * from teams WHERE name=${args.name}`)
             }
 
@@ -103,6 +103,7 @@ export let resolver = {
                 let query = await db.one(`UPDATE teams SET
                 (name, logo, description, members, link, contacts) = ($1,$2,$3,$4,$5, $6) WHERE id=${args.id} RETURNING *
                 `, [input.name, input.logo, input.description, input.members, input.link, input.contacts]);
+
                 return true;
             } else {
                 return false;

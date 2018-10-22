@@ -138,14 +138,16 @@ class App extends Component {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Paper >xs=12 sm=6</Paper>
+            <TasksList tasks={defaultTasks} canEdit={true} />
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Paper>xs=12 sm=6</Paper>
           </Grid>
+          
         </Grid>
 
-        <TasksList tasks={defaultTasks} canEdit={true} />
+
         <PostViewer posts={posts} />
       </div>
     );

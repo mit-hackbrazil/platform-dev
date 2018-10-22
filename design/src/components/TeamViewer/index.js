@@ -137,118 +137,116 @@ class MemberCard extends Component {
     render() {
         let { name, role, link, github, linkedin, photo } = this.props.member;
         let defaultPhoto = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/user-logo.png?raw=true";
+        let { canEdit } = this.props;
 
         photo = photo ? photo : defaultPhoto;
 
         let editMenu = null;
 
         if (this.props.canEdit)
-            editMenu = (<CardActions>
-                <Button onClick={this.toggleEditor}>Editar</Button>
+            editMenu = (<Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.editorOpen}
+                onClose={this.handleClose}
+                className="modal-editor-container"
+            >
 
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.editorOpen}
-                    onClose={this.handleClose}
-                    className="modal-editor-container"
-                >
-
-                    <div className="modal-editor modal-inner" >
-                        <Typography variant="h6" id="modal-title">
-                            Editar Perfil
+                <div className="modal-editor modal-inner" >
+                    <Typography variant="h6" id="modal-title">
+                        Editar Perfil
                         </Typography>
-                        <Typography variant="subtitle1" id="simple-modal-description">
-                            As alterações só serão salvas quando clicar no botão 'salvar'
+                    <Typography variant="subtitle1" id="simple-modal-description">
+                        As alterações só serão salvas quando clicar no botão 'salvar'
                         </Typography>
 
-                        <p>Foto do Perfil</p>
+                    <p>Foto do Perfil</p>
 
-                        <div className="upload-file">
-                            <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo..."}</button>
-                            <input type="file" name="myfile" onChange={this.onInputChange} />
-                        </div>
-
-                        <TextField
-                            id="standard-name"
-                            label="Nome"
-                            value={this.state.nameEdit}
-                            onChange={this.editName}
-                            margin="normal"
-                            placeholder="Nome do Participante"
-                            className="editor-text"
-                        />
-                        <TextField
-                            id="role-name"
-                            label="Posição na equipe"
-                            value={this.state.roleEdit}
-                            onChange={this.editRole}
-                            margin="normal"
-                            className="editor-text"
-                            helperText="separe por vírgula"
-                            placeholder="CEO, CTO"
-                        />
-
-                        <TextField
-                            id="standard-name"
-                            label="Github (link)"
-                            value={this.state.githubEdit}
-                            onChange={this.editGithub}
-                            margin="normal"
-                            className="editor-text"
-                            helperText="repositório de projetos"
-                            placeholder="http://github.com/lucascassiano"
-                        />
-
-                        <TextField
-                            id="standard-name"
-                            label="Linkedin (link)"
-                            value={this.state.linkedinEdit}
-                            onChange={this.editLinkedin}
-                            margin="normal"
-                            placeholder="http://linkedin.com/lucascassiano"
-                        />
-
-                        <TextField
-                            id="standard-name"
-                            label="Site Pessoal / Portfolio (link)"
-                            value={this.state.linkEdit}
-                            onChange={this.linkEdit}
-                            margin="normal"
-                            className="editor-text"
-                            helperText="Site pessoal ou portfolio"
-                            placeholder="http://linkedin.com/lucascassiano"
-                        />
-
-                        <Button onClick={this.toggleEditor}>Cancelar</Button>
-                        <Button onClick={this.onSaveChanges}>Salvar</Button>
-
+                    <div className="upload-file">
+                        <button className="btn"> <i className="fas fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selectionar Arquivo..."}</button>
+                        <input type="file" name="myfile" onChange={this.onInputChange} />
                     </div>
-                </Modal>
 
+                    <TextField
+                        id="standard-name"
+                        label="Nome"
+                        value={this.state.nameEdit}
+                        onChange={this.editName}
+                        margin="normal"
+                        placeholder="Nome do Participante"
+                        className="editor-text"
+                    />
+                    <TextField
+                        id="role-name"
+                        label="Posição na equipe"
+                        value={this.state.roleEdit}
+                        onChange={this.editRole}
+                        margin="normal"
+                        className="editor-text"
+                        helperText="separe por vírgula"
+                        placeholder="CEO, CTO"
+                    />
 
-            </CardActions>)
+                    <TextField
+                        id="standard-name"
+                        label="Github (link)"
+                        value={this.state.githubEdit}
+                        onChange={this.editGithub}
+                        margin="normal"
+                        className="editor-text"
+                        helperText="repositório de projetos"
+                        placeholder="http://github.com/lucascassiano"
+                    />
 
+                    <TextField
+                        id="standard-name"
+                        label="Linkedin (link)"
+                        value={this.state.linkedinEdit}
+                        onChange={this.editLinkedin}
+                        margin="normal"
+                        placeholder="http://linkedin.com/lucascassiano"
+                    />
+
+                    <TextField
+                        id="standard-name"
+                        label="Site Pessoal / Portfolio (link)"
+                        value={this.state.linkEdit}
+                        onChange={this.linkEdit}
+                        margin="normal"
+                        className="editor-text"
+                        helperText="Site pessoal ou portfolio"
+                        placeholder="http://linkedin.com/lucascassiano"
+                    />
+
+                    <Button onClick={this.toggleEditor}>Cancelar</Button>
+                    <Button onClick={this.onSaveChanges}>Salvar</Button>
+
+                </div>
+            </Modal>);
+
+        let cardClass = canEdit ? "member-card card card-edit" : "member-card card";
 
         return (
-            <Grid item xs={6} sm={4}>
-                <div className="member-card card">
+            <Grid item xs={12} sm={4}>
+                <div className={cardClass}>
 
-                    <div className="member-card-image" >
+                    <div className="image" >
                         <img
                             src={photo}></img>
                     </div>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <div className="name">
                         {name}
-                    </Typography>
-                    <Typography component="p">
+                    </div>
+                    <div className="role">
                         {role}
-                    </Typography>
-                    <div className="member-contact">
+                    </div>
+                    <div className="contact">
                         <IconButton className={github ? "link-active" : null}><a href={github}><i className="fab fa-github"></i></a></ IconButton>
                         <IconButton> <i className="fab fa-linkedin-in"></i> </IconButton>
                         <IconButton> <i className="fas fa-link"></i> </ IconButton>
                     </div>
+
+                    {this.props.canEdit ? <Button className="card-edit-button" onClick={this.toggleEditor}>Editar</Button> : null}
 
                     {editMenu}
 
@@ -273,15 +271,12 @@ export default class TeamViewer extends Component {
 
     loadCurrentTeam = async () => {
         let loadedTeam = await api.teams.getCurrent();
-        console.log("loaded Team", loadedTeam);
         let { members } = loadedTeam;
 
         this.setState({ team_id: loadedTeam.id, members: members.members, ready: true });
     }
 
     onMemberChange = async (index, member, photo) => {
-        console.log("member change", index, member, photo);
-
         let { id, editKey } = api.getCredentials();
         let { team_id, members } = this.state;
 
@@ -289,11 +284,8 @@ export default class TeamViewer extends Component {
         if (photo) {
             //Updloading User Photos
             api.teams.uploadProfileImage(photo, null, (url) => {
-                console.log("image URL", url);
-
                 member.photo = url;
                 members[index] = member;
-
                 let _members = {
                     members: members
                 };
@@ -314,8 +306,6 @@ export default class TeamViewer extends Component {
 
     render() {
         let { team_id, members, canEdit } = this.state;
-        //console.log("members from state", members);
-
         let members_div = <div className="contacts"><LinearProgress /></div>;
 
         if (members && members.length)

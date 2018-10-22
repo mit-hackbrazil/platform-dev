@@ -135,7 +135,7 @@
 /*mobile*/
 @media only screen and (max-width: 768px) {
     .team-header{
-        margin-bottom:20px;
+        margin-bottom:0px;
         margin-top:10px;
         display: flex;
         flex-direction: column;

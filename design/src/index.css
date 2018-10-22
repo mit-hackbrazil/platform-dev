@@ -48,6 +48,17 @@ html{
   overflow: hidden;
 }
 
+.card-edit{
+  padding-bottom: 20px;
+}
+
+.card-edit-button{
+  position: absolute !important;
+  bottom:0px;
+  left:0px;
+  width:80px;
+}
+
 .name-0{
   color:#111;
   font-size: 32pt;

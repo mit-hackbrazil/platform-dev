@@ -97,21 +97,26 @@ export default class Contacts extends Component {
     }
 
     render() {
-        if (!this.state.ready)
 
+
+        if (!this.state.ready)
             return <div className="contacts card">
                 <LinearProgress />
             </div>
 
+        let { canEdit } = this.props;
+        let cardClass = canEdit ? "contacts card card-edit" : "contacts card";
+
         return (
-            <div className="contacts card">
+            <div className={cardClass}>
                 <div className="contacts-list">
                     <div><i class="fab fa-whatsapp fa-lg"></i>{this.state.contacts.whatsapp}</div>
                     <div><i class="fab fa-facebook fa-lg"></i>{this.state.contacts.facebook}</div>
                     <div><i class="fab fa-slack fa-lg"></i>{this.state.contacts.slack}</div>
                 </div>
 
-                <Button onClick={this.toggleEditor}>Editar</Button>
+                {this.props.canEdit ? <Button onClick={this.toggleEditor} className="card-edit-button">Editar</Button> : null}
+
 
                 <Modal
                     aria-labelledby="simple-modal-title"

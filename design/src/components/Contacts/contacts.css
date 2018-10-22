@@ -1,9 +1,10 @@
 .contacts{
     height: 220px;
-    display: block;
-    padding-top:30px;
+    display: flex;
     width: 100%;
-
+    flex-direction: column;
+    justify-content: center;   
+    position: relative;
 }
 
 .contacts-list{
@@ -27,11 +28,12 @@
 .contacts-list > div > i{
     margin-right: 20pt;
 }
+
 /*mobile*/
 @media only screen and (max-width: 768px) {
     .contacts{
-        margin-bottom:20px;
-        margin-top:10px;
+        margin-bottom:0px;
+        margin-top:0px;
         display: flex;
         flex-direction: column;
         text-align: center;
