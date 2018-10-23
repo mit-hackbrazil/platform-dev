@@ -14,6 +14,7 @@ import { ServerStyleSheet } from 'styled-components'; // <-- importing ServerSty
 import App from './views/App';
 import Html from './views/Html';
 
+var path = require('path');
 var app = express();
 app.use(cors());
 
@@ -57,6 +58,11 @@ app.get('/startup', (req, res) => {
             title
         })
     );
+});
+
+app.use('/static', express.static(__dirname + '/views/team/static'));
+app.use('/team', (req, res) => {
+    res.sendFile(path.join(__dirname + '/views/team/index.html'));
 });
 
 const port = process.env.PORT;

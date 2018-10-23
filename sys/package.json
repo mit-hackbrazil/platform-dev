@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "parcel:start": "parcel design/index.js",
     "start": "PORT=3000 nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir ./dist",
     "serve": "PORT=80 node ./dist/index.js"
@@ -25,9 +26,10 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.1.2",
-    "@google-cloud/storage": "^2.1.0",
+    "@blueprintjs/core": "^3.7.0",
     "@material-ui/core": "^3.3.0",
     "apollo-server-express": "^2.1.0",
+    "axios": "^0.18.0",
     "cors": "^2.8.4",
     "crypto-random-string": "^1.0.0",
     "express": "^4.16.4",
@@ -42,6 +44,7 @@
     "pg-promise": "^8.5.1",
     "qs-middleware": "^1.0.3",
     "react": "^16.5.2",
+    "react-big-calendar": "^0.20.1",
     "react-dom": "^16.5.2",
     "stringify-object": "^3.3.0",
     "styled-components": "^4.0.2"

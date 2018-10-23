@@ -1,8 +1,0 @@
-node_modules/
-*.secret
-*.secret.json
-*.keys
-*.keys.json
-settings.json
-secret.json
-*_secret.json
