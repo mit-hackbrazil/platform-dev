@@ -26,7 +26,7 @@ since version 1.0.1 we migrated from MongoDB to PostgreSQL;
 - create a file name 'db_secret.json' at "platform-dev/app/api/"
 
 ```
-/* platform-dev/app/api/db_secret.json */
+/* sys/db_secret.json */
 
 {
     "host": <postgres_host>,
@@ -38,27 +38,20 @@ since version 1.0.1 we migrated from MongoDB to PostgreSQL;
 
 ```
 
-# core dependencies
-- meteor (requires manual installation)
-  mac/linux
-  ```
-  curl https://install.meteor.com/ | sh
-  ```
-  
-# Running Project
+# Running Project Locally
 ```
-cd app
-meteor npm install
-meteor run
+cd sys
+npm install
+npm run dev
 ```
 http://localhost:3000
 
 # Example Team
 ```
-http://localhost:3002/?id=12&edit=fe8027edb3
+http://localhost:3000/?id=12&edit=fe8027edb3
 ```
 
-# Running experimental UI
+# Running experimental UI -- useful to use React Hot Reload
 ```
 cd design
 npm install

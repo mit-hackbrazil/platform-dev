@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "parcel:start": "parcel design/index.js",
-    "start": "PORT=3000 nodemon --exec babel-node src/index.js",
-    "build": "babel src --out-dir ./dist",
-    "serve": "PORT=80 node ./dist/index.js"
+    "dev": "PORT=3000 nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir ./dist --copy-files",
+    "start": "PORT=80 node ./dist/index.js"
   },
   "author": "lucascassiano",
   "license": "MIT",
