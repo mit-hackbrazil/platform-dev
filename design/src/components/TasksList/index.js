@@ -17,7 +17,6 @@ import { } from "./tasks-lists.css";
 
 import { Button, TextField, Modal, LinearProgress, Typography } from "@material-ui/core";
 import moment from "moment";
-moment.locale('pt-BR');
 
 class Task extends Component {
     constructor(props) {

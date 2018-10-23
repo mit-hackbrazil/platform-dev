@@ -81,13 +81,29 @@
 .action-button-add-post{
     position: fixed;
     z-index: 8;
-    bottom:0px;
-    right:12px;
+    bottom:10px;
+    right:10px;
     transition: 0.5s;
+    background: #000;
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.8);
+    display: flex;
+    color: #fff;
+    align-items: center;
+  justify-content: center;
 }
 
 .action-button-add-post:hover{
     cursor: pointer;
+    background: #FFF;
+    color: #000;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.8);
+    width:60px;
+    height:60px;
+    bottom:5px;
+    right:5px;
 }
 
 #action-button-bg{

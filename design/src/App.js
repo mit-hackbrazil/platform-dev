@@ -12,51 +12,9 @@ import Contacts from "./components/Contacts";
 import { Classes } from "@blueprintjs/core";
 import { Grid, Paper } from "@material-ui/core";
 
-const defaultTasks = [
-  {
-    name: "tarefa 1",
-    active: true,
-    done: true,
-    start: "1/10/2018",
-    end: "2/10/2018"
-  },
-  {
-    name: "tarefa 2",
-    active: true,
-    done: false,
-    start: "10/10/2018",
-    end: "12/10/2018"
-  },
-  {
-    name: "tarefa 3",
-    active: false,
-    done: false,
-    start: "10/10/2018",
-    end: "12/10/2018"
-  },
-  {
-    name: "tarefa 3",
-    active: false,
-    done: false,
-    start: "10/10/2018",
-    end: "12/10/2018"
-  },
-  {
-    name: "tarefa 3",
-    active: false,
-    done: false,
-    start: "10/10/2018",
-    end: "12/10/2018"
-  }
-  /*..*/
-];
-
-let team = {
-  name: "NASA",
-  logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png",
-  description: "Exploring the Space and Hiring the best MIT undergrads",
-  link: 'http://nasa.gov'
-}
+//notifications
+import { Snackbar, Button } from '@material-ui/core';
+import api from "./apiConnect";
 
 const events = [
   {
@@ -75,56 +33,50 @@ const events = [
   },
 ];
 
-const posts = [
-  {
-    title: "prototipo 1",
-    description: "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-    image: "https://www.nasa.gov/images/content/603294main_PISCES-014g.jpg",
-    date: "2018-08-25",
-    file: {
-      name: "test_prototype.pdf",
-      url: "http://hackbrazil.com/api/files/id=?"
-    }
-  },
-  {
-    title: "prototipo 2",
-    description: "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-    image: "https://www.nasa.gov/images/content/603294main_PISCES-014g.jpg",
-    date: "2018-08-25",
-    file: {
-      name: "test_prototype.pdf",
-      url: "http://hackbrazil.com/api/files/id=?"
-    }
-  },
-  {
-    title: "prototipo 3",
-    description: "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-    image: "https://www.nasa.gov/images/content/603294main_PISCES-014g.jpg",
-    date: "2018-08-25",
-    file: {
-      name: "test_prototype.pdf",
-      url: "http://hackbrazil.com/api/files/id=?"
-    }
-  }
-];
-
-const teamMembers = [
-  {
-    name: "lucas",
-    link: "link here"
-  }
-];
-
 const canEdit = true;
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      notificationOpen: true,
+      notificationDiv: null
+    }
+
+    this.loadNotifications();
+  }
+
+  unescapeHTML(html) {
+    var escapeEl = document.createElement('div');
+    escapeEl.innerHTML = html;
+    return escapeEl.textContent;
+  }
+
+  loadNotifications = async () => {
+    let { notifications } = await api.notifications.getAll();
+    let notification = notifications[0];
+
+    let div = (<div className="notification">
+      <span><i className={notification.icon}></i>{" :: " + this.unescapeHTML(notification.content)}</span>
+      <div className="notification-close-button" onClick={this.notificationClose}><i class="fas fa-times"></i></div>
+    </div>);
+
+    this.setState({
+      notificationDiv: div
+    });
+  }
+
+  notificationClose = () => {
+    this.setState({ notificationOpen: false });
+  };
+
   render() {
     return (
       <div className={Classes.DARK}>
         <NavBar />
         <Grid container spacing={24} className="main-content">
           <Grid item xs={12} sm={8}>
-            <TeamHeader team={team} canEdit={canEdit} />
+            <TeamHeader canEdit={canEdit} />
           </Grid>
           <Grid item xs={12} sm={4}>
             <Contacts canEdit={canEdit} />
@@ -139,15 +91,17 @@ class App extends Component {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TasksList tasks={defaultTasks} canEdit={true} />
+            <TasksList canEdit={true} />
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <h2>Posts / Protótipo</h2>
-            <PostViewer posts={posts} />
+            <PostViewer />
           </Grid>
 
         </Grid>
+
+        {this.state.notificationOpen ? this.state.notificationDiv : null}
       </div>
     );
   }

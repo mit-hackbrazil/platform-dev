@@ -101,17 +101,16 @@ class UploadTeamLogo extends Component {
 export default class TeamHeader extends Component {
     constructor(props) {
         super(props);
-        let { name, logo, description, link } = props.team;
+
         this.state = {
-            name, logo, description, link,
             canEdit: props.canEdit ? props.canEdit : false,
             ready: false,
             editorOpen: false,
-            nameEdit: name,
-            logoEdit: logo,
-            descriptionEdit: description,
-            linkEdit: link,
-            logoFile: null
+            logoFile: null,
+            name: null,
+            link: null,
+            description: null,
+            logo: null
         }
         this.loadCurrentTeam();
     }
@@ -191,8 +190,10 @@ export default class TeamHeader extends Component {
     }
 
     render() {
-        let { name, logo, description, link } = this.props.team;
-        let linkSimplified = link.replace("https://", "").replace("http://", "");
+        let { name, logo, description, link } = this.state;
+        let linkSimplified = null;
+        if (link)
+            linkSimplified = link.replace("https://", "").replace("http://", "");
         let defaultImageUrl = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/add-logo.png?raw=true";
 
         let cardClass = this.props.canEdit ? "team-header card card-edit" : "team-header card";

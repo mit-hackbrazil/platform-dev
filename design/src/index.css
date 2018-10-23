@@ -140,3 +140,55 @@ html{
 h2{
   color:#111;
 }
+
+footer{
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  width: 100%;
+  background:#000008;
+  color:#aaa;
+  min-height: 100px;
+  padding-bottom: 30px;
+  padding-top:16px;
+
+}
+
+footer > div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  line-height: 20pt;
+}
+
+footer a {
+  color: #FFF;
+}
+
+.notification{
+  background:#4CAF50;
+  position: fixed;
+  bottom: 12px;
+  left:12px;
+  min-height: 30px;
+  border-radius: 15px;
+  padding: 5px 10px;
+  transition: 1s;
+  opacity: 1;
+  color:#FFF;
+  display: flex;
+  flex-direction: row;
+  z-index: 2;
+}
+
+.notification-close-button{
+  float:right;
+  opacity: 1;
+  margin-left:5px;
+}
+
+.notification-close-button:hover{
+  float:right;
+  opacity: 1;
+  cursor:pointer;
+}

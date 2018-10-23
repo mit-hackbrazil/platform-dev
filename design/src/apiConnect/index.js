@@ -4,6 +4,7 @@ import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 import * as _teams from "./teams";
 import * as _posts from "./posts";
 import * as _tasks from "./tasks";
+import * as _notifications from "./notifications";
 
 const stringifyObject = require('stringify-object');
 
@@ -45,7 +46,8 @@ let apiConnect = {
     getCredentials: getCredentials,
     teams: _teams,
     posts: _posts,
-    tasks: _tasks
+    tasks: _tasks,
+    notifications: _notifications
 }
 
 export default apiConnect;
