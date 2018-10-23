@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { } from "./team-header.css";
-import icon_edit from "./icon_edit.svg";
 
 import {
     AnchorButton,
@@ -29,7 +28,6 @@ import {
 //API connect
 
 import api from "../../apiConnect";
-import apiConnect from "../../apiConnect";
 
 import { Button, TextField, Modal, LinearProgress } from "@material-ui/core";
 
@@ -194,6 +192,7 @@ export default class TeamHeader extends Component {
         let linkSimplified = null;
         if (link)
             linkSimplified = link.replace("https://", "").replace("http://", "");
+
         let defaultImageUrl = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/add-logo.png?raw=true";
 
         let cardClass = this.props.canEdit ? "team-header card card-edit" : "team-header card";

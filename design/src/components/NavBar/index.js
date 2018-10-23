@@ -56,7 +56,7 @@ export default class NavBar extends Component {
             {icon_hack}
 
             <div className="menu-right">
-                <a target="_blank" href={formsUrl}>Reportar Feedback/Erro</a>
+                <a target="_blank" href={formsUrl}><i class="fas fa-clipboard-check"></i> Reportar Erro / Feedback</a>
             </div>
         </div>)
     }

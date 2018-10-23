@@ -4,34 +4,37 @@
 }
 
 .post{
-    width:Calc( 100% - 40px);
+    width:100%;
     display: grid;
     grid-template-areas: "image info";
     grid-template-columns: 40% 60%;
-    background:#fafafa;
     padding:0px;
-    min-height: 40px;
-    max-height: 200px;
+    min-height: 80px;
+    max-height: 240px;
+    height: auto;
     overflow: hidden;
     align-content: center;
     align-items: center;
     text-align: justify;
-    margin-bottom: 12px;
-    border-radius: 3px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
-    color:#000;
-}
-
-.post img{
-    height:100%;
-    width:auto;
+    margin-bottom: 20px;
+    border-radius: 2px;
+    color: #333;
 }
 
 .post .image{
     width:100%;
     overflow: hidden;
+  
+    display: flex;
+    background:#f0f0f0;
+    justify-content: center;
 }
 
+.image > img{
+    width:100% auto;
+    height: 100% auto;
+    object-fit: scale-down;
+}   
 .post  > .info > .date{
     position: absolute;
     top: -15px;
@@ -44,11 +47,12 @@
 
 }
 
-.post > .info > .description{
+.post > .info > .post-content{
     margin-bottom: 6px;
     overflow: hidden;
     font-size: 12pt;
     padding:20px;
+    max-height: 80px;
 }
 
 .post a{
@@ -74,10 +78,62 @@
     font-weight: bold;
 }
 
+.action-button-add-post{
+    position: fixed;
+    z-index: 8;
+    bottom:10px;
+    right:10px;
+    transition: 0.5s;
+    background: #000;
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.8);
+    display: flex;
+    color: #fff;
+    align-items: center;
+  justify-content: center;
+}
+
+.action-button-add-post:hover{
+    cursor: pointer;
+    background: #FFF;
+    color: #000;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.8);
+    width:60px;
+    height:60px;
+    bottom:5px;
+    right:5px;
+}
+
+#action-button-bg{
+    fill: rgba(0,0,0,0.7);
+    transition: 0.5s;
+}
+
+.action-button-add-post:hover #action-button-bg{
+    fill: rgba(0,0,0,1);
+}
+
 @media only screen and (max-width: 600px) {
     .post{
-        grid-template-columns: 20% 80%;
-        padding:2px;
-        margin-bottom: 6px;
+        grid-template-columns: 25% 75%;
+        padding:0px;
+        margin-bottom: 10px;
+        min-height: 80px;
+        max-height: 180px;
     }
+
+    .image > img{
+        width:auto;
+        height: 100%;
+        object-fit: scale-down;
+        padding:0px;
+    } 
+}
+
+.post-editor{
+    width: 80%;
+    height: auto;
+    min-height: 400px;
 }

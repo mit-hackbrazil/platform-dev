@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import { } from "./teamviewer.css";
-import icon_user from "./icon_user.svg";
 
 import { Grid, Paper, Card, Typography, CardContent, CardActionArea, CardMedia, IconButton, Button, CardActions, Input, TextField, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Modal } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import api from "../../apiConnect";
-import { Spinner } from "@blueprintjs/core";
-import { async } from "@firebase/util";
-import { object } from "prop-types";
 /*
 {"members":
 [{

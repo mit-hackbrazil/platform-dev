@@ -1,0 +1,36 @@
+{
+  "name": "sys",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "PORT=4000 nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir ./dist",
+    "serve": "PORT=80 node ./dist/index.js"
+  },
+  "author": "lucascassiano",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-arrow-functions": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "nodemon": "^1.18.4"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
+    "crypto-random-string": "^1.0.0",
+    "express": "^4.16.4",
+    "express-graphql": "^0.6.12",
+    "graphql": "^14.0.2",
+    "graphql-type-json": "^0.2.1",
+    "pg-promise": "^8.5.1",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  }
+}
