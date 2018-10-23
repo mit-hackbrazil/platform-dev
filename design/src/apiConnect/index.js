@@ -6,16 +6,20 @@ import * as _posts from "./posts";
 import * as _tasks from "./tasks";
 import * as _notifications from "./notifications";
 
-const stringifyObject = require('stringify-object');
+//const stringifyObject = require('stringify-object');
 
 //graphUrl
 const GRAPH_URL = "http://localhost:3000/graphql"; //change for production
 
 export function GraphJson(obj) {
-    const pretty = stringifyObject(obj, {
+  /*  const pretty = stringifyObject(obj, {
         indent: '  ',
         singleQuotes: false
     });
+    console.log("pretty", pretty);*/
+
+    let pretty = JSON.stringify(obj);
+    
     return pretty;
 }
 

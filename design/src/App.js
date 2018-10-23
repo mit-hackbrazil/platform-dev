@@ -54,16 +54,19 @@ class App extends Component {
 
   loadNotifications = async () => {
     let { notifications } = await api.notifications.getAll();
-    let notification = notifications[0];
 
-    let div = (<div className="notification">
-      <span><i className={notification.icon}></i>{" :: " + this.unescapeHTML(notification.content)}</span>
-      <div className="notification-close-button" onClick={this.notificationClose}><i class="fas fa-times"></i></div>
-    </div>);
+    if (notifications != null) {
+      let notification = notifications[0];
+      let div = (<div className="notification">
+        <span><i className={notification.icon}></i>{" :: " + this.unescapeHTML(notification.content)}</span>
+        <div className="notification-close-button" onClick={this.notificationClose}><i class="fas fa-times"></i></div>
+      </div>);
 
-    this.setState({
-      notificationDiv: div
-    });
+      this.setState({
+        notificationDiv: div
+      });
+    }
+
   }
 
   notificationClose = () => {
