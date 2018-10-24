@@ -9,17 +9,23 @@ import * as _notifications from "./notifications";
 //const stringifyObject = require('stringify-object');
 
 //graphUrl
-const GRAPH_URL = "http://localhost:3000/graphql"; //change for production
+const GRAPH_URL = process.env.NODE_ENV === 'production' ? "https://hackbrazil-platform.appspot.com/graphql" : "http://localhost:3000/graphql"; //change for production
 
+if (process.env.NODE_ENV === 'production') {
+    console.log("PRODUCTION MODE");
+}
+else{
+    console.log("DEVELOPMENT MODE")
+}
 export function GraphJson(obj) {
-  /*  const pretty = stringifyObject(obj, {
-        indent: '  ',
-        singleQuotes: false
-    });
-    console.log("pretty", pretty);*/
+    /*  const pretty = stringifyObject(obj, {
+          indent: '  ',
+          singleQuotes: false
+      });
+      console.log("pretty", pretty);*/
 
     let pretty = JSON.stringify(obj);
-    
+
     return pretty;
 }
 

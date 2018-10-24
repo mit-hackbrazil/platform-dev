@@ -1,5 +1,15 @@
 import { db } from "./Database.js";
 
+export async function GetTeamById(id) {
+    try {
+        let result = await db.one(`SELECT * FROM teams WHERE id=${id}`);
+        return result;
+    }
+    catch (e) {
+        return null;
+    }
+}
+
 export async function ValidateEditKey(id, edit_key) {
     try {
         let result = await db.one(`SELECT edit_key FROM teams WHERE id=${id}`);

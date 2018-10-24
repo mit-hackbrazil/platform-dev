@@ -176,7 +176,7 @@ var resolver = {
       var _addTeam = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee4(_, _ref, req) {
-        var args, edit_key, view_key, input, query;
+        var args, edit_key, view_key, subscription_key, input, query;
         return _regenerator.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
@@ -192,16 +192,21 @@ var resolver = {
 
               case 6:
                 view_key = _context4.sent;
-                input = args;
-                _context4.next = 10;
-                return _Database.db.none("INSERT INTO \n            teams(name, edit_key, logo, members, link, contacts, view_key) \n            VALUES($1,$2,$3,$4,$5,$6,$7)\n            ", [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key]);
+                _context4.next = 9;
+                return GenerateKey('subscription_key');
 
-              case 10:
+              case 9:
+                subscription_key = _context4.sent;
+                input = args;
+                _context4.next = 13;
+                return _Database.db.none("INSERT INTO \n            teams(name, edit_key, logo, members, link, contacts, view_key, subscription_key) \n            VALUES($1,$2,$3,$4,$5,$6,$7, $8)\n            ", [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key, subscription_key]);
+
+              case 13:
                 query = _context4.sent;
                 (0, _log.Log)(req, "insert@team", args);
                 return _context4.abrupt("return", true);
 
-              case 13:
+              case 16:
               case "end":
                 return _context4.stop();
             }

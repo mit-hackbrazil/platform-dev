@@ -82,12 +82,14 @@ export let resolver = {
         async addTeam(_, { args }, req) {
             let edit_key = await GenerateKey('edit_key');
             let view_key = await GenerateKey('view_key');
+            let subscription_key = await GenerateKey('subscription_key');
+
             let input = args;
 
             let query = await db.none(`INSERT INTO 
-            teams(name, edit_key, logo, members, link, contacts, view_key) 
-            VALUES($1,$2,$3,$4,$5,$6,$7)
-            `, [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key]);
+            teams(name, edit_key, logo, members, link, contacts, view_key, subscription_key) 
+            VALUES($1,$2,$3,$4,$5,$6,$7, $8)
+            `, [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key, subscription_key]);
 
             Log(req, "insert@team", args);
             return true;
@@ -123,11 +125,8 @@ let GenerateKey = async (key_name, table_name = "teams") => {
     let new_key;
     while (keyIsUsed) {
         new_key = cryptoRandomString(16);
-
         let findKey = await db.any(`SELECT * FROM ${table_name} WHERE ${key_name}='${new_key}'`);
-
         keyIsUsed = findKey.length > 0 ? true : false;
-
     }
 
     return new_key;
@@ -147,5 +146,4 @@ export async function ValidateViewKey(id, view_key) {
         return true;
     else
         return false;
-
 }

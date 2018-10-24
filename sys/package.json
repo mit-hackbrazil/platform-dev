@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "parcel:start": "parcel design/index.js",
+    "start:react": "PORT=3001 npm start --prefix ../design/",
     "dev": "PORT=3000 nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir ./dist --copy-files",
-    "start": "PORT=80 node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "build:react": "npm run build --prefix ../design/ && rm -r ./src/client/team && mkdir ./src/client/team && cp -R ../design/build/* ./src/client/team",
+    "deploy": "npm run build:react && npm run build"
   },
   "author": "lucascassiano",
   "license": "MIT",

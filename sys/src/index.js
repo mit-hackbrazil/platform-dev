@@ -7,7 +7,7 @@ import path from 'path';
 import graphqlHTTP from 'express-graphql';
 import { typeDefs, resolvers } from './graphql'
 import { makeExecutableSchema } from 'graphql-tools';
-import { ValidateRequest } from "./Auth";
+import { ValidateRequest, GetTeamById } from "./Auth";
 
 //React Server-side rendering 
 import React from "react";
@@ -83,7 +83,7 @@ app.use('/team', async (req, res) => {
 });
 
 const port = process.env.PORT;
-app.listen(port);
+app.listen(process.env.PORT || 8080);
 
 console.log(`🚀 Running a GraphQL API server at localhost:${process.env.PORT}/graphql`);
 console.log(`Serving at http://localhost:${port}`);

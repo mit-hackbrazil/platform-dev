@@ -143,6 +143,6 @@ function () {
   };
 }());
 var port = process.env.PORT;
-app.listen(port);
+app.listen(process.env.PORT || 8080);
 console.log("\uD83D\uDE80 Running a GraphQL API server at localhost:".concat(process.env.PORT, "/graphql"));
 console.log("Serving at http://localhost:".concat(port));
