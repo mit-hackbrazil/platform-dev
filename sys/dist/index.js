@@ -30,14 +30,19 @@ var _App = _interopRequireDefault(require("./client/App"));
 
 var _Html = _interopRequireDefault(require("./client/Html"));
 
-//import reload from 'express-reload';
+var bodyParser = require('body-parser'); //import reload from 'express-reload';
 //GraphQL dependencies
-//React Server-side rendering 
-// <-- renderToString() will take our React app and turn it into a string to be inserted into our Html template function.
-// <-- importing ServerStyleSheet
+
+
 //import Home from "./client/Home.html";
 var app = (0, _express.default)();
-app.use((0, _cors.default)());
+app.use((0, _cors.default)()); // parse application/x-www-form-urlencoded
+
+app.use(bodyParser.urlencoded({
+  extended: false
+})); // parse application/json
+
+app.use(bodyParser.json());
 app.use('/graphql', (0, _expressGraphql.default)({
   schema: (0, _graphqlTools.makeExecutableSchema)({
     typeDefs: _graphql.typeDefs,

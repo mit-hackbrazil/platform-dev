@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+var bodyParser = require('body-parser');
+
 //import reload from 'express-reload';
 
 //GraphQL dependencies
@@ -20,6 +22,10 @@ import Html from './client/Html';
 
 var app = express();
 app.use(cors());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
 
 app.use('/graphql', graphqlHTTP({
     schema: makeExecutableSchema({ typeDefs, resolvers }),
