@@ -25,6 +25,9 @@ import { AnchorButton, Button, Classes, Code, Dialog, H5, Intent, Switch, Toolti
 import apiConnect from "../../apiConnect";
 
 import PostEditor from "./PostEditor";
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import { Grid } from "@material-ui/core";
 
 class ButtonAddPost extends Component {
     render() {
@@ -37,7 +40,7 @@ class ButtonAddPost extends Component {
 class Post extends Component {
     render() {
         let { title, content, description, thumbnail, date, files } = this.props.post;
-        let timestamp = moment(date).format('MMMM Do YYYY');
+        let timestamp = moment(date).format('DD/MM/YY');
 
         //settings default thumbnail github/assets/
         thumbnail = thumbnail ? thumbnail : "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/place-holder-thumbnail.png?raw=true";
@@ -63,7 +66,6 @@ class Post extends Component {
                     {filesList}
                 </div>
             </div>
-
 
         </div>
     }
@@ -99,16 +101,19 @@ export default class PostViewer extends Component {
         let { posts, ready } = this.state;
 
         let postsList = posts.map((post) => {
-            return <Post post={post} />
+            return <Grid item sm={12} sm={6}>
+                <Post post={post} />
+            </Grid>
         });
 
         if (!ready)
-            return <Spinner size={50} />
+            return <LinearProgress />
         return <div className="post-viewer">
-            <ButtonAddPost onCLick={this.onOpenEditor} />
-            <div className="pots-list">
+            <Grid container spacing={16}>
                 {postsList}
-            </div>
+            </Grid>
+
+            <ButtonAddPost onCLick={this.onOpenEditor} />
             <PostEditor isOpen={this.state.isOpen} onClose={this.onCloseEditor} />
         </div>
     }

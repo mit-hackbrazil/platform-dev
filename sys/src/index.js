@@ -48,7 +48,7 @@ watcher.on('ready', function () {
 })
 
 /*** Home ***/
-app.get('/', async (req, res) => {
+app.get('/app', async (req, res) => {
     const sheet = new ServerStyleSheet(); // <-- creating out stylesheet
     const body = renderToString(sheet.collectStyles(<App />)); // <-- collecting styles
     const styles = sheet.getStyleTags(); // <-- getting all the tags from the sheet
@@ -65,7 +65,8 @@ app.get('/', async (req, res) => {
 
 app.use('/public', express.static(__dirname + '/client/public'));
 
-app.use('/home', (req, res) => {
+//Home
+app.use('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/home.html'));
 });
 

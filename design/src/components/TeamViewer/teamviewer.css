@@ -101,7 +101,7 @@
 
     .member-card .name{
         display: flex;
-        font-size: 18pt;
+        font-size: 14pt;
         grid-area: name;
         margin-left:15px;
         line-height: 18pt;

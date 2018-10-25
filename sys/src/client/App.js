@@ -1,6 +1,6 @@
 
 import React from 'react';
 
-const App = () => <div>💅</div>;
+const App = () => <div>🔬 Hack Brazil v2.1</div>;
 
 export default App;

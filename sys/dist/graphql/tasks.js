@@ -138,7 +138,7 @@ var resolver = {
 
               case 7:
                 _context2.next = 9;
-                return _Database.db.any("SELECT * FROM teams_tasks WHERE team=".concat(team, " AND task=").concat(task));
+                return _Database.db.any("SELECT * FROM teams_tasks WHERE team=".concat(team, " AND task=").concat(task, "  ORDER BY timestamp DESC LIMIT 1"));
 
               case 9:
                 taskContent = _context2.sent;

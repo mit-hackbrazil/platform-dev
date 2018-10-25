@@ -5,6 +5,9 @@ import { Grid, Paper, Card, Typography, CardContent, CardActionArea, CardMedia, 
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import api from "../../apiConnect";
+
+import MemberEditor from "./MemberEditor";
+
 /*
 {"members":
 [{
@@ -138,12 +141,18 @@ class MemberCard extends Component {
 
         let editMenu = null;
 
+        /*
+            this.state.editorOpen
+            editedMember
+            onSave
+            onClose
+        */
+
         if (this.props.canEdit)
             editMenu = (<Modal
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
                 open={this.state.editorOpen}
-                onClose={this.handleClose}
                 className="modal-editor-container"
             >
 

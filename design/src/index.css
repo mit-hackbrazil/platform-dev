@@ -175,7 +175,8 @@ footer{
   min-height: 100px;
   padding-bottom: 30px;
   padding-top:16px;
-
+  
+  margin-top:60px;
 }
 
 footer > div{
