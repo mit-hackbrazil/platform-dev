@@ -77,32 +77,35 @@ class App extends Component {
     return (
       <div className={Classes.DARK}>
         <NavBar />
-        <Grid container spacing={24} className="main-content">
-          <Grid item xs={12} sm={8}>
-            <TeamHeader canEdit={canEdit} />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Contacts canEdit={canEdit} />
-          </Grid>
+        <div className="grid-container">
+          <Grid container spacing={24} className="main-content">
+            <Grid item xs={12} sm={8}>
+              <TeamHeader canEdit={canEdit} />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Contacts canEdit={canEdit} />
+            </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <TeamViewer canEdit={canEdit} />
-          </Grid>
+            <Grid item xs={12} sm={6}>
+              <TeamViewer canEdit={canEdit} />
+            </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <div className="card" ><Calendar events={events} /></div>
-          </Grid>
+            <Grid item xs={12} sm={6}>
+              <div className="card" ><Calendar events={events} /></div>
+            </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <TasksList canEdit={true} />
-          </Grid>
+            <Grid item xs={12} sm={6}>
+              <TasksList canEdit={true} />
+            </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <h2>Posts / Protótipo</h2>
-            <PostViewer />
-          </Grid>
+            <Grid item xs={12} sm={6}>
+              <h2>Posts / Protótipo</h2>
+              <PostViewer />
+            </Grid>
 
-        </Grid>
+          </Grid>
+        </div>
+
 
         {this.state.notificationOpen ? this.state.notificationDiv : null}
       </div>

@@ -59,8 +59,8 @@ export let resolver = {
             return tasks;
         },
         async taskContent(_, { args }) {
-            let { task, team} = args;
-            
+            let { task, team } = args;
+
             //only requests with a valid View Or Edit keys 
             let valid = await ValidateAction(args);
 
@@ -68,7 +68,7 @@ export let resolver = {
                 return null
 
             let taskContent = await db.any(
-                `SELECT * FROM teams_tasks WHERE team=${team} AND task=${task}`
+                `SELECT * FROM teams_tasks WHERE team=${team} AND task=${task}  ORDER BY timestamp DESC LIMIT 1`
             );
 
             return taskContent;

@@ -90,8 +90,8 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     padding: 5px 12px;
     background-color: white;
     position: relative;
-    border-radius: 2px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.4);
+    border-radius: 1px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
   }
 
   .content > p{
@@ -107,8 +107,28 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
 
   /*-- CUSTOM --*/
   .task-dates{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 45% 10% 45%;
+    margin-top:0px;
+  }
+
+  .task-dates > div{
     display: flex;
-    width: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .task-modal-content{
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    width:100%;
+    padding-left:12px;
+    padding-right:12px;
+    margin-top:12px;
+    margin-bottom:12px;
+    
   }
 
   /* Media queries - Responsive timeline on screens less than 600px wide */
@@ -142,12 +162,5 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     .right {
       left: 0%;
     }
-
-      /*-- CUSTOM --*/
-  .task-dates{
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-  }
 
   }

@@ -33,7 +33,7 @@ export async function sendTask(team_id, task_id, editKey, newTask) {
         }
     `;
 
-    console.log("task",query)
+    console.log("task", query)
 
     let results = await GraphQuery(query);
     return results;
@@ -98,9 +98,9 @@ export async function getCurrent() {
 }
 
 
-export async function uploadFile(image, progress_callback, done) {
+export async function uploadFile(file, progress_callback, done) {
 
-    const uploadTask = storage.ref(`taksFiles/${image.name}`).put(image);
+    const uploadTask = storage.ref(`taksFiles/${file.name}`).put(file);
 
     uploadTask.on('state_changed',
         (snapshot) => {
@@ -117,9 +117,9 @@ export async function uploadFile(image, progress_callback, done) {
             console.log(error);
         },
         () => {
-            storage.ref('taksFiles').child(image.name).getDownloadURL().then(url => {
+            storage.ref('taksFiles').child(file.name).getDownloadURL().then(url => {
                 if (done)
-                    done(url);
+                    done(url, file.name, file.type, file.size);
                 // this.setState({ url });
             })
         });

@@ -16,11 +16,22 @@ import api from "../../apiConnect";
 import { } from "./tasks-lists.css";
 
 import { Button, TextField, Modal, LinearProgress, Typography } from "@material-ui/core";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import moment from "moment";
+
+function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + " Bytes";
+    else if (bytes < 1048576) return (bytes / 1024).toFixed(3) + " KB";
+    else if (bytes < 1073741824) return (bytes / 1048576).toFixed(3) + " MB";
+    else return (bytes / 1073741824).toFixed(3) + " GB";
+
+};
 
 class Task extends Component {
     constructor(props) {
         super(props);
+        let { task } = this.props;
         this.state = {
             ready: false,
             editorOpen: false,
@@ -30,8 +41,10 @@ class Task extends Component {
             files: [],
             timestamp: null,
             contentEdit: null,
+            filesEdit: null,
+            filesDiv: null,
+            showLoading: false
         }
-        let { task } = this.props;
 
         this.loadTask();
     }
@@ -41,12 +54,21 @@ class Task extends Component {
         let { id, editKey, viewKey } = api.getCredentials();
         let { taskContent } = await api.tasks.getTaskContent(id, task.id, viewKey, editKey);
 
-        if (taskContent.length) {
+        //check if data was loaded
+        if (taskContent && taskContent.length) {
             //task was sent / completed
             console.log("task content", taskContent);
             let { content, files, timestamp } = taskContent[0];
+            let filesDiv = [];
 
-            this.setState({ ready: true, sent: true, content, files, timestamp })
+            if (files && files.list && files.list.length)
+                filesDiv = files.list.map((file) => {
+                    return <div>{file.name} |  {file.type} |{formatBytes(file.size)} | <a href={file.url}>Download</a> </div>
+                });
+
+            console.log("files Div", filesDiv);
+
+            this.setState({ ready: true, sent: true, content, files, filesDiv, timestamp, contentEdit: content, filesEdit: files })
         }
         else {
             this.setState({ ready: true, sent: false })
@@ -54,7 +76,11 @@ class Task extends Component {
     }
 
     toggleEditor = () => {
-        this.setState({ editorOpen: !this.state.editorOpen });
+        this.setState({ editorOpen: !this.state.editorOpen, showLoading: false });
+    }
+
+    toggleViewer = () => {
+        this.setState({ viewerOpen: !this.state.viewerOpen });
     }
 
     onEditContent = event => {
@@ -68,10 +94,17 @@ class Task extends Component {
         this.setState({ taskFile: file, fileName: file.name });
     }
 
-    onNewLogo = async (team_id, editKey, task_id, url) => {
+    onNewLogo = async (team_id, editKey, task_id, url, name, type, size) => {
         let _task = {
             content: this.state.contentEdit,
-            files: { list: [url] }
+            files: {
+                list: [{
+                    name,
+                    type,
+                    size,
+                    url
+                }]
+            }
         }
 
         let res = await api.tasks.sendTask(team_id, task_id, editKey, _task);
@@ -89,10 +122,13 @@ class Task extends Component {
         let task_id = task.id;
 
         //check if needs to upload file
-        if (this.state.taskFile)
-            api.tasks.uploadFile(this.state.taskFile, null, (url) => {
-                this.onNewLogo(team_id, editKey, task_id, url);
+        if (this.state.taskFile) {
+            this.setState({ showLoading: true })
+            api.tasks.uploadFile(this.state.taskFile, null, (url, name, type, size) => {
+                this.onNewLogo(team_id, editKey, task_id, url, name, type, size);
             });
+        }
+
         else {
             let _task = {
                 content: this.state.contentEdit,
@@ -109,10 +145,72 @@ class Task extends Component {
     render() {
         let { task } = this.props;
 
-        let start_date = moment(task.start_date);
-        let end_date = moment(task.end_date);
+        console.log("task", task);
+        let start_date = moment(parseInt(task.start_date));
+        let end_date = moment(parseInt(task.end_date));
 
         let side = this.props.index % 2 == 0 ? " right" : " left";
+
+        let modalEditor = (<Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={this.state.editorOpen}
+            onClose={this.handleClose}
+            className="modal-editor-container"
+        >
+            <div className="modal-editor" >
+                <div className="modal-inner">
+                    <Typography variant="h6" id="modal-title">
+                        <i class="fas fa-tasks"></i> Enviar Tarefa
+                    </Typography>
+                    <TextField
+                        id="outlined-multiline-flexible"
+                        label="Texto da Tarefa"
+                        multiline
+                        value={this.state.contentEdit}
+                        onChange={this.onEditContent}
+                        fullWidth
+                        rows="6"
+                        helperText="Escreva comentários que auxiliem o entendimento da atividade"
+                    />
+                    <p>Anexar Arquivo (.pdf - máximo 20Mb) </p>
+                    <div className="upload-file">
+                        <button className="btn"> <i className="fa fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selecionar Arquivo.."}</button>
+                        <input type="file" name="task-file" onChange={this.onInputChange} />
+                    </div>
+
+                    <Button onClick={this.toggleEditor}>Cancelar</Button>
+                    <Button color="primary" onClick={this.onSaveChanges}>Enviar</Button>
+                </div>
+            </div>
+        </Modal>);
+
+
+        //Viewer
+        let modalViewer = (<Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={this.state.viewerOpen}
+            onClose={this.handleClose}
+            className="modal-editor-container"
+        >
+            <div className="modal-editor" >
+                <div className="modal-inner">
+                    <Typography variant="h6" id="modal-title">
+                        {task.title}
+                    </Typography>
+                    <div className="task-modal-dates">
+                        <i>{start_date.format("DD/MM/YYYY")}</i> - <strong>{end_date.format("DD/MM/YYYY")}</strong>
+                        <p>Enviado em:{moment(parseInt(this.state.timestamp)).format("DD/MM/YYYY hh:mm:ss")}</p>
+                    </div>
+                    <div className="task-modal-content">{this.state.content}</div>
+                    <div className="task-modal-content">{this.state.filesDiv}</div>
+
+                    <Button onClick={this.toggleViewer}>Fechar</Button>
+                </div>
+            </div>
+        </Modal>);
+
 
         //loading
         if (!this.state.ready) {
@@ -124,119 +222,46 @@ class Task extends Component {
             </div>
         }
 
-        //task is empty - e.g. not sent yet
-        if (!this.state.sent) {
-            return (<div className={"container" + side}>
-                <div className="content">
-                    <div className="task-dates">
-                        <div>
-                            início: <i>{start_date.format("DD/MM/YYYY")}</i>
-                        </div>
-                        <div>
-                            encerra:<strong>{end_date.format("DD/MM/YYYY")}</strong>
-                        </div>
-                    </div>
+        return (<div className={"container" + side}>
+            <div className="content">
+                <div className="task-dates">
+                    <div>{start_date.format("DD/MM/YYYY")}</div>
+                    <div> até </div>
+                    <div>{end_date.format("DD/MM/YYYY")}</div>
+                </div>
 
-                    <h2>{task.title}</h2>
-                    <p>{task.content}</p>
+                <h2>{task.title}</h2>
+                <p>{task.content}</p>
 
-                    <div className="buttons">
-                        {this.props.canEdit ? <Button variant="contained" color="primary" onClick={this.toggleEditor}>Enviar</Button> : null}
-                    </div>
+                <div className="buttons">
+                    {this.props.canEdit && !this.state.sent ? <Button variant="contained" onClick={this.toggleEditor}>Enviar</Button> : null}
+                    {this.state.sent ? < Button onClick={this.toggleViewer}>Abrir</Button> : null}
+                    {this.props.canEdit && this.state.sent ? <Button onClick={this.toggleEditor}>Editar</Button> : null}
 
                 </div>
 
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.editorOpen}
-                    onClose={this.handleClose}
-                    className="modal-editor-container"
-                >
-                    <div className="modal-editor" >
-                        <div className="modal-inner">
-                            <Typography variant="h6" id="modal-title">
-                                <i class="fas fa-tasks"></i> Enviar Tarefa
-                        </Typography>
+                {this.props.canEdit ? modalEditor : null}
+                {modalViewer}
+            </div>
 
-                            <TextField
-                                id="outlined-multiline-flexible"
-                                label="Texto da Tarefa"
-                                multiline
-                                value={this.state.contentEdit}
-                                onChange={this.onEditContent}
-                                fullWidth
-                                rows="6"
-                                helperText="Escreva comentários que auxiliem o entendimento da atividade"
-                            />
-                            <p>Anexar Arquivo (.pdf - máximo 20Mb) </p>
-                            <div className="upload-file">
-                                <button className="btn"> <i className="fa fa-file-upload fa-lg"></i>  {this.state.fileName ? this.state.fileName : "Selecionar Arquivo.."}</button>
-                                <input type="file" name="task-file" onChange={this.onInputChange} />
-                            </div>
-
-                            <Button onClick={this.toggleEditor}>Cancelar</Button>
-                            <Button color="primary" onClick={this.onSaveChanges}>Enviar</Button>
-                        </div>
-                    </div>
-                </Modal>
-            </div>);
-        }
-        //task was sent
-        else {
-            let { content } = this.state;
-
-            return (<div className={"container" + side}>
-                <div className="content">
-                    <div className="task-dates">
-                        <div>
-                            início: <i>{start_date.format("DD/MM/YYYY")}</i>
-                        </div>
-                        <div>
-                            encerra:<strong>{end_date.format("DD/MM/YYYY")}</strong>
-                        </div>
-                    </div>
-
-                    <h2>{task.title}</h2>
-                    <p>{task.content}</p>
-
-                    <div className="buttons">
-                        <Button onClick={this.toggleEditor}>Abrir</Button>
-                        {this.props.canEdit ? <Button onClick={this.toggleEditor}>Editar</Button> : null}
-                    </div>
-
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.showLoading}
+                onClose={this.handleClose}
+                className="modal-editor-container"
+            >
+                <div className="card loading-card">
+                    <CircularProgress
+                        size={100}
+                    />
+                    <br />
+                    <p><i className="fa fa-file-upload fa-lg"></i> Enviando Arquivos...</p>
                 </div>
 
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.editorOpen}
-                    onClose={this.handleClose}
-                    className="modal-editor-container"
-                >
+            </Modal>
 
-                    <div className="modal-editor" >
-                        <Typography variant="h6" id="modal-title">
-                            Editar Tarefa
-                    </Typography>
-
-                        <TextField
-                            id="standard-name"
-                            label="Content"
-                            value={this.state.facebookEdit}
-                            onChange={this.onEditFacebook}
-                            margin="normal"
-                            placeholder="Grupo do Facebook..."
-                            className="editor-text"
-                        />
-                        <Button onClick={this.toggleEditor}>Cancelar</Button>
-                        <Button onClick={this.onSaveChanges}>Salvar</Button>
-                    </div>
-                </Modal>
-            </div>);
-        }
-
-
+        </div >);
     }
 }
 

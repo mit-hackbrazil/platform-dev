@@ -7,21 +7,27 @@
     left:0px;
     padding-left:12px;
     padding-right:8px;
-    padding-top:10px;
-    padding-bottom:10px;
+    padding-top:1px;
+    padding-bottom:1px;
     margin-bottom:30px;
     display: flex;
     z-index: 10;
-    box-shadow: 0px 5px 15px rgba(0,0,0,0.15);
+    box-shadow: 0px 2px 15px rgba(0,0,0,0.2);
 }
 
 .menu-right{
     display: flex;
+    align-items: center;
     justify-content: right;
     width: 0 auto;
     height: 100%;
     margin-right: 10px;
     position: absolute;
     right: 0;
-    font-size: 16pt;
+    font-size: 10pt;
 }
+
+/*
+.menu-right a {
+    color:#222;
+}*/

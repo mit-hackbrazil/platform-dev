@@ -190,7 +190,7 @@ class MemberCard extends Component {
                         margin="normal"
                         className="editor-text"
                         helperText="repositório de projetos"
-                        placeholder="http://github.com/lucascassiano"
+                        placeholder="http://github.com/<SEU_PERFIL>"
                     />
 
                     <TextField
@@ -199,7 +199,9 @@ class MemberCard extends Component {
                         value={this.state.linkedinEdit}
                         onChange={this.editLinkedin}
                         margin="normal"
-                        placeholder="http://linkedin.com/lucascassiano"
+                        helperText="link para perfil do Linkedin"
+                        placeholder="http://linkedin.com/<SEU_PERFIL>"
+                        fullWidth
                     />
 
                     <TextField
