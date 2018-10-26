@@ -8,22 +8,6 @@ import api from "../../apiConnect";
 
 import MemberEditor from "./MemberEditor";
 
-/*
-{"members":
-[{
-    "name":"Lucas Cassiano",
-    "role":";) seduzente",
-    "link":"http://google.com",
-    "photo":null},
- {
-     "name":"Lara Timbó",
-     "role":"moral",
-     "link":"http:''airbnb.com",
-     "photo":null
-  },
-  {"name":"Allan Costa","role":"bixao","link":"http://nasa.gov","photo":null}]}
-*/
-
 class MemberCard extends Component {
     constructor(props) {
         super(props);

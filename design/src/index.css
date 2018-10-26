@@ -10,7 +10,6 @@ body {
   margin-right: 0px;
   margin-top:45px;
   overflow-x: hidden;
-/*font-family: 'Open Sans', sans-serif;*/
 }
 
 html{
@@ -155,7 +154,7 @@ html{
 
 .upload-file input[type=file] {
   font-size: 100px;
-  
+
   position: absolute !important;
   left: 0;
   top: 0;
@@ -175,7 +174,7 @@ footer{
   min-height: 100px;
   padding-bottom: 30px;
   padding-top:16px;
-  
+
   margin-top:60px;
 }
 
