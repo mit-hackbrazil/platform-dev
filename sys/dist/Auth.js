@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.GetTeamById = GetTeamById;
+exports.GetTeamFromSubscriptionKey = GetTeamFromSubscriptionKey;
+exports.RegisterUser = RegisterUser;
 exports.ValidateEditKey = ValidateEditKey;
 exports.ValidateViewKey = ValidateViewKey;
 exports.ValidateRequest = ValidateRequest;
@@ -52,14 +54,14 @@ function _GetTeamById() {
   return _GetTeamById.apply(this, arguments);
 }
 
-function ValidateEditKey(_x2, _x3) {
-  return _ValidateEditKey.apply(this, arguments);
+function GetTeamFromSubscriptionKey(_x2) {
+  return _GetTeamFromSubscriptionKey.apply(this, arguments);
 }
 
-function _ValidateEditKey() {
-  _ValidateEditKey = (0, _asyncToGenerator2.default)(
+function _GetTeamFromSubscriptionKey() {
+  _GetTeamFromSubscriptionKey = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee2(id, edit_key) {
+  _regenerator.default.mark(function _callee2(subscrition_key) {
     var result;
     return _regenerator.default.wrap(function _callee2$(_context2) {
       while (1) {
@@ -67,124 +69,253 @@ function _ValidateEditKey() {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return _Database.db.one("SELECT edit_key FROM teams WHERE id=".concat(id));
+            return _Database.db.one("SELECT id, name, edit_key, view_key FROM teams WHERE subscription_key='".concat(subscrition_key, "'"));
 
           case 3:
             result = _context2.sent;
+            return _context2.abrupt("return", result);
 
-            if (!(edit_key == result.edit_key && result.edit_key != null)) {
-              _context2.next = 8;
-              break;
-            }
-
-            return _context2.abrupt("return", true);
-
-          case 8:
-            return _context2.abrupt("return", false);
-
-          case 9:
-            _context2.next = 14;
-            break;
-
-          case 11:
-            _context2.prev = 11;
+          case 7:
+            _context2.prev = 7;
             _context2.t0 = _context2["catch"](0);
             return _context2.abrupt("return", false);
 
-          case 14:
+          case 10:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[0, 11]]);
+    }, _callee2, this, [[0, 7]]);
   }));
-  return _ValidateEditKey.apply(this, arguments);
+  return _GetTeamFromSubscriptionKey.apply(this, arguments);
 }
 
-function ValidateViewKey(_x4, _x5) {
-  return _ValidateViewKey.apply(this, arguments);
+function RegisterUser(_x3, _x4) {
+  return _RegisterUser.apply(this, arguments);
 }
 
-function _ValidateViewKey() {
-  _ValidateViewKey = (0, _asyncToGenerator2.default)(
+function _RegisterUser() {
+  _RegisterUser = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee3(id, view_key) {
-    var result;
+  _regenerator.default.mark(function _callee3(user, subscrition_key) {
+    var team, userInDB, isMentor, query, editKey, viewKey, _editKey, _viewKey;
+
     return _regenerator.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _context3.next = 2;
-            return _Database.db.one("SELECT view_key FROM teams WHERE id=".concat(id));
+            _context3.prev = 0;
+            _context3.next = 3;
+            return GetTeamFromSubscriptionKey(subscrition_key);
 
-          case 2:
-            result = _context3.sent;
+          case 3:
+            team = _context3.sent;
+            console.log("team", team);
+            _context3.next = 7;
+            return _Database.db.any("SELECT * FROM users WHERE uid='".concat(user.uid, "'"));
 
-            if (!(view_key == result.view_key && result.view_key != null)) {
-              _context3.next = 7;
+          case 7:
+            userInDB = _context3.sent;
+            console.log("user", userInDB);
+            _context3.next = 11;
+            return _Database.db.any("SELECT * FROM mentors WHERE email='".concat(user.email, "'"));
+
+          case 11:
+            isMentor = _context3.sent;
+
+            if (isMentor.length) {
+              isMentor = true;
+            }
+
+            if (userInDB.length) {
+              _context3.next = 23;
               break;
             }
 
-            return _context3.abrupt("return", true);
+            //register user
+            console.log("registering user");
+            _context3.next = 17;
+            return _Database.db.none("INSERT INTO \n            users(uid, name, email, team, is_mentor) \n            VALUES($1,$2,$3,$4,$5)\n            ", [user.uid, user.displayName, user.email, team.id, isMentor]);
 
-          case 7:
+          case 17:
+            query = _context3.sent;
+            editKey = team.edit_key;
+            viewKey = team.view_key;
+            return _context3.abrupt("return", {
+              id: team.id,
+              editKey: editKey,
+              viewKey: viewKey
+            });
+
+          case 23:
+            console.log("user already in db");
+            _context3.next = 26;
+            return GetTeamById(userInDB[0].team);
+
+          case 26:
+            team = _context3.sent;
+            //user already in database
+            _editKey = team.edit_key;
+            _viewKey = team.view_key;
+            if (isMentor) _editKey = null;else _viewKey = null;
+            return _context3.abrupt("return", {
+              id: team.id,
+              editKey: _editKey,
+              viewKey: _viewKey
+            });
+
+          case 31:
+            return _context3.abrupt("return", null);
+
+          case 34:
+            _context3.prev = 34;
+            _context3.t0 = _context3["catch"](0);
+            console.log("error", _context3.t0);
             return _context3.abrupt("return", false);
 
-          case 8:
+          case 38:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, this);
+    }, _callee3, this, [[0, 34]]);
   }));
-  return _ValidateViewKey.apply(this, arguments);
+  return _RegisterUser.apply(this, arguments);
 }
 
-function ValidateRequest(_x6, _x7, _x8) {
-  return _ValidateRequest.apply(this, arguments);
+function ValidateEditKey(_x5, _x6) {
+  return _ValidateEditKey.apply(this, arguments);
 }
 
-function _ValidateRequest() {
-  _ValidateRequest = (0, _asyncToGenerator2.default)(
+function _ValidateEditKey() {
+  _ValidateEditKey = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee4(teamId, editKey, viewKey) {
-    var canEdit, canView;
+  _regenerator.default.mark(function _callee4(id, edit_key) {
+    var result;
     return _regenerator.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            canEdit = false;
-            canView = false;
-            _context4.prev = 2;
-            _context4.next = 5;
-            return ValidateViewKey(teamId, viewKey);
+            _context4.prev = 0;
+            _context4.next = 3;
+            return _Database.db.one("SELECT edit_key FROM teams WHERE id=".concat(id));
 
-          case 5:
-            canView = _context4.sent;
-            _context4.next = 8;
-            return ValidateEditKey(teamId, editKey);
+          case 3:
+            result = _context4.sent;
+
+            if (!(edit_key == result.edit_key && result.edit_key != null)) {
+              _context4.next = 8;
+              break;
+            }
+
+            return _context4.abrupt("return", true);
 
           case 8:
-            canEdit = _context4.sent;
-            _context4.next = 13;
+            return _context4.abrupt("return", false);
+
+          case 9:
+            _context4.next = 14;
             break;
 
           case 11:
             _context4.prev = 11;
-            _context4.t0 = _context4["catch"](2);
-
-          case 13:
-            return _context4.abrupt("return", {
-              canEdit: canEdit,
-              canView: canView
-            });
+            _context4.t0 = _context4["catch"](0);
+            return _context4.abrupt("return", false);
 
           case 14:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, this, [[2, 11]]);
+    }, _callee4, this, [[0, 11]]);
+  }));
+  return _ValidateEditKey.apply(this, arguments);
+}
+
+function ValidateViewKey(_x7, _x8) {
+  return _ValidateViewKey.apply(this, arguments);
+}
+
+function _ValidateViewKey() {
+  _ValidateViewKey = (0, _asyncToGenerator2.default)(
+  /*#__PURE__*/
+  _regenerator.default.mark(function _callee5(id, view_key) {
+    var result;
+    return _regenerator.default.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return _Database.db.one("SELECT view_key FROM teams WHERE id=".concat(id));
+
+          case 2:
+            result = _context5.sent;
+
+            if (!(view_key == result.view_key && result.view_key != null)) {
+              _context5.next = 7;
+              break;
+            }
+
+            return _context5.abrupt("return", true);
+
+          case 7:
+            return _context5.abrupt("return", false);
+
+          case 8:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, this);
+  }));
+  return _ValidateViewKey.apply(this, arguments);
+}
+
+function ValidateRequest(_x9, _x10, _x11) {
+  return _ValidateRequest.apply(this, arguments);
+}
+
+function _ValidateRequest() {
+  _ValidateRequest = (0, _asyncToGenerator2.default)(
+  /*#__PURE__*/
+  _regenerator.default.mark(function _callee6(teamId, editKey, viewKey) {
+    var canEdit, canView;
+    return _regenerator.default.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            canEdit = false;
+            canView = false;
+            _context6.prev = 2;
+            _context6.next = 5;
+            return ValidateViewKey(teamId, viewKey);
+
+          case 5:
+            canView = _context6.sent;
+            _context6.next = 8;
+            return ValidateEditKey(teamId, editKey);
+
+          case 8:
+            canEdit = _context6.sent;
+            _context6.next = 13;
+            break;
+
+          case 11:
+            _context6.prev = 11;
+            _context6.t0 = _context6["catch"](2);
+
+          case 13:
+            return _context6.abrupt("return", {
+              canEdit: canEdit,
+              canView: canView
+            });
+
+          case 14:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, this, [[2, 11]]);
   }));
   return _ValidateRequest.apply(this, arguments);
 }

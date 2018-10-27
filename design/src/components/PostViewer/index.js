@@ -29,10 +29,12 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 import { Grid } from "@material-ui/core";
 
+import addIcon from "./addIcon.svg";
+
 class ButtonAddPost extends Component {
     render() {
         return <div className="action-button-add-post" onClick={this.props.onCLick}>
-            <i class="fas fa-plus fa-2x"></i>
+            <img src={addIcon} />
         </div>
     }
 }
@@ -87,6 +89,8 @@ export default class PostViewer extends Component {
         let posts = await apiConnect.posts.getAll();
         if (posts.posts)
             this.setState({ posts: posts.posts, ready: true });
+        else
+            this.setState({ posts: null, ready: true });
     }
     onOpenEditor = () => {
         this.setState({ isOpen: true });
@@ -99,15 +103,17 @@ export default class PostViewer extends Component {
 
     render() {
         let { posts, ready } = this.state;
+        let postsList = <div className="card"> <h2>Nenhum Post ainda?</h2><p>Adicione Posts clicando no Botão  <img src={addIcon} width="30px" /> no canto inferior direito</p></div>
+        if (posts != null)
+            postsList = posts.map((post) => {
+                return <Grid item sm={12} sm={6}>
+                    <Post post={post} />
+                </Grid>
+            });
 
-        let postsList = posts.map((post) => {
-            return <Grid item sm={12} sm={6}>
-                <Post post={post} />
-            </Grid>
-        });
 
         if (!ready)
-            return <LinearProgress />
+            return <div> <LinearProgress /> <ButtonAddPost onCLick={this.onOpenEditor} /></div>
         return <div className="post-viewer">
             <Grid container spacing={16}>
                 {postsList}

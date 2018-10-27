@@ -1,6 +1,17 @@
 import { GraphQuery, GraphJson } from "./index.js";
 import { storage } from "./storage";
 
+export async function CanEdit() {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    var editKey = url.searchParams.get("edit");
+  
+    let isValid = await validateEdit(id, editKey);
+
+    return isValid;
+}
+
 export async function getCurrent(args) {
     var url_string = window.location.href;
     var url = new URL(url_string);

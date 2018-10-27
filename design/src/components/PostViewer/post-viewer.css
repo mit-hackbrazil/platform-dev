@@ -86,26 +86,20 @@
     bottom:10px;
     right:10px;
     transition: 0.5s;
-    background: #000;
-    width:50px;
-    height:50px;
-    border-radius: 50%;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.8);
+    opacity: 0.8;
     display: flex;
-    color: #fff;
+    justify-content: center;
+    align-content: center;
     align-items: center;
-   justify-content: center;
 }
 
-.action-button-add-post:hover{
-    cursor: pointer;
-    background: #FFF;
-    color: #000;
-    box-shadow: 0px 8px 25px rgba(0,0,0,0.8);
+.action-button-add-post > img{
     width:60px;
-    height:60px;
-    bottom:5px;
-    right:5px;
+}
+
+
+.action-button-add-post:hover{
+    opacity: 1;
 }
 
 #action-button-bg{
@@ -125,11 +119,16 @@
         height:60px;
     }
     
+    .action-button-add-post > img{
+        width: 110px;
+    }
+
     .action-button-add-post:hover{
         bottom:20px;
         right:20px;
         width:80px;
         height:80px;
+        opacity: 1;
     }
 }
 

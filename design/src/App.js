@@ -33,19 +33,26 @@ const events = [
   },
 ];
 
-const canEdit = true;
+
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       notificationOpen: true,
-      notificationDiv: null
+      notificationDiv: null,
+      canEdit: false
     }
-
+    this.loadCanEdit();
     this.loadNotifications();
   }
 
+  loadCanEdit = async () => {
+    let canEdit = await api.teams.CanEdit();
+    console.log("CAN EDIT", canEdit);
+    this.setState({ canEdit });
+  }
+  
   unescapeHTML(html) {
     var escapeEl = document.createElement('div');
     escapeEl.innerHTML = html;
@@ -74,6 +81,7 @@ class App extends Component {
   };
 
   render() {
+    let { canEdit } = this.state;
     return (
       <div className={Classes.DARK}>
         <NavBar />
@@ -95,7 +103,7 @@ class App extends Component {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <TasksList canEdit={true} />
+              <TasksList canEdit={canEdit} />
             </Grid>
 
             <Grid item xs={12} sm={6}>

@@ -11,17 +11,18 @@ import MemberEditor from "./MemberEditor";
 class MemberCard extends Component {
     constructor(props) {
         super(props);
-        let { name, role, link, github, linkedin } = props.member;
+        let { name, role, link, github, linkedin, photo } = props.member;
 
         this.state = {
             editorOpen: false,
             nameEdit: name,
-            roleEdit: role != undefined ? role : null,
-            linkEdit: link != undefined ? link : null,
+            roleEdit: role ? role : null,
+            linkEdit: link ? link : null,
             githubEdit: github ? github : null,
             linkedinEdit: linkedin ? linkedin : null,
             photoFile: null,
-            fileName: null
+            fileName: null,
+            photo: photo ? photo : null
         }
     }
 
@@ -99,7 +100,7 @@ class MemberCard extends Component {
         let { id, editKey } = api.getCredentials();
         let { team_id, memberIndex, members } = this.props;
 
-        let { nameEdit, roleEdit, linkedinEdit, linkEdit, githubEdit, photoEdit, fileName, photoFile } = this.state;
+        let { nameEdit, roleEdit, linkedinEdit, linkEdit, githubEdit, photoEdit, fileName, photoFile, photo } = this.state;
 
         //console.log("member index", memberIndex);
         let member = {
@@ -108,6 +109,7 @@ class MemberCard extends Component {
             linkedin: linkedinEdit,
             link: linkEdit,
             github: githubEdit,
+            photo: photo
         }
 
         if (this.props.onChange)
@@ -121,6 +123,7 @@ class MemberCard extends Component {
         let defaultPhoto = "https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/user-logo.png?raw=true";
         let { canEdit } = this.props;
 
+        console.log("teamviewer can edit", canEdit);
         photo = photo ? photo : defaultPhoto;
 
         let editMenu = null;
@@ -231,8 +234,8 @@ class MemberCard extends Component {
                     </div>
                     <div className="contact">
                         <IconButton className={github ? "link-active" : null}><a href={github}><i className="fab fa-github"></i></a></ IconButton>
-                        <IconButton> <i className="fab fa-linkedin-in"></i> </IconButton>
-                        <IconButton> <i className="fas fa-link"></i> </ IconButton>
+                        <IconButton className={linkedin ? "link-active" : null}><a href={linkedin}> <i className="fab fa-linkedin-in"></i></a> </IconButton>
+                        <IconButton className={link ? "link-active" : null}> <a href={link}><i className="fas fa-link"></i> </a></ IconButton>
                     </div>
 
                     {this.props.canEdit ? <Button className="card-edit-button" onClick={this.toggleEditor}>Editar</Button> : null}
@@ -240,7 +243,7 @@ class MemberCard extends Component {
                     {editMenu}
 
                 </div>
-            </Grid>
+            </Grid >
         )
     }
 }
@@ -250,7 +253,7 @@ export default class TeamViewer extends Component {
 
         this.state = {
             ready: false,
-            canEdit: props.canEdit ? props.canEdit : false,
+            canEdit: false,
             team_id: 0,
             members: []
         }
@@ -294,7 +297,9 @@ export default class TeamViewer extends Component {
     }
 
     render() {
-        let { team_id, members, canEdit } = this.state;
+        let { team_id, members } = this.state;
+        let canEdit = this.props;
+
         let members_div = <div className="contacts"><LinearProgress /></div>;
 
         if (members && members.length)
