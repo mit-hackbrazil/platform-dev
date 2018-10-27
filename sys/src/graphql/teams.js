@@ -26,7 +26,8 @@ export const typeDef = `
   extend type Query {
     team(args:JSON): [Team],
     teamEditKey(args:JSON) : Boolean,
-    teamViewKey(args:JSON) : Boolean
+    teamViewKey(args:JSON) : Boolean,
+    teamSubscritionKey(subscription_key:String) : Team
   }
 
   extend type Mutation{
@@ -75,6 +76,11 @@ export let resolver = {
             else
                 return false;
 
+        },
+
+        async teamSubscritionKey(_, { subscription_key }) {
+            let result = await db.one(`SELECT id, name FROM teams WHERE subscription_key='${subscription_key}'`);
+            return result;
         }
     },
     Mutation: {

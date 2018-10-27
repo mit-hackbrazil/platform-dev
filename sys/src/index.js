@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-var bodyParser = require('body-parser');
+import session from 'express-session';
 
+import bodyParser from 'body-parser';
 //import reload from 'express-reload';
 
 //GraphQL dependencies
@@ -18,65 +19,81 @@ import { ServerStyleSheet } from 'styled-components'; // <-- importing ServerSty
 
 import App from './client/App';
 import Html from './client/Html';
-//import Home from "./client/Home.html";
+
+import * as auth from "./Auth";
 
 var app = express();
 app.use(cors());
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
+
 // parse application/json
 app.use(bodyParser.json());
+
+//session
+app.use(session({
+    secret: '3dPc7PCn8JVgf4LJ',
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use('/graphql', graphqlHTTP({
     schema: makeExecutableSchema({ typeDefs, resolvers }),
     graphiql: true
 }));
 
-//hot reload
-var clientPath = path.join(__dirname, '/client/');
-//app.use(reload(clientPath));
+//--------server-side rendering
+// app.get('/app', async (req, res) => {
+//     const sheet = new ServerStyleSheet(); // <-- creating out stylesheet
+//     const body = renderToString(sheet.collectStyles(<App />)); // <-- collecting styles
+//     const styles = sheet.getStyleTags(); // <-- getting all the tags from the sheet
+//     const title = 'Home';
+//     res.send(
+//         Html({
+//             body,
+//             styles, // <-- passing the styles to our Html template
+//             title
+//         })
+//     );
+// });
 
-var chokidar = require('chokidar');
-var watcher = chokidar.watch(clientPath);
-watcher.on('ready', function () {
-    watcher.on('all', function () {
-        console.log("Clearing /app/ module cache from server")
-        Object.keys(require.cache).forEach(function (id) {
-            if (/[\/\\]app[\/\\]/.test(id)) delete require.cache[id]
-        })
-    })
-})
+app.use('/public', express.static(path.join(__dirname + '/client/public')));
 
-/*** Home ***/
-app.get('/app', async (req, res) => {
-    const sheet = new ServerStyleSheet(); // <-- creating out stylesheet
-    const body = renderToString(sheet.collectStyles(<App />)); // <-- collecting styles
-    const styles = sheet.getStyleTags(); // <-- getting all the tags from the sheet
-    const title = 'Home';
+//--------- Home
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/Home.html'), { name: "TEAM NAME" });
 
-    res.send(
-        Html({
-            body,
-            styles, // <-- passing the styles to our Html template
-            title
-        })
-    );
+    /*
+    if (req.query.subscription) {
+        //register a new team
+    } else
+        res.render(path.join(__dirname + '/client/Home.html'), { name: "TEAM NAME" });*/
 });
 
-app.use('/public', express.static(__dirname + '/client/public'));
-
-//Home
-app.use('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/home.html'));
-});
-
-app.use('/register', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/register.html'));
+/*** Register - server-side rendering ***/
+app.get('/register', async (req, res) => {
+    /* const sheet = new ServerStyleSheet(); // <-- creating out stylesheet
+     const body = renderToString(sheet.collectStyles(<App />)); // <-- collecting styles
+     const styles = sheet.getStyleTags(); // <-- getting all the tags from the sheet
+     const title = 'Home';
+ 
+     res.send(
+         Html({
+             body,
+             styles, // <-- passing the styles to our Html template
+             title
+         })
+     );
+ 
+     console.log(req.query.subscription);
+ */
+    res.sendFile(path.join(__dirname + '/client/Register.html'));
 });
 
 app.use('/static', express.static(__dirname + '/client/team/static'));
+app.get('/team', async (req, res) => {
 
-app.use('/team', async (req, res) => {
     let teamId = req.query.id;
     let editKey = req.query.edit;
     let viewKey = req.query.view;
@@ -89,8 +106,41 @@ app.use('/team', async (req, res) => {
     res.sendFile(path.join(__dirname + '/client/team/index.html'));
 });
 
+//user routering
+app.get('/login', async (req, res) => {
+
+    if (req.query.config) {
+        let config = JSON.parse(decodeURIComponent(req.query.config));
+        //console.log('config',config);
+        let register = await auth.RegisterUser(config.user, config.subscription);
+        if (register) {
+            let { id, editKey, viewKey } = register;
+            console.log(`/team?id=${id}&edit=${editKey}`);
+            
+            if (editKey)
+                res.redirect(`/team?id=${id}&edit=${editKey}`);
+            else
+                res.redirect(`/team?id=${id}&view=${viewKey}`);
+        }
+    } else {
+        res.redirect('/error');
+    }
+
+
+    /*
+    let subscriptionKey = req.query.subscriptionKey;
+    let user = JSON.parse(req.query.user);
+
+    res.redirect('/team'); 
+*/
+
+
+    //res.sendFile(path.join(__dirname + '/client/team/index.html'));
+});
+
 const port = process.env.PORT;
 app.listen(process.env.PORT || 8080);
+
 
 console.log(`🚀 Running a GraphQL API server at localhost:${process.env.PORT}/graphql`);
 console.log(`Serving at http://localhost:${port}`);

@@ -184,6 +184,7 @@ footer > div{
   justify-content: center;
   flex-direction: column;
   line-height: 20pt;
+  text-align: right;
 }
 
 footer a {
@@ -216,4 +217,15 @@ footer a {
   float:right;
   opacity: 1;
   cursor:pointer;
+}
+
+/*mobile*/
+@media only screen and (max-width: 768px) {
+  footer{
+    display:flex;
+    flex-direction: column-reverse;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    }
 }
