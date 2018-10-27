@@ -5,6 +5,11 @@ Designed to organize Teams, Tasks/Calendar, Posts (Prototypes' Updates) and Ment
 
 Current localizations: \[🇧🇷 pt-br\]
 
+(UI v2.2 -- 95% integrated with GraphQL API)
+
+![image](https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/screenshot4.gif?raw=true)
+
+
 (UI v2.1 -- 90% integrated with GraphQL API)
 
 ![image](https://github.com/mit-hackbrazil/platform-dev/blob/master/assets/screenshot3.gif?raw=true)
