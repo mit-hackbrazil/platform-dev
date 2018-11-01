@@ -80,7 +80,7 @@ export default class PostViewer extends Component {
             isOpen: false,
             posts: [],
             ready: false,
-
+            editorOpen: false
         }
         this.loadPosts();
     }
@@ -93,13 +93,17 @@ export default class PostViewer extends Component {
             this.setState({ posts: null, ready: true });
     }
     onOpenEditor = () => {
-        this.setState({ isOpen: true });
+        this.setState({ editorOpen: true });
     }
 
     onCloseEditor = () => {
-        this.setState({ isOpen: false });
+        this.setState({ editorOpen: false });
     }
 
+    onSave = () => {
+        this.loadPosts();
+        this.setState({ editorOpen: false });
+    }
 
     render() {
         let { posts, ready } = this.state;
@@ -120,7 +124,7 @@ export default class PostViewer extends Component {
             </Grid>
 
             <ButtonAddPost onCLick={this.onOpenEditor} />
-            <PostEditor isOpen={this.state.isOpen} onClose={this.onCloseEditor} />
+            <PostEditor open={this.state.editorOpen} onClose={this.onCloseEditor} onSave={this.onSave} />
         </div>
     }
 }
