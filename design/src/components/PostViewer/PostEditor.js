@@ -205,6 +205,9 @@ export default class PostEditor extends Component {
 
                 {buttonFile}
 
+                <br />
+                <br />
+
                 <Button onClick={this.handleClose}>Cancelar</Button>
                 <Button onClick={this.onSaveChanges}>Salvar</Button>
             </div>

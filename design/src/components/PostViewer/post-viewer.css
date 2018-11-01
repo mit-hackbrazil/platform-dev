@@ -49,6 +49,7 @@
     font-size: 12pt;
     padding:20px;
     max-height: 130px;
+    width: 100%;
 }
 
 .post a{
@@ -67,7 +68,7 @@
     display: flex;
     flex-direction: column;
     justify-items: center;
-
+    width: 100%;
     align-items: flex-start;
 }
 
@@ -109,6 +110,18 @@
 
 .action-button-add-post:hover #action-button-bg{
     fill: rgba(0,0,0,1);
+}
+
+.post-open{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.post-open-content{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 80%;
 }
 
 @media only screen and (max-width: 700px) {
