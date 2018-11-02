@@ -62,3 +62,5 @@ typings/
 
 # experimental apps (Lucas)
 experimental/*
+
+.DS_Store
