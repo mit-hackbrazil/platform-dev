@@ -104,6 +104,18 @@
     }
 
     function initApp() {
+      //checking if the user has a subscription key
+
+
+      var url_string = window.location.href;
+      var url = new URL(url_string);
+      var subscription = url.searchParams.get("subscription");
+      if (!subscription) {
+        let button = document.getElementById('quickstart-password-reset');
+        button.style.display = "none";
+      }
+
+
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           // User is signed in.
@@ -174,21 +186,21 @@
 
 
   <div class="mdl-grid">
-      <div class="mdl-layout-spacer"></div>
-      <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-cell mdl-cell--4-col">
 
 
-        <div id="login-container" class="mdl-card mdl-shadow--2dp">
-          <div class="mdl-card__title">
-          </div>
-          <div class="mdl-card__supporting-text">
-            Use o email e senha de sua equipe ou crie uma nova senha
+      <div id="login-container" class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+        </div>
+        <div class="mdl-card__supporting-text">
+          Use o email e senha de sua equipe ou crie uma nova senha
           <!-- </div> -->
 
 
 
           <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input"  type="text" id="email" name="email" >
+            <input class="mdl-textfield__input" type="text" id="email" name="email">
             <label class="mdl-textfield__label" for="sample1">email...</label>
           </div>
 
@@ -201,10 +213,12 @@
 
           <div class="mdl-card__actions mdl-card--border">
             <button disabled class="mdl-button mdl-button--colored
-            mdl-js-button mdl-js-ripple-effect" id="quickstart-sign-in" name="signin">Login</button>
+            mdl-js-button mdl-js-ripple-effect" id="quickstart-sign-in"
+              name="signin">Login</button>
 
             <button class="mdl-button mdl-button--colored mdl-js-button
-            mdl-js-ripple-effect" id="quickstart-password-reset" name="verify-email">Criar Senha</button>
+            mdl-js-ripple-effect" id="quickstart-password-reset"
+              name="verify-email">Criar Senha</button>
 
           </div>
 
@@ -212,8 +226,8 @@
         </div>
 
       </div>
-      </div>
-      <div class="mdl-layout-spacer"></div>
+    </div>
+    <div class="mdl-layout-spacer"></div>
   </div>
 
 
