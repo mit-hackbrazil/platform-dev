@@ -67,3 +67,4 @@ experimental/*
 sys/src/db_secret.json
 **/**/db_secret.json
 sys/src/db_secret.*
+sys/src/db_secret.json
