@@ -30,11 +30,15 @@ export async function RegisterUser(user, subscrition_key) {
         let isMentor = await db.any(`SELECT * FROM mentors WHERE email='${user.email}'`);
 
         if (isMentor.length) {
+            console.log("is mentor",isMentor)
             isMentor = true;
         }
+        else
+            isMentor = false;
 
         if (!userInDB.length) {//register user
-            console.log("registering user");
+            console.log("registering user", user);
+
             let query = await db.none(`INSERT INTO 
             users(uid, name, email, team, is_mentor) 
             VALUES($1,$2,$3,$4,$5)

@@ -1,42 +1,96 @@
 .contacts{
-    height: 220px;
-    display: flex;
+    height: 100%;
+   
     width: 100%;
-    flex-direction: column;
-    justify-content: center;   
-    position: relative;
+    min-height:100%;
+ 
 }
 
 .contacts-list{
+    height: 100%;
+    display: grid;
+    grid-template-rows: repeat(Calc(33%-6px),3);
+    grid-row-gap: 6px;
+}
+
+.contact-button {
     display: flex;
-    width: 0 auto;
     flex-direction: column;
-    font-size: 12pt;
     justify-content: center;
-    align-content: center;
-    text-align: center;
+    align-items: center;
+    padding:10px;
+    width: 100%;
+    color:#FFF;
+    border-radius: 2px;
+    opacity: 0.8;
 }
 
-.contacts-list > div{
+.contact-button:hover{
+    opacity: 1;
+}
+.contact-button i{
+    font-size: 30px;
+}
+
+.whatsapp{
+    background: #56E65D;
+}
+
+.facebook{
+    background: #345BAC;
+}
+
+.slack{
+    background: #CF0E5B;
+}
+
+.contact-content {
+    display: none;
+    transform: translate(-50%,0%);
+    position: absolute;
+    background-color: #fafafa;
+    color:#333;
+    min-width: 160px;
+    border-radius: 1px;
+    box-shadow: 0px 8px 15px 0px rgba(0,0,0,0.4);
+    padding: 6px 10px;
+    z-index: 10;
+    opacity: 0;
+    width:0;
+}
+
+.contact-button:hover .contact-content {
     display: flex;
-    width: 0 auto;
+    opacity: 1;
+    align-content: center;
+    align-items: center; 
     justify-content: left;
-    font-size: 14pt;
-    margin-bottom: 10pt;
+    width: auto;
+
+}
+.contact-content i {
+    font-size: 12pt;
+    padding: 5px;
+    float: right;
+    justify-self: right;
 }
 
-.contacts-list > div > i{
-    margin-right: 20pt;
+.contact-content i:hover{
+    background: #eee;
 }
 
 /*mobile*/
 @media only screen and (max-width: 768px) {
-    .contacts{
-        margin-bottom:0px;
-        margin-top:0px;
+    .contacts-list{
+        height: 100%;
         display: flex;
-        flex-direction: column;
-        text-align: center;
-        height: auto;
+    }
+    .contact-button{
+        border-radius: 0px;
+    }
+
+    .contact-content {
+        
+        transform: translate(0,-50%);
     }
 } 

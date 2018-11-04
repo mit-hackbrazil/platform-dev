@@ -148,8 +148,11 @@ export async function ValidateEditKey(id, edit_key) {
 
 export async function ValidateViewKey(id, view_key) {
     let result = await db.one(`SELECT view_key FROM teams WHERE id=${id}`);
-    if (view_key == result.view_key)
+
+    if (view_key == result.view_key) {
         return true;
+    }
+
     else
         return false;
 }

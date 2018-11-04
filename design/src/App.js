@@ -52,7 +52,7 @@ class App extends Component {
     console.log("CAN EDIT", canEdit);
     this.setState({ canEdit });
   }
-  
+
   unescapeHTML(html) {
     var escapeEl = document.createElement('div');
     escapeEl.innerHTML = html;
@@ -87,10 +87,10 @@ class App extends Component {
         <NavBar />
         <div className="grid-container">
           <Grid container spacing={24} className="main-content">
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={11} >
               <TeamHeader canEdit={canEdit} />
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={1}>
               <Contacts canEdit={canEdit} />
             </Grid>
 
@@ -101,8 +101,12 @@ class App extends Component {
             <Grid item xs={12} sm={6}>
               <div className="card" ><Calendar events={events} /></div>
             </Grid>
-
+            <div className="divider">
+              <div></div>
+            </div>
             <Grid item xs={12} sm={6}>
+              <h2>Tarefas da Fase maker</h2>
+              <p className="sub-text">Envie, abra e edite tarefas enviadas. Anexe arquivos .pdf com suas respostas e adicione texto se for necessário</p>
               <TasksList canEdit={canEdit} />
             </Grid>
 

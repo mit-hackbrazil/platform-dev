@@ -1,3 +1,9 @@
+.members-grid{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-auto-rows: 1fr;
+    width:100%;
+}
 .member-card{
     position: relative;
     display: block;
@@ -8,7 +14,7 @@
     padding:5px;
     color:#111 !important;
     height: auto;
-    
+    height: 270px;
 }
 
 .card-edit{

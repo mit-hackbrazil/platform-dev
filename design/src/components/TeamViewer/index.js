@@ -217,7 +217,11 @@ class MemberCard extends Component {
             </Modal>);
 
         let cardClass = canEdit ? "member-card card card-edit" : "member-card card";
+        console.log("team ceit", canEdit);
+        let editButton = null;
 
+        if (canEdit.ca)
+            editButton = <Button className="card-edit-button" onClick={this.toggleEditor}>Editar</Button>
         return (
             <Grid item xs={12} sm={4}>
                 <div className={cardClass}>
@@ -238,7 +242,7 @@ class MemberCard extends Component {
                         <IconButton className={link ? "link-active" : null}> <a href={link}><i className="fas fa-link"></i> </a></ IconButton>
                     </div>
 
-                    {this.props.canEdit ? <Button className="card-edit-button" onClick={this.toggleEditor}>Editar</Button> : null}
+                    {editButton}
 
                     {editMenu}
 

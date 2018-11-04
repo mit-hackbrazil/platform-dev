@@ -178,7 +178,7 @@ class Task extends Component {
                     </div>
 
                     <Button onClick={this.toggleEditor}>Cancelar</Button>
-                    <Button color="primary" onClick={this.onSaveChanges}>Enviar</Button>
+                    <Button onClick={this.onSaveChanges}>Enviar</Button>
                 </div>
             </div>
         </Modal>);
@@ -232,7 +232,7 @@ class Task extends Component {
                 <p>{task.content}</p>
 
                 <div className="buttons">
-                    {this.props.canEdit && !this.state.sent ? <Button variant="contained" onClick={this.toggleEditor}>Enviar</Button> : null}
+                    {this.props.canEdit && !this.state.sent ? <Button onClick={this.toggleEditor}>Enviar</Button> : null}
                     {this.state.sent ? < Button onClick={this.toggleViewer}>Abrir</Button> : null}
                     {this.props.canEdit && this.state.sent ? <Button onClick={this.toggleEditor}>Editar</Button> : null}
 

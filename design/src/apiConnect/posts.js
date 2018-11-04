@@ -7,18 +7,34 @@ export async function getAll(team_id, editKey, viewKey, args = "id, title, conte
     var team_id = url.searchParams.get("id");
     var editKey = url.searchParams.get("edit");
     var viewKey = url.searchParams.get("view");
+    let query;
 
-    let query = `
-            query{
-                posts(args:{
-                    team:${team_id},
-                    editKey:"${editKey}",
-                    viewKey:"${viewKey}",
-                }){
-                    ${args}
-                }
+    if (editKey && !viewKey) {
+        query = `
+        query{
+            posts(args:{
+                team:${team_id},
+                editKey:"${editKey}"
+            }){
+                ${args}
             }
-        `;
+        }
+    `;
+    }
+    else if (viewKey && !editKey) {
+        query = `
+        query{
+            posts(args:{
+                team:${team_id},
+                viewKey:"${viewKey}"
+            }){
+                ${args}
+            }
+        }
+    `;
+    }
+
+    console.log(query);
 
     let results = await GraphQuery(query);
     return results;

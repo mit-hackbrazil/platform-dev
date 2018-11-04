@@ -96,6 +96,23 @@ export default class Contacts extends Component {
 
     }
 
+    copyStringToClipboard(str) {
+        // Create new element
+        var el = document.createElement('textarea');
+        // Set value (string to be copied)
+        el.value = str;
+        // Set non-editable to avoid focus and move outside of view
+        el.setAttribute('readonly', '');
+        el.style = { position: 'absolute', left: '-9999px' };
+        document.body.appendChild(el);
+        // Select text inside element
+        el.select();
+        // Copy text to clipboard
+        document.execCommand('copy');
+        // Remove temporary element
+        document.body.removeChild(el);
+    }
+
     render() {
 
 
@@ -105,18 +122,45 @@ export default class Contacts extends Component {
             </div>
 
         let { canEdit } = this.props;
-        let cardClass = canEdit ? "contacts card card-edit" : "contacts card";
+        let cardClass = canEdit ? "contacts card card-edit" : "contacts card-full";
+        /*
+    <div className="contact-button whatsapp"><i class="fab fa-whatsapp fa-lg"></i>
+                        {/*this.state.contacts.whatsapp}
+                        </div>
+    <div className="contact-button facebook"><i class="fab fa-facebook fa-lg"></i>{this.state.contacts.facebook}</div>
+    <div className="contact-button slack"><i class="fab fa-slack fa-lg"></i>{this.state.contacts.slack}</div>
+        */
 
+        /*
+    
+    <div class="dropdown">
+    <span>Mouse over me</span>
+    <div class="dropdown-content">
+    <p>Hello World!</p>
+    </div>
+    </div>
+        */
         return (
             <div className={cardClass}>
                 <div className="contacts-list">
-                    <div><i class="fab fa-whatsapp fa-lg"></i>{this.state.contacts.whatsapp}</div>
-                    <div><i class="fab fa-facebook fa-lg"></i>{this.state.contacts.facebook}</div>
-                    <div><i class="fab fa-slack fa-lg"></i>{this.state.contacts.slack}</div>
+                    <div className="contact-button whatsapp"><i className="fab fa-whatsapp fa-lg"></i>
+                        <div class="contact-content">
+                            <i className="far fa-copy" onClick={() => this.copyStringToClipboard(this.state.contacts.whatsapp)}></i> <div>{this.state.contacts.whatsapp}</div>
+                        </div>
+                    </div>
+                    <div className="contact-button facebook"><i class="fab fa-facebook fa-lg"></i>
+                        <div class="contact-content">
+                            <i className="far fa-copy" onClick={() => this.copyStringToClipboard(this.state.contacts.facebook)}></i> <div>{this.state.contacts.facebook}</div>
+                        </div>
+                    </div>
+                    <div className="contact-button slack"><i class="fab fa-slack fa-lg"></i>
+                        <div class="contact-content">
+                            <i className="far fa-copy" onClick={() => this.copyStringToClipboard(this.state.contacts.slack)}></i> <div>{this.state.contacts.slack}</div>
+                        </div>
+                    </div>
                 </div>
 
                 {this.props.canEdit ? <Button onClick={this.toggleEditor} className="card-edit-button">Editar</Button> : null}
-
 
                 <Modal
                     aria-labelledby="simple-modal-title"
@@ -166,7 +210,7 @@ export default class Contacts extends Component {
 
                     </div>
                 </Modal>
-            </div>
+            </div >
         );
     }
 
