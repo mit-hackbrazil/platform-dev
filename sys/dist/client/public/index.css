@@ -8,7 +8,6 @@ body {
   font-family: 'Abel', sans-serif;
   margin-left:0px;
   margin-right: 0px;
-  margin-top:45px;
   overflow-x: hidden;
 }
 
@@ -222,10 +221,21 @@ footer a {
 /* exclusive for Home.html ------ */
 
 #login-container{
-  width:100%;
   display: flex;
-  justify-content: center;
+  width: 512px !important;
 
+  justify-content: center;
+  margin-top: -300px;
+  z-index: 100;
+}
+
+#home-body {
+  background-color: black;
+}
+
+
+.demo-card-wide.mdl-card {
+  width: 512px;
 }
 
 .menu-navbar{
@@ -243,7 +253,7 @@ footer a {
   display: flex;
   z-index: 10;
   box-shadow: 0px 2px 15px rgba(0,0,0,0.2);
-  
+
 }
 
 .menu-right{
@@ -258,7 +268,7 @@ footer a {
 }
 
 .top{
-  background:#333;
+  /* background:#333; */
   display: flex;
   justify-content: center;
   align-content: center;
@@ -284,7 +294,7 @@ footer a {
 .info > div{
   display: flex;
   margin:30px;
-  justify-content: center;  
+  justify-content: center;
 }
 
 .info .card{
@@ -324,7 +334,7 @@ h4{
       padding-bottom: 80px;
 
       padding:30px;
-      
+
     }
 
     .top > img{
@@ -337,15 +347,33 @@ h4{
     .info > div{
       display: flex;
       margin:12px;
-      justify-content: center;  
+      justify-content: center;
     }
 
     .info{
       display:flex;
       flex-direction: column;
-      
-      justify-content: center;  
+
+      justify-content: center;
     }
+}
 
 
+ .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url("./img/blgds.jpeg") center / cover;
+}
+
+.demo-layout-transparent {
+  background: url("./img/crop.jpeg") center / cover;
+  height: 500px;
+  color: white !important;
+}
+
+.mdl-layout__header,
+.mdl-layout__drawer-button,
+.mdl-navigation__link {
+  color: white !important;
+  font-weight: bold;
 }

@@ -124,8 +124,9 @@ function _RegisterUser() {
             isMentor = _context3.sent;
 
             if (isMentor.length) {
+              console.log("is mentor", isMentor);
               isMentor = true;
-            }
+            } else isMentor = false;
 
             if (userInDB.length) {
               _context3.next = 23;
@@ -133,7 +134,7 @@ function _RegisterUser() {
             }
 
             //register user
-            console.log("registering user");
+            console.log("registering user", user);
             _context3.next = 17;
             return _Database.db.none("INSERT INTO \n            users(uid, name, email, team, is_mentor) \n            VALUES($1,$2,$3,$4,$5)\n            ", [user.uid, user.displayName, user.email, team.id, isMentor]);
 
