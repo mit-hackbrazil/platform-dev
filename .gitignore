@@ -63,4 +63,6 @@ typings/
 # experimental apps (Lucas)
 experimental/*
 
-db_secret.json
+*/db_secret.json
+sys/src/db_secret.json
+**/**/db_secret.json
