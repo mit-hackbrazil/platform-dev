@@ -1,9 +1,9 @@
 .contacts{
     height: 100%;
-   
     width: 100%;
     min-height:100%;
- 
+    display: flex;
+    flex-direction: column;
 }
 
 .contacts-list{
@@ -33,15 +33,15 @@
 }
 
 .whatsapp{
-    background: #56E65D;
+    color: #56E65D;
 }
 
 .facebook{
-    background: #345BAC;
+    color: #345BAC;
 }
 
 .slack{
-    background: #CF0E5B;
+    color: #CF0E5B;
 }
 
 .contact-content {

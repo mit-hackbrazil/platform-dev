@@ -217,15 +217,15 @@ class MemberCard extends Component {
             </Modal>);
 
         let cardClass = canEdit ? "member-card card card-edit" : "member-card card";
-        console.log("team ceit", canEdit);
+        console.log("team ceit", canEdit.canEdit);
         let editButton = null;
 
-        if (canEdit.ca)
+        if (canEdit.canEdit == true)
             editButton = <Button className="card-edit-button" onClick={this.toggleEditor}>Editar</Button>
         return (
             <Grid item xs={12} sm={4}>
                 <div className={cardClass}>
-
+                
                     <div className="image" >
                         <img
                             src={photo}></img>
@@ -236,6 +236,7 @@ class MemberCard extends Component {
                     <div className="role">
                         {role}
                     </div>
+
                     <div className="contact">
                         <IconButton className={github ? "link-active" : null}><a href={github}><i className="fab fa-github"></i></a></ IconButton>
                         <IconButton className={linkedin ? "link-active" : null}><a href={linkedin}> <i className="fab fa-linkedin-in"></i></a> </IconButton>

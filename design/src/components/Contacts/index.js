@@ -122,7 +122,7 @@ export default class Contacts extends Component {
             </div>
 
         let { canEdit } = this.props;
-        let cardClass = canEdit ? "contacts card card-edit" : "contacts card-full";
+        let cardClass = canEdit ? "contacts card card-edit" : "contacts card";
         /*
     <div className="contact-button whatsapp"><i class="fab fa-whatsapp fa-lg"></i>
                         {/*this.state.contacts.whatsapp}
@@ -160,7 +160,7 @@ export default class Contacts extends Component {
                     </div>
                 </div>
 
-                {this.props.canEdit ? <Button onClick={this.toggleEditor} className="card-edit-button">Editar</Button> : null}
+                {this.props.canEdit ? <Button onClick={this.toggleEditor} >Editar</Button> : null}
 
                 <Modal
                     aria-labelledby="simple-modal-title"
@@ -169,7 +169,6 @@ export default class Contacts extends Component {
                     onClose={this.handleClose}
                     className="modal-editor-container"
                 >
-
                     <div className="modal-editor" >
                         <Typography variant="h6" id="modal-title">
                             Editar Perfil

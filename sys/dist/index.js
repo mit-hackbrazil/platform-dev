@@ -148,7 +148,7 @@ function () {
           case 5:
             keysAuth = _context2.sent;
             console.log(keysAuth);
-            if (!keysAuth.canEdit && !keysAuth.canView) res.redirect('/home');
+            if (!keysAuth.canEdit && !keysAuth.canView) res.redirect('/error?type=0');
             res.sendFile(_path.default.join(__dirname + '/client/team/index.html'));
 
           case 9:
@@ -162,45 +162,20 @@ function () {
   return function (_x3, _x4) {
     return _ref2.apply(this, arguments);
   };
-}()); //user routering
-
-app.get('/login',
+}());
+app.get('/error',
 /*#__PURE__*/
 function () {
   var _ref3 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
   _regenerator.default.mark(function _callee3(req, res) {
-    var config, register, id, editKey, viewKey;
     return _regenerator.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            if (!req.query.config) {
-              _context3.next = 8;
-              break;
-            }
+            res.sendFile(_path.default.join(__dirname + '/client/Error.html'));
 
-            config = JSON.parse(decodeURIComponent(req.query.config)); //console.log('config',config);
-
-            _context3.next = 4;
-            return auth.RegisterUser(config.user, config.subscription);
-
-          case 4:
-            register = _context3.sent;
-
-            if (register) {
-              id = register.id, editKey = register.editKey, viewKey = register.viewKey;
-              console.log("/team?id=".concat(id, "&edit=").concat(editKey));
-              if (editKey) res.redirect("/team?id=".concat(id, "&edit=").concat(editKey));else res.redirect("/team?id=".concat(id, "&view=").concat(viewKey));
-            }
-
-            _context3.next = 9;
-            break;
-
-          case 8:
-            res.redirect('/error');
-
-          case 9:
+          case 1:
           case "end":
             return _context3.stop();
         }
@@ -210,6 +185,55 @@ function () {
 
   return function (_x5, _x6) {
     return _ref3.apply(this, arguments);
+  };
+}()); //user routering
+
+app.get('/login',
+/*#__PURE__*/
+function () {
+  var _ref4 = (0, _asyncToGenerator2.default)(
+  /*#__PURE__*/
+  _regenerator.default.mark(function _callee4(req, res) {
+    var config, register, id, editKey, viewKey;
+    return _regenerator.default.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            if (!req.query.config) {
+              _context4.next = 8;
+              break;
+            }
+
+            config = JSON.parse(decodeURIComponent(req.query.config)); //console.log('config',config);
+
+            _context4.next = 4;
+            return auth.RegisterUser(config.user, config.subscription);
+
+          case 4:
+            register = _context4.sent;
+
+            if (register) {
+              id = register.id, editKey = register.editKey, viewKey = register.viewKey;
+              console.log("/team?id=".concat(id, "&edit=").concat(editKey));
+              if (editKey) res.redirect("/team?id=".concat(id, "&edit=").concat(editKey));else res.redirect("/team?id=".concat(id, "&view=").concat(viewKey));
+            }
+
+            _context4.next = 9;
+            break;
+
+          case 8:
+            res.redirect('/error?type=1');
+
+          case 9:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, this);
+  }));
+
+  return function (_x7, _x8) {
+    return _ref4.apply(this, arguments);
   };
 }());
 var port = process.env.PORT;

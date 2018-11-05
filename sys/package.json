@@ -50,6 +50,7 @@
     "json-to-graphql-query": "^1.9.0",
     "moment": "^2.22.2",
     "pg-promise": "^8.5.1",
+    "pug": "^2.0.3",
     "qs-middleware": "^1.0.3",
     "react": "^16.5.2",
     "react-big-calendar": "^0.20.1",

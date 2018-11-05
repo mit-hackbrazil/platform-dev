@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="public/index.css">
+
+    <title>HackBrazil</title>
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDe7sKBJyuHpW8TQlKml-z_XT7wa6FmCtI",
+            authDomain: "hackbrazil-files.firebaseapp.com",
+            databaseURL: "https://hackbrazil-files.firebaseio.com",
+            projectId: "hackbrazil-files",
+            storageBucket: "hackbrazil-files.appspot.com",
+            messagingSenderId: "381639451152"
+        };
+        firebase.initializeApp(config);
+
+
+
+        window.onload = function () {
+            //sign out the users after erros
+            if (firebase.auth().currentUser) {
+                firebase.auth().signOut();
+            }
+        };
+    </script>
+    <style>
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transform: translate(0%, 50%);
+        }
+
+        .container>.card {
+            max-width: 600px;
+        }
+
+        #error-msg {
+            font-size: 12pt;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            padding: 12px;
+            line-height: 22pt;
+            color: #000;
+        }
+
+        p {
+            color: #888;
+            font-size: 10pt;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h3>🚨 Oops...</h3>
+            <h2 id="error-title"></h2>
+
+            <div id="error-msg"> </div>
+
+            <p>por favor, reportar o erro aos nossos desenvolvedores ou entre em contato com a equipe:</p>
+            <a target="_blank" href="https://goo.gl/forms/kFAs13YK8ZJDxT8e2"><i class="fas fa-clipboard-check"></i>
+                Reportar Erro</a>
+        </div>
+
+        <br />
+        <div class="card">
+            <a href="/">Voltar</a>
+        </div>
+    </div>
+
+
+    <script>
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var type_msg = url.searchParams.get("type");
+        console.log(type_msg);
+        let msg = null;
+        let title = null;
+
+        switch (Number(type_msg)) {
+            case 0:
+                title = "Link de inscrição inexistente";
+                msg = `Para fazer login na plataforma é necessário um link de inscrição. Se você não recebeu um via e-mail, entre em contato com a equipe`
+                break;
+            case 1:
+                title = "Erro ao Cadastrar usuário";
+                msg = `Para fazer login na plataforma é necessário um link de inscrição. Se você não recebeu um via e-mail, entre em contato com a equipe`
+                break;
+        }
+
+        let msgDiv = document.getElementById('error-msg');
+        msgDiv.innerText = msg;
+
+        let titleDiv = document.getElementById('error-title');
+        titleDiv.innerHTML = title;
+
+    </script>
+
+
+</body>
+
+</html>

@@ -307,9 +307,12 @@ class TasksList extends Component {
             return <LinearProgress />
         }
 
-        let tasksList = tasks.map((task, index) => {
-            return <Task key={"task-" + index} task={task} index={index} canEdit={this.props.canEdit} onChange={this.onChange} />;
-        });
+        let tasksList = null;
+
+        if (tasks)
+            tasksList = tasks.map((task, index) => {
+                return <Task key={"task-" + index} task={task} index={index} canEdit={this.props.canEdit} onChange={this.onChange} />;
+            });
         /*
             return <div className="timeline">
                 <div className="container left">

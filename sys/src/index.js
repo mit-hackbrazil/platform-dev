@@ -101,9 +101,14 @@ app.get('/team', async (req, res) => {
 
     console.log(keysAuth);
     if (!keysAuth.canEdit && !keysAuth.canView)
-        res.redirect('/home');
+        res.redirect('/error?type=0');
 
     res.sendFile(path.join(__dirname + '/client/team/index.html'));
+});
+
+
+app.get('/error', async (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/Error.html'));
 });
 
 //user routering
@@ -116,14 +121,14 @@ app.get('/login', async (req, res) => {
         if (register) {
             let { id, editKey, viewKey } = register;
             console.log(`/team?id=${id}&edit=${editKey}`);
-            
+
             if (editKey)
                 res.redirect(`/team?id=${id}&edit=${editKey}`);
             else
                 res.redirect(`/team?id=${id}&view=${viewKey}`);
         }
     } else {
-        res.redirect('/error');
+        res.redirect('/error?type=1');
     }
 
 
