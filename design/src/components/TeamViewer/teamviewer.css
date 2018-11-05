@@ -80,6 +80,8 @@
                              "image contact contact";
         grid-template-rows: auto auto;
         grid-template-columns: 80px auto;
+
+        height: auto;
     }
 
     .member-card .contact{

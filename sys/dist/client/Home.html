@@ -108,11 +108,15 @@
       var url_string = window.location.href;
       var url = new URL(url_string);
       var subscription = url.searchParams.get("subscription");
+
+      var teamName = url.searchParams.get("name");
+      if (teamName)
+        document.getElementById('team-name').innerText = `Bem-vinda equipe ${teamName}`;
+
       if (!subscription) {
         let button = document.getElementById('quickstart-password-reset');
         button.style.display = "none";
       }
-
 
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -189,7 +193,8 @@
 
 
       <div id="login-container" class="mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title">
+        <div class="mdl-card__title" id="team-name">
+
         </div>
         <div class="mdl-card__supporting-text">
           Use o email e senha de sua equipe ou crie uma nova senha

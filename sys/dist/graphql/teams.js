@@ -28,7 +28,7 @@ var model = {
   logo: null,
   contacts: null
 };
-var typeDef = "\n  type Team{\n    id: Int,\n    name: String,\n    description: String,\n    link: String,\n    members: JSON, \n    logo: String, \n    contacts: JSON\n  }\n\n  extend type Query {\n    team(args:JSON): [Team],\n    teamEditKey(args:JSON) : Boolean,\n    teamViewKey(args:JSON) : Boolean,\n    teamSubscritionKey(subscription_key:String) : Team\n  }\n\n  extend type Mutation{\n      addTeam(args:JSON): Boolean,\n      updateTeam(args:JSON): Boolean\n  }\n";
+var typeDef = "\n  type Team{\n    id: Int,\n    name: String,\n    description: String,\n    link: String,\n    members: JSON, \n    logo: String, \n    contacts: JSON\n  }\n\n  extend type Query {\n    team(args:JSON): [Team],\n    teamEditKey(args:JSON) : Boolean,\n    teamViewKey(args:JSON) : Boolean,\n    teamSubscritionKey(subscription_key:String) : Team\n  }\n\n  extend type Mutation{\n      addTeam(args:JSON): JSON,\n      updateTeam(args:JSON): Boolean\n  }\n";
 exports.typeDef = typeDef;
 var resolver = {
   Query: {
@@ -228,12 +228,12 @@ var resolver = {
                 subscription_key = _context5.sent;
                 input = args;
                 _context5.next = 13;
-                return _Database.db.none("INSERT INTO \n            teams(name, edit_key, logo, members, link, contacts, view_key, subscription_key) \n            VALUES($1,$2,$3,$4,$5,$6,$7, $8)\n            ", [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key, subscription_key]);
+                return _Database.db.any("INSERT INTO \n            teams(name, edit_key, logo, members, link, contacts, view_key, subscription_key) \n            VALUES($1,$2,$3,$4,$5,$6,$7, $8) returning *\n            ", [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key, subscription_key]);
 
               case 13:
                 query = _context5.sent;
                 (0, _log.Log)(req, "insert@team", args);
-                return _context5.abrupt("return", true);
+                return _context5.abrupt("return", query);
 
               case 16:
               case "end":

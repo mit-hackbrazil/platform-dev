@@ -31,7 +31,7 @@ export const typeDef = `
   }
 
   extend type Mutation{
-      addTeam(args:JSON): Boolean,
+      addTeam(args:JSON): JSON,
       updateTeam(args:JSON): Boolean
   }
 `;
@@ -92,13 +92,13 @@ export let resolver = {
 
             let input = args;
 
-            let query = await db.none(`INSERT INTO 
+            let query = await db.any(`INSERT INTO 
             teams(name, edit_key, logo, members, link, contacts, view_key, subscription_key) 
-            VALUES($1,$2,$3,$4,$5,$6,$7, $8)
+            VALUES($1,$2,$3,$4,$5,$6,$7, $8) returning *
             `, [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key, subscription_key]);
 
             Log(req, "insert@team", args);
-            return true;
+            return query;
         },
 
         async updateTeam(_, { args }, req) {
