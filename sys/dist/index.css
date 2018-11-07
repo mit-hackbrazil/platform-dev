@@ -130,7 +130,7 @@ html{
 
 .upload-file input[type=file] {
   font-size: 100px;
-  
+
   position: absolute !important;
   left: 0;
   top: 0;
@@ -219,14 +219,14 @@ footer a {
     right: 0;
     font-size: 16pt;
 }
-  
+
   /* The actual timeline (the vertical ruler) */
 .timeline {
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
 }
-  
+
 /* The actual timeline (the vertical ruler) */
 .timeline::after {
     content: '';
@@ -239,7 +239,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     margin-left: 0px;
     border-radius: 10px;
 }
-  
+
 /* Container around content */
 .container {
     padding: 10px 40px;
@@ -248,7 +248,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     width: 50%;
     color: #111 !important;
 }
-  
+
   /* The circles on the timeline */
 .container::after {
     content: '';
@@ -262,17 +262,17 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     z-index: 1;
     box-shadow: 0px 2px 3px rgba(0,0,0,0.6);
 }
-  
+
   /* Place the container to the left */
   .left {
     left: 0;
   }
-  
+
   /* Place the container to the right */
   .right {
     left: 50%;
   }
-  
+
   /* Add arrows to the left container (pointing right) */
   .left::before {
     content: " ";
@@ -286,7 +286,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     border-width: 10px 0 10px 10px;
     border-color: transparent transparent transparent white;
   }
-  
+
   /* Add arrows to the right container (pointing left) */
   .right::before {
     content: " ";
@@ -300,12 +300,12 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     border-width: 10px 10px 10px 0;
     border-color: transparent white transparent transparent;
   }
-  
+
   /* Fix the circle for containers on the right side */
   .right::after {
     left: -5px;
   }
-  
+
   /* The actual content */
   .content {
     padding: 5px 12px;
@@ -323,7 +323,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
 
   .content-open{
     background-color: rgb(0, 119, 255);
-    color:#FFF;  
+    color:#FFF;
   }
 
   /*-- CUSTOM --*/
@@ -338,14 +338,14 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     .timeline::after {
       left: 31px;
     }
-  
+
   /* Full-width containers */
     .container {
       width: 100%;
       padding-left: 70px;
       padding-right: 25px;
     }
-  
+
   /* Make sure that all arrows are pointing leftwards */
     .container::before {
       left: 60px;
@@ -353,12 +353,12 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
       border-width: 10px 10px 10px 0;
       border-color: transparent white transparent transparent;
     }
-  
+
   /* Make sure all circles are at the same spot */
     .left::after, .right::after {
       left: 26px;
     }
-  
+
   /* Make all right containers behave like the left ones */
     .right {
       left: 0%;
@@ -397,20 +397,20 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
 }
 
 .team-header > .logo > .image{
-    width: 100%; 
-    text-align: center; 
-    position: relative; 
-    padding-bottom: 100%; 
+    width: 100%;
+    text-align: center;
+    position: relative;
+    padding-bottom: 100%;
     border-radius: 50%;
     background:#f0f0f0;
 }
 
 .team-header > .logo > .image > img{
-    position: absolute; 
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0; 
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
     object-fit: cover;
     border-radius: 50%;
     overflow: hidden;
@@ -529,7 +529,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     align-content: center;
     text-align: center;
     padding-left: 0;
-    
+
     background:#FFF;
     border-radius: 5px;
     display: flex;
@@ -624,7 +624,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     border-left: 1px solid #fff;
   }
   .rbc-rtl .rbc-header + .rbc-header {
-      
+
     border-left-width: 0;
     border-right: 1px solid #FFF;
   }
@@ -691,7 +691,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
   .rbc-toolbar button:hover {
     color: #fff;
     background-color: #4A7699;
-   
+
   }
   .rbc-btn-group {
     display: inline-block;
@@ -1178,7 +1178,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
   }
   .post-list{
     display: grid;
-    grid-template-columns: 100%;   
+    grid-template-columns: 100%;
 }
 
 .post{
@@ -1202,7 +1202,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
 .post .image{
     width:100%;
     overflow: hidden;
-  
+
     display: flex;
     background:#f0f0f0;
     justify-content: center;
@@ -1212,7 +1212,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     width:100% auto;
     height: 100% auto;
     object-fit: scale-down;
-}   
+}
 .post  > .info > .date{
     position: absolute;
     top: -15px;
@@ -1307,7 +1307,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
         height: 100%;
         object-fit: scale-down;
         padding:0px;
-    } 
+    }
 }
 
 .post-editor{
@@ -1324,7 +1324,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     padding:5px;
     color:#111 !important;
     height: auto;
-    
+
 }
 
 .card-edit{
@@ -1437,7 +1437,7 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     display: flex;
     width: 100%;
     flex-direction: column;
-    justify-content: center;   
+    justify-content: center;
     position: relative;
 }
 
@@ -1473,4 +1473,4 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
         text-align: center;
         height: auto;
     }
-} 
+}
