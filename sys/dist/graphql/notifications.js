@@ -13,7 +13,7 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _Database = require("../Database.js");
 
-var typeDef = "\n\n  type Notification{\n    type:String, \n    content:String, \n    icon:String,\n    timestamp: String,\n    active: Boolean\n  }\n\n  extend type Query {\n    notifications: [Notification]\n  }\n  \n";
+var typeDef = "\n\n  type Notification{\n    type:String, \n    content:String, \n    icon:String,\n    timestamp: Date,\n    active: Boolean\n  }\n\n  extend type Query {\n    notifications: [Notification]\n  }\n  \n";
 exports.typeDef = typeDef;
 var resolver = {
   Query: {

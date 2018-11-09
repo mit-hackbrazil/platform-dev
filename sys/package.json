@@ -10,7 +10,8 @@
     "start": "node ./dist/index.js",
     "get-design": "rm -r ./src/client/team && mkdir ./src/client/team && cp -R ../design/build/* ./src/client/team",
     "build:react": "npm run build --prefix ../design/ && npm run get-design",
-    "deploy": "npm run build:react && npm run build"
+    "deploy": "npm run build:react && npm run build",
+    "setup": "gcloud config set project hackbrazil-platform"
   },
   "author": "lucascassiano",
   "license": "MIT",

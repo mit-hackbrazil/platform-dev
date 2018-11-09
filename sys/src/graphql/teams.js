@@ -97,7 +97,7 @@ export let resolver = {
             VALUES($1,$2,$3,$4,$5,$6,$7, $8) returning *
             `, [input.name, edit_key, input.logo, input.members, input.link, input.contacts, view_key, subscription_key]);
 
-            Log(req, "insert@team", args);
+            Log(req, "addTeam", args);
             return query;
         },
 
@@ -120,7 +120,6 @@ export let resolver = {
             } else {
                 return false;
             }
-
         }
     }
 }

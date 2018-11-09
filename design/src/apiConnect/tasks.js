@@ -6,7 +6,7 @@ export async function getAll(args = "id, title, content, files, thumbnail, times
     let query = `
             query{
                 tasks{
-                    id, title, content, start_date, end_date, open
+                    id, title, content, start_date, end_date, open, url, type
                 }
             }
         `;

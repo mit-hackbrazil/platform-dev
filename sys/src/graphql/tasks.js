@@ -8,9 +8,10 @@ export const typeDef = `
     title: String, 
     open: Boolean,
     content: String, 
-    start_date: String,
-    end_date: String,
-    url: String
+    start_date: Date,
+    end_date: Date,
+    url: String,
+    type: String
   }
 
   type TaskContent{
@@ -19,7 +20,7 @@ export const typeDef = `
     files: JSON, 
     team: Int, 
     task: Int
-    timestamp: String
+    timestamp: Date
   }
 
   extend type Query {
@@ -54,7 +55,7 @@ export let resolver = {
     Query: {
         async tasks(_, { args }) {
             let tasks = await db.many(
-                `SELECT * FROM tasks ORDER BY start_date DESC`
+                `SELECT * FROM tasks ORDER BY id ASC`
             );
             return tasks;
         },
@@ -68,7 +69,7 @@ export let resolver = {
                 return null
 
             let taskContent = await db.any(
-                `SELECT * FROM teams_tasks WHERE team=${team} AND task=${task}  ORDER BY timestamp DESC LIMIT 1`
+                `SELECT * FROM teams_tasks WHERE team=${team} AND task=${task} ORDER BY id DESC LIMIT 1`
             );
 
             return taskContent;

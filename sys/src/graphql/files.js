@@ -18,7 +18,7 @@ export const typeDef = `
     type: String,
     author_meteor: String,
     data: String,
-    timestamp: String
+    timestamp: Date
   }
 
   extend type Query {

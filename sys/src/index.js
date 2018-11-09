@@ -22,6 +22,8 @@ import Html from './client/Html';
 
 import * as auth from "./Auth";
 
+import { Log } from "./graphql/log";
+
 var app = express();
 app.use(cors());
 
@@ -104,11 +106,14 @@ app.get('/team', async (req, res) => {
         res.redirect('/error?type=0');
 
     res.sendFile(path.join(__dirname + '/client/team/index.html'));
+
+    Log(req, "team-view", teamId);
 });
 
 
 app.get('/error', async (req, res) => {
     res.sendFile(path.join(__dirname + '/client/Error.html'));
+    Log(req, "error");
 });
 
 //user routering
@@ -127,8 +132,11 @@ app.get('/login', async (req, res) => {
             else
                 res.redirect(`/team?id=${id}&view=${viewKey}`);
         }
+
+        Log(req, "login", config);
     } else {
         res.redirect('/error?type=1');
+        Log(req, "login-error", config);
     }
 
 

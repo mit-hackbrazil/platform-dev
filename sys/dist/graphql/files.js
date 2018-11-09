@@ -24,7 +24,7 @@ var model = {
   logo: null,
   contacts: null
 };
-var typeDef = "\n\n  type File{\n    id: Int,\n    name: String,\n    type: String,\n    author_meteor: String,\n    data: String,\n    timestamp: String\n  }\n\n  extend type Query {\n    file(args:JSON): [File]\n  }\n  \n";
+var typeDef = "\n\n  type File{\n    id: Int,\n    name: String,\n    type: String,\n    author_meteor: String,\n    data: String,\n    timestamp: Date\n  }\n\n  extend type Query {\n    file(args:JSON): [File]\n  }\n  \n";
 exports.typeDef = typeDef;
 var resolver = {
   Query: {

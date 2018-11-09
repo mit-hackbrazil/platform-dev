@@ -16,6 +16,7 @@ import { } from "./tasks-lists.css";
 
 import { Button, TextField, Modal, LinearProgress, Typography } from "@material-ui/core";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import moment from "moment";
 
@@ -87,6 +88,12 @@ class Task extends Component {
         });
     };
 
+    onChangeCheckBox = event => {
+        this.setState({
+            contentEdit: 'Ok',
+        });
+    };
+
     onInputChange = async (event) => {
         let file = event.target.files[0];
         this.setState({ taskFile: file, fileName: file.name });
@@ -126,7 +133,6 @@ class Task extends Component {
                 this.onNewLogo(team_id, editKey, task_id, url, name, type, size);
             });
         }
-
         else {
             let _task = {
                 content: this.state.contentEdit,
@@ -135,17 +141,25 @@ class Task extends Component {
 
             let res = await api.tasks.sendTask(id, task.id, editKey, _task);
             this.toggleEditor();
-
-            this.props.onChange();
         }
+
+        this.props.onChange();
     }
 
     render() {
         let { task } = this.props;
 
         console.log("task", task);
-        let start_date = moment(parseInt(task.start_date));
-        let end_date = moment(parseInt(task.end_date));
+
+        //let start_date = moment(parseInt(task.start_date));
+        let start_date = new Date(task.start_date);
+
+        start_date = start_date.toLocaleDateString('pt-BR');
+
+        let end_date = new Date(task.end_date);
+        end_date = end_date.toLocaleDateString('pt-BR');
+
+        console.log('end_date', end_date)
 
         let side = this.props.index % 2 == 0 ? " right" : " left";
 
@@ -198,7 +212,7 @@ class Task extends Component {
                         {task.title}
                     </Typography>
                     <div className="task-modal-dates">
-                        <i>{start_date.format("DD/MM/YYYY")}</i> - <strong>{end_date.format("DD/MM/YYYY")}</strong>
+                        <i>{start_date}</i> - <strong>{end_date}</strong>
                         <p>Enviado em:{moment(parseInt(this.state.timestamp)).format("DD/MM/YYYY hh:mm:ss")}</p>
                     </div>
                     <div className="task-modal-content">{this.state.content}</div>
@@ -209,12 +223,35 @@ class Task extends Component {
             </div>
         </Modal>);
 
+        //if task is just a checkbox
+        if (task.type == 'checkbox') {
+            modalEditor = (<Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.editorOpen}
+                onClose={this.handleClose}
+                className="modal-editor-container"
+            >
+                <div className="modal-editor" >
+                    <div className="modal-inner">
+                        <Typography variant="h6" id="modal-title">
+                            <i class="fas fa-tasks"></i> Enviar Tarefa
+                        </Typography>
+                        <Checkbox onChange={this.onChangeCheckBox} /> Tarefa Executada
+
+                        <Button onClick={this.toggleEditor}>Cancelar</Button>
+                        <Button onClick={this.onSaveChanges}>Enviar</Button>
+                    </div>
+                </div>
+            </Modal>);
+        }
+
 
         //loading
         if (!this.state.ready) {
             return <div className={"container" + side}>
                 <div className="content">
-                    <p>Carregando Conteúdo da Tarefa...</p>
+                    <p>Carregando Tarefa...</p>
                     <LinearProgress />
                 </div>
             </div>
@@ -222,14 +259,16 @@ class Task extends Component {
 
         return (<div className={"container" + side}>
             <div className="content">
+                <div className="top-color blue"></div>
                 <div className="task-dates">
-                    <div>{start_date.format("DD/MM/YYYY")}</div>
+                    <div>{start_date}</div>
                     <div> até </div>
-                    <div>{end_date.format("DD/MM/YYYY")}</div>
+                    <div>{end_date}</div>
                 </div>
 
                 <h2>{task.title}</h2>
                 <p>{task.content}</p>
+                {task.url ? <a href={task.url}>link</a> : null}
 
                 <div className="buttons">
                     {this.props.canEdit && !this.state.sent ? <Button onClick={this.toggleEditor}>Enviar</Button> : null}
@@ -291,6 +330,7 @@ class TasksList extends Component {
             ready: false,
             tasks: []
         }
+
         this.loadTasks();
     }
 

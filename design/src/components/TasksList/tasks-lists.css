@@ -128,7 +128,20 @@ background-image: linear-gradient(-180deg, #979797 0%, #919191 48%, rgba(149,149
     padding-right:12px;
     margin-top:12px;
     margin-bottom:12px;
-    
+  }
+
+  .top-color{
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    top:0px;
+    left:0px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+  }
+
+  .blue{
+    background: #1070CA;
   }
 
   /* Media queries - Responsive timeline on screens less than 600px wide */

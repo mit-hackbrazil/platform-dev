@@ -5,7 +5,7 @@ export const typeDef = `
     type:String, 
     content:String, 
     icon:String,
-    timestamp: String,
+    timestamp: Date,
     active: Boolean
   }
 

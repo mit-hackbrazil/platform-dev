@@ -36,6 +36,8 @@ var _App = _interopRequireDefault(require("./client/App"));
 
 var _Html = _interopRequireDefault(require("./client/Html"));
 
+var _log = require("./graphql/log");
+
 //import reload from 'express-reload';
 //GraphQL dependencies
 //React Server-side rendering 
@@ -150,8 +152,9 @@ function () {
             console.log(keysAuth);
             if (!keysAuth.canEdit && !keysAuth.canView) res.redirect('/error?type=0');
             res.sendFile(_path.default.join(__dirname + '/client/team/index.html'));
+            (0, _log.Log)(req, "team-view", teamId);
 
-          case 9:
+          case 10:
           case "end":
             return _context2.stop();
         }
@@ -174,8 +177,9 @@ function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             res.sendFile(_path.default.join(__dirname + '/client/Error.html'));
+            (0, _log.Log)(req, "error");
 
-          case 1:
+          case 2:
           case "end":
             return _context3.stop();
         }
@@ -194,20 +198,21 @@ function () {
   var _ref4 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
   _regenerator.default.mark(function _callee4(req, res) {
-    var config, register, id, editKey, viewKey;
+    var _config, register, id, editKey, viewKey;
+
     return _regenerator.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             if (!req.query.config) {
-              _context4.next = 8;
+              _context4.next = 9;
               break;
             }
 
-            config = JSON.parse(decodeURIComponent(req.query.config)); //console.log('config',config);
+            _config = JSON.parse(decodeURIComponent(req.query.config)); //console.log('config',config);
 
             _context4.next = 4;
-            return auth.RegisterUser(config.user, config.subscription);
+            return auth.RegisterUser(_config.user, _config.subscription);
 
           case 4:
             register = _context4.sent;
@@ -218,13 +223,15 @@ function () {
               if (editKey) res.redirect("/team?id=".concat(id, "&edit=").concat(editKey));else res.redirect("/team?id=".concat(id, "&view=").concat(viewKey));
             }
 
-            _context4.next = 9;
+            (0, _log.Log)(req, "login", _config);
+            _context4.next = 11;
             break;
 
-          case 8:
-            res.redirect('/error?type=1');
-
           case 9:
+            res.redirect('/error?type=1');
+            (0, _log.Log)(req, "login-error", config);
+
+          case 11:
           case "end":
             return _context4.stop();
         }

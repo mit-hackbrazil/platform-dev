@@ -232,7 +232,7 @@ var resolver = {
 
               case 13:
                 query = _context5.sent;
-                (0, _log.Log)(req, "insert@team", args);
+                (0, _log.Log)(req, "addTeam", args);
                 return _context5.abrupt("return", query);
 
               case 16:

@@ -8,6 +8,7 @@ import { resolver as notificationsResolver, typeDef as notificationsTypeDef } fr
 
 let defaultTypeDef = `
 scalar JSON 
+scalar Date
 
 type Query{
     _empty:String

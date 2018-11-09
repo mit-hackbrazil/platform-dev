@@ -17,7 +17,7 @@ var _tasks = require("./tasks");
 
 var _notifications = require("./notifications");
 
-var defaultTypeDef = "\nscalar JSON \n\ntype Query{\n    _empty:String\n}\n\ntype Mutation{\n    _empty:String\n}\n";
+var defaultTypeDef = "\nscalar JSON \nscalar Date\n\ntype Query{\n    _empty:String\n}\n\ntype Mutation{\n    _empty:String\n}\n";
 var typeDefs = [defaultTypeDef, _teams.typeDef, _files.typeDef, _posts.typeDef, _tasks.typeDef, _notifications.typeDef];
 exports.typeDefs = typeDefs;
 var resolvers = (0, _lodash.merge)(_teams.resolver, _files.resolver, _posts.resolver, _tasks.resolver, _notifications.resolver);

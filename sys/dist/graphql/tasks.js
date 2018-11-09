@@ -17,7 +17,7 @@ var _graphqlTypeJson = _interopRequireDefault(require("graphql-type-json"));
 
 var _teams = require("./teams");
 
-var typeDef = "\n  type Task{\n    id: Int, \n    title: String, \n    open: Boolean,\n    content: String, \n    start_date: String,\n    end_date: String,\n    url: String\n  }\n\n  type TaskContent{\n    id: Int,\n    content: String, \n    files: JSON, \n    team: Int, \n    task: Int\n    timestamp: String\n  }\n\n  extend type Query {\n    tasks(args:JSON): [Task],\n    taskContent(args:JSON): [TaskContent],\n  }\n\n  extend type Mutation{\n      sendTask(args:JSON):Boolean,\n      editTask(args:JSON):TaskContent\n  }\n  \n";
+var typeDef = "\n  type Task{\n    id: Int, \n    title: String, \n    open: Boolean,\n    content: String, \n    start_date: Date,\n    end_date: Date,\n    url: String,\n    type: String\n  }\n\n  type TaskContent{\n    id: Int,\n    content: String, \n    files: JSON, \n    team: Int, \n    task: Int\n    timestamp: Date\n  }\n\n  extend type Query {\n    tasks(args:JSON): [Task],\n    taskContent(args:JSON): [TaskContent],\n  }\n\n  extend type Mutation{\n      sendTask(args:JSON):Boolean,\n      editTask(args:JSON):TaskContent\n  }\n  \n";
 exports.typeDef = typeDef;
 
 function ValidateAction(_x) {
@@ -93,7 +93,7 @@ var resolver = {
               case 0:
                 args = _ref.args;
                 _context.next = 3;
-                return _Database.db.many("SELECT * FROM tasks ORDER BY start_date DESC");
+                return _Database.db.many("SELECT * FROM tasks ORDER BY id ASC");
 
               case 3:
                 tasks = _context.sent;
@@ -138,7 +138,7 @@ var resolver = {
 
               case 7:
                 _context2.next = 9;
-                return _Database.db.any("SELECT * FROM teams_tasks WHERE team=".concat(team, " AND task=").concat(task, "  ORDER BY timestamp DESC LIMIT 1"));
+                return _Database.db.any("SELECT * FROM teams_tasks WHERE team=".concat(team, " AND task=").concat(task, " ORDER BY id DESC LIMIT 1"));
 
               case 9:
                 taskContent = _context2.sent;
