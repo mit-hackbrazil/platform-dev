@@ -14,7 +14,7 @@
     padding:5px;
     color:#111 !important;
     height: auto;
-    height: 270px;
+    height: 100%;
 }
 
 .card-edit{
@@ -30,8 +30,8 @@
 .member-card  .image img{
     width:50%;
     top:0px;
-    min-width:40px;
-    max-width: 125px;
+    height:115px;
+    width: 115px;
     height: 0 auto;
     align-self: center;
     float:center;
@@ -124,4 +124,4 @@
         width: 100%;
         line-height: 18pt;
     }
-} 
+}

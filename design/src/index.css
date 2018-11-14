@@ -236,6 +236,10 @@ footer a {
   color: #FFF;
 }
 
+#footer-img {
+  width: 90px;
+}
+
 .notification{
   background:#4CAF50;
   position: fixed;

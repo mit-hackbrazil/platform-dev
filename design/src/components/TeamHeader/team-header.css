@@ -6,11 +6,9 @@
     align-items: center;
     text-align: left;
     position: relative;
-
     display: grid;
     grid-template-columns: 20% 80%;
-
-    height: 220px;
+    height: 100%;
 }
 
 .team-header > .logo{
@@ -24,20 +22,20 @@
 }
 
 .team-header > .logo > .image{
-    width: 100%; 
-    text-align: center; 
-    position: relative; 
-    padding-bottom: 100%; 
+    width: 100%;
+    text-align: center;
+    position: relative;
+    padding-bottom: 100%;
     border-radius: 50%;
     background:#f0f0f0;
 }
 
 .team-header > .logo > .image > img{
-    position: absolute; 
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0; 
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
     object-fit: cover;
     border-radius: 50%;
     overflow: hidden;
@@ -150,4 +148,4 @@
     }
 
 
-} 
+}
